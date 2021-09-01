@@ -7,7 +7,7 @@ PHP Lunar Calendar includes important features:
     - Convert Gregorian date time to Solar term
 
 ## Basic usage
-```
+```php
 // Create custom Gregorian date time input
 $dateTimeInput = BaseDateTime::create()
     ->setDate(20, 10, 2021)
