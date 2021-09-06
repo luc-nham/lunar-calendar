@@ -15,16 +15,37 @@ Tiếp theo, chúng ta tiến hành chuyển đổi một mốc thời gian bằ
 use DateTimeZone;
 use LunarCalendar\LunarDateTime;
 
-// Chuyển đổi thời gian ngay tại thời điểm gọi lớp
+// Chuyển đổi thời gian ngay tại thời điểm khởi tạo đối tượng
 $lunar = new LunarDateTime();
 
-// Chuyển đổi thời gian ngay tại thời điểm gọi lớp có sử dụng chênh lệnh múi giờ
+// Chuyển đổi thời gian ngay tại thời điểm khởi tạo có sử dụng chênh lệnh múi giờ
 // $lunar = new LunarDateTime('now', new \DateTimeZone('+0700'));
 
 // Chuyển đổi từ một mốc thời gian Dương lịch cụ thể, ví dụ vào ngày 20 tháng 7 năm 2020, lúc 18 giờ 30 phút
 // $lunar = new LunarDateTime('07/20/2020 18:30:00');
 
 var_dump($lunar);
+```
+Bạn có thể nhận được đầu ra tương tự như sau:
+```php
+C:\Users\caova\xampp\htdocs\lunar-calendar\index.php:13:
+object(LunarCalendar\LunarDateTime)[3]
+  protected 'lunar_date' => 
+    object(LunarCalendar\Formatter\LunarDateTimeStorageFormatter)[4]
+      protected 'datetime' => 
+        array (size=9)
+          'd' => int 11
+          'm' => int 6
+          'Y' => int 2021
+          'H' => int 16
+          'i' => int 0
+          's' => int 30
+          'o' => float 7
+          'l' => int 0
+          'j' => float 2459416.6670139
+  public 'date' => string '2021-07-20 16:00:30.000000' (length=26)
+  public 'timezone_type' => int 3
+  public 'timezone' => string 'Asia/Ho_Chi_Minh' (length=16)
 ```
 
 ## Định dạng kết quả đầu ra
