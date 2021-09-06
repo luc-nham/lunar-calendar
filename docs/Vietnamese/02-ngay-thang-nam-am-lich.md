@@ -96,7 +96,6 @@ Trong trường hợp bạn muốn lấy hoặc hiển thị các dữ liệu th
 <?php
 
 // Hằng số LunarDateTime::GREGORIAN_FORMAT xác định rằng bạn muốn ủy quyền việc định dạng đầu ra cho lớp cha - Dương lịch
-// 
 echo $lunar->format('d/m/Y H:i:s O', LunarDateTime::GREGORIAN_FORMAT);
 //echo $lunar->format('d/m/Y H:i:s O', 1); // Cách viết ngắn gọn
 echo '<br />';
