@@ -1,8 +1,8 @@
 # Tổng quan về thư viện Lunar-Calendar
 
-- **[Cài đặt](#cai-dat)**
-- **[Khái niệm cốt lõi](#khai-niem-cot-loi)**
-- **[Tham khảo](#tham-khao)**
+- **[Cài đặt](#cài-đặt)**
+- **[Khái niệm cốt lõi](#khái-niệm-cốt-lõi)**
+- **[Tham khảo](#tham-khảo)**
 
 
 ## Cài đặt
@@ -17,5 +17,5 @@ Ngoài việc chuyển đổi dữ liệu, thư viện còn hỗ trợ người 
 
 ## Tham khảo
 Thư viện Lunar-Calendar được tham khảo giải thuật từ các nguồn sau đây:
-- [https://www.informatik.uni-leipzig.de/~duc/amlich/calrules.html]
-- [http://tutorialspots.com/php-some-method-of-determining-the-suns-longitude-part-2-2479.html]
+- https://www.informatik.uni-leipzig.de/~duc/amlich/calrules.html
+- http://tutorialspots.com/php-some-method-of-determining-the-suns-longitude-part-2-2479.html
