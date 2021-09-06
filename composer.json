@@ -12,7 +12,7 @@
     },
     "autoload": {
         "psr-4": {
-            "LunarCalendar\\": "src/"
+            "LunarCalendar\\": "src/LunarCalendar"
         }
     },
     "autoload-dev": {
