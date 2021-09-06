@@ -61,6 +61,8 @@ object(LunarCalendar\LunarDateTime)[3]
 - `L`: Trả về 1 nếu năm âm lịch là năm nhuận, 0 nếu không. Lưu ý, nếu tháng âm lịch là tháng nhuận thì năm đó là năm nhuận, nhưng nếu năm âm lịch nhuận thì chưa chắc tháng đó đã nhuận, do vậy `l` và `L` sẽ có giá trị khác nhau tùy thời điểm.
 
 ```php
+<?php
+
 // Chỉ lấy một giá trị ngày tháng hoặc năm cụ thể
 echo $lunar->format('d');
 echo '<br />';
@@ -88,4 +90,14 @@ echo '<br />';
 // 30/05/2020
 // 30-05-2020
 // 30.05.2020 0 1
+```
+Trong trường hợp bạn muốn lấy hoặc hiển thị các dữ liệu thời gian Dương lịch tương ứng, bạn có thể bổ sung tham số thứ hai cho phương thức `format()`. Khi đó, việc tính toán sẽ được ủy quyền cho phương thức `format()` mặc định của lớp cha `DateTime`, xem https://www.php.net/manual/en/datetime.format.php:
+```php
+<?php
+
+// Hằng số LunarDateTime::GREGORIAN_FORMAT xác định rằng bạn muốn ủy quyền việc định dạng đầu ra cho lớp cha - Dương lịch
+// 
+echo $lunar->format('d/m/Y H:i:s O', LunarDateTime::GREGORIAN_FORMAT);
+//echo $lunar->format('d/m/Y H:i:s O', 1); // Cách viết ngắn gọn
+echo '<br />';
 ```
