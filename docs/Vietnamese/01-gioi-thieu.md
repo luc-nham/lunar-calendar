@@ -6,13 +6,14 @@
 
 
 ## Cài đặt
-Tải xuống thư viện tại địa chỉ (https://github.com/vantran445/lunar-calendar.git)
+Tải xuống thư viện tại địa chỉ https://github.com/vantran445/lunar-calendar.git
 
 ## Khái niệm cốt lõi
 Thư viện này cho phép bạn chuyển đổi từ Dương lịch (lịch Gregorian) sang Âm dương lịch nhanh chóng, bao gồm nhiều yếu tố lịch pháp cần thiết:
 - Ngày tháng trong Âm lịch
 - Hệ thống Thiên can và Địa chi tương ứng với ngày tháng
 - 24 tiết khí trong năm.
+
 Ngoài việc chuyển đổi dữ liệu, thư viện còn hỗ trợ người dùng lấy dữ liệu thuận tiện và nhanh chóng thông qua khả năng định dạng trước. Để đi vào chi tiết, hãy xem các hướng dẫn khác trong bộ tài liệu này.
 
 ## Tham khảo
