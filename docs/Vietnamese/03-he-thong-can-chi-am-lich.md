@@ -34,16 +34,16 @@ var_dump($sexagenary);
 ```php
 <?php
 
+use LunarCalendar\LunarSexagenary;
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+// Khởi tạo đối tượng với mốc thời gian 'hiện tại'
+$sexagenary = new LunarSexagenary();
+
 // Lấy thiên can của ngày
 $dayHeavenlyStem = $sexagenary->getTerm('D'); 
 var_dump($dayHeavenlyStem);
-
-// Đầu ra tương tự
-// C:\Users\caova\xampp\htdocs\lunar-calendar\index.php:17:
-// object(LunarCalendar\Formatter\LunarHeavenlyStemFormatter)[5]
-//   protected 'offset' => int 4
-//   protected 'key' => string 'mau' (length=3)
-//   protected 'label' => string 'Mậu' (length=5)
 
 // Hiển thị nhãn của can ngày
 echo $dayHeavenlyStem->getLabel();
