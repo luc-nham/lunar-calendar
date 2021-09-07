@@ -44,15 +44,23 @@ echo '<br />';
 echo $term->getLabel();
 echo '<br />';
 ```
-Bạn có thể nhận được đầu ra tương tự như sau:
-```
-C:\Users\caova\xampp\htdocs\lunar-calendar\index.php:19:
-object(LunarCalendar\Formatter\SolarTermFormatter)[2]
-  protected 'offset' => int 11
-  protected 'key' => string 'bach_lo' (length=7)
-  protected 'label' => string 'Bạch Lộ' (length=11)
+## Tìm điểm bắt đầu tiết khí
+Phương thức `getTerm()` chỉ cho biết tiết khí tại thời điểm tính toán là gì. Để biết thời điểm mà tiết khí đó bắt đầu, chúng ta có phương thức `getDateTimeBegin()`. Thông người, người ta chỉ cần biết ngày khởi đầu tiết khí là ngày nào, tuy nhiên phương thức này còn tính toán cho bạn cả giờ khởi tiết khí.
+```php
+<?php
 
-11
-bach_lo
-Bạch Lộ
+use LunarCalendar\SolarTerm;
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+// Khởi tạo đối tượng tiết khí với mốc thời gian 'hiện tại'
+$solarTerm = new SolarTerm();
+
+// Điểm bắt đầu tiết khí
+$dateTimeBegin = $solarTerm->getDateTimeBegin();
+var_dump($dateTimeBegin);
+
+// Hiển thị thời gian lập tiết khí: Ngày-tháng-năm Giờ-phút-giây
+echo $dateTimeBegin->format('d-m-Y H:i:s');
 ```
+Phương thức `getDateTimeBegin()` trả về một đối tượng `DateTime` của PHP, do vậy bạn có thể sử dụng chức năng của lớp này qua tài liệu tại https://www.php.net/manual/en/class.datetime.php
