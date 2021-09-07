@@ -10,9 +10,9 @@ Tải xuống thư viện tại địa chỉ https://github.com/vantran445/lunar
 
 ## Khái niệm cốt lõi
 Thư viện này cho phép bạn chuyển đổi từ Dương lịch (lịch Gregorian) sang Âm dương lịch nhanh chóng, bao gồm nhiều yếu tố lịch pháp cần thiết:
-- Ngày tháng trong Âm lịch
-- Hệ thống Thiên can và Địa chi tương ứng với ngày tháng
-- 24 tiết khí trong năm.
+- [Biểu diễn Ngày tháng Âm lịch](/docs/Vietnamese/02-bieu-dien-ngay-thang-am-lich.md)
+- [Hệ thống Thiên can và Địa chi](/docs/Vietnamese/03-he-thong-thien-can-dia-chi.md)
+- [Hệ thống 24 Tiết khí](/docs/Vietnamese/04-he-thong-24-tiet-khi.md)
 
 Ngoài việc chuyển đổi dữ liệu, thư viện còn hỗ trợ người dùng lấy dữ liệu thuận tiện và nhanh chóng thông qua khả năng định dạng trước. Để đi vào chi tiết, hãy xem các hướng dẫn khác trong bộ tài liệu này.
 
