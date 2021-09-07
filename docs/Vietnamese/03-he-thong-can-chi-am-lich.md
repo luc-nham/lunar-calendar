@@ -52,3 +52,23 @@ Thực hiện tương tự như ví dụ trên, bạn có lấy được tất c
 - `offset`: là vị trí nhận biết của đối tượng trong nhóm đối tượng. Ví dụ trong 10 can từ Giáp đến Quý, thì Giáp được đánh số đầu tiên có offset là 0, đếm thuận đến Quý thì có offset là 9. Trong nhóm 12 địa chi thì Tý được đánh số 0, đếm thuận đến Hợi là 11. Để lấy giá trị của thuộc tính, sử dụng phương thức `getOffset()`.
 - `key`: Được sử dụng tương tự như `offset`, dùng để nhận biết đối tượng, nhưng dùng chuỗi định danh thay vì số. Thuộc tính này chủ yếu nhằm hỗ trợ cho kỹ thuật phát triển. Ví dụ, khi bạn mở rộng chương trình, bạn có thể muốn sử dụng phép so sánh: `if($term->getKey() == 'ty')` thay vì `if($term->getOffset() == 0)`. Để lấy giá trị thuộc tính, sử dụng `getKey()`, để đặt giá trị tùy chỉnh cho thuộc tính, sử dụng `setKey()`.
 - `label`: Được sử dụng cho mục đích hiển thị ở định dạng người đọc. Để lấy giá trị thuộc tính, sử dụng `getLabel()`, để đặt giá trị cho thuộc tính, sử dụng `setLabel()`.
+
+
+## Định dạng dữ liệu
+Để định dạng dữ liệu ở dạng người đọc, sử dụng phương thức `format()`, chấp nhận tham số là một chuỗi có chứa các ký tự được hỗ trợ như `getTerm()`:
+```php
+<?php
+
+use LunarCalendar\LunarSexagenary;
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+// Khởi tạo đối tượng với mốc thời gian 'hiện tại'
+$sexagenary = new LunarSexagenary();
+
+// Định dạng hiển thị cho hệ thống thiên can, địa chi
+$format = 'Ngày {D} {d}, tháng {M} {m}, năm {Y} {y}, giờ {H} {h}';
+echo $sexagenary->format($format);
+
+// Đầu ra tương tự: Ngày Mậu Ngọ, tháng Đinh Dậu, năm Tân Sửu, giờ Canh Thân
+```
