@@ -1,3 +1,8 @@
-/vendor
-/index.php
-/phpunit.result.cache
+vendor
+composer.phar
+phpunit.xml
+composer.lock
+index.php
+.DS_Store
+.hg
+.phpunit.result.cache
