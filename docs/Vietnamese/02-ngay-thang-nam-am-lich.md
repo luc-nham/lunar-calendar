@@ -15,6 +15,8 @@ Tiếp theo, chúng ta tiến hành chuyển đổi một mốc thời gian bằ
 use DateTimeZone;
 use LunarCalendar\LunarDateTime;
 
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
 // Chuyển đổi thời gian ngay tại thời điểm khởi tạo đối tượng
 $lunar = new LunarDateTime();
 
@@ -26,28 +28,6 @@ $lunar = new LunarDateTime();
 
 var_dump($lunar);
 ```
-Bạn có thể nhận được đầu ra tương tự như sau:
-```php
-C:\Users\caova\xampp\htdocs\lunar-calendar\index.php:13:
-object(LunarCalendar\LunarDateTime)[3]
-  protected 'lunar_date' => 
-    object(LunarCalendar\Formatter\LunarDateTimeStorageFormatter)[4]
-      protected 'datetime' => 
-        array (size=9)
-          'd' => int 11
-          'm' => int 6
-          'Y' => int 2021
-          'H' => int 16
-          'i' => int 0
-          's' => int 30
-          'o' => float 7
-          'l' => int 0
-          'j' => float 2459416.6670139
-  public 'date' => string '2021-07-20 16:00:30.000000' (length=26)
-  public 'timezone_type' => int 3
-  public 'timezone' => string 'Asia/Ho_Chi_Minh' (length=16)
-```
-
 ## Định dạng kết quả đầu ra
 Để lấy hoặc hiển thị dữ liệu, chúng ta sẽ sử dụng phương thức `format()`. Về cơ bản, phương thức này hỗ trợ việc định dạng đầu ra tương tự như lớp `DateTime`, bạn nên xem https://www.php.net/manual/en/datetime.format.php. Chuỗi định dạng truyền vào hỗ trợ các ký tự sau đây:
 - `d`: Lấy ngày âm lịch có bao gồm số 0 phía trước, 01 đến 30
@@ -62,6 +42,13 @@ object(LunarCalendar\LunarDateTime)[3]
 
 ```php
 <?php
+
+use LunarCalendar\LunarDateTime;
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+// Chuyển đổi thời gian ngay tại thời điểm khởi tạo đối tượng
+$lunar = new LunarDateTime();
 
 // Chỉ lấy một giá trị ngày tháng hoặc năm cụ thể
 echo $lunar->format('d');
@@ -94,6 +81,10 @@ echo '<br />';
 Trong trường hợp bạn muốn lấy hoặc hiển thị các dữ liệu thời gian Dương lịch tương ứng, bạn có thể bổ sung tham số thứ hai cho phương thức `format()`. Khi đó, việc tính toán sẽ được ủy quyền cho phương thức `format()` mặc định của lớp cha `DateTime`, xem https://www.php.net/manual/en/datetime.format.php:
 ```php
 <?php
+
+use LunarCalendar\LunarDateTime;
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 // Hằng số LunarDateTime::GREGORIAN_FORMAT xác định rằng bạn muốn ủy quyền việc định dạng đầu ra cho lớp cha - Dương lịch
 echo $lunar->format('d/m/Y H:i:s O', LunarDateTime::GREGORIAN_FORMAT);
