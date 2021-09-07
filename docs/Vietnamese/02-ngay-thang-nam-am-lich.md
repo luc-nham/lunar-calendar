@@ -86,6 +86,9 @@ use LunarCalendar\LunarDateTime;
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
+// Chuyển đổi thời gian ngay tại thời điểm khởi tạo đối tượng
+$lunar = new LunarDateTime();
+
 // Hằng số LunarDateTime::GREGORIAN_FORMAT xác định rằng bạn muốn ủy quyền việc định dạng đầu ra cho lớp cha - Dương lịch
 echo $lunar->format('d/m/Y H:i:s O', LunarDateTime::GREGORIAN_FORMAT);
 //echo $lunar->format('d/m/Y H:i:s O', 1); // Cách viết ngắn gọn
