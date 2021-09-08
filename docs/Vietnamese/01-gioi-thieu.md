@@ -7,6 +7,10 @@
 
 ## Cài đặt
 Tải xuống thư viện tại địa chỉ https://github.com/vantran445/lunar-calendar.git
+Thư viện cũng có sẵn trên [packagist.org](https://packagist.org/packages/lunar-calendar/lunar-calendar), cài đặt phiên bản mới nhất thông qua dòng lệnh hoặc nhúng vào tệp composer.json của bạn.
+```
+$ composer require monolog/monolog
+```
 
 ## Khái niệm cốt lõi
 Thư viện này cho phép bạn chuyển đổi từ Dương lịch (lịch Gregorian) sang Âm dương lịch nhanh chóng, bao gồm nhiều yếu tố lịch pháp cần thiết:
