@@ -1,8 +1,8 @@
 {
     "name": "lunar-calendar/lunar-calendar",
     "type": "library",
-    "description": "PHP Vietnames Lunar Calendar",
-    "keywords": ["calendar", "lunar calendar"],
+    "description": "PHP Lunar Calendar",
+    "keywords": ["calendar", "lunar calendar", "php lunar calendar"],
     "license": "MIT",
     "require": {
         "php": "^8.0"
