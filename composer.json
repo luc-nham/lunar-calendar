@@ -11,9 +11,7 @@
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
-        "psr-4": {
-            "LunarCalendar\\": "src/LunarCalendar"
-        }
+        "psr-4": {"LunarCalendar\\": "src/LunarCalendar"}
     },
     "autoload-dev": {
         "psr-4": {
