@@ -9,7 +9,7 @@
 Tải xuống thư viện tại địa chỉ https://github.com/vantran445/lunar-calendar.git
 Thư viện cũng có sẵn trên [packagist.org](https://packagist.org/packages/lunar-calendar/lunar-calendar), cài đặt phiên bản mới nhất thông qua dòng lệnh hoặc nhúng vào tệp composer.json của bạn.
 ```
-$ composer require monolog/monolog
+$ composer require lunar-calendar/lunar-calendar
 ```
 
 ## Khái niệm cốt lõi
