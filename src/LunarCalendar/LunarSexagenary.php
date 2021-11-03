@@ -88,7 +88,7 @@ class LunarSexagenary extends LunarDateTime
     public function format($format, int $formatType = self::SEXAGENARY_FORMAT): string
     {
         if($formatType != self::SEXAGENARY_FORMAT) {
-            return parent::format($format);
+            return parent::format($format, $formatType);
         }
 
         $formatKeys = [
