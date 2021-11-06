@@ -136,7 +136,7 @@ class LunarDateTime extends \DateTime
      *
      * @return boolean
      */
-    private function isLeapYear(): bool
+    public function isLeapYear(): bool
     {
         if(1 == $this->lunar_date->get('l')) {
             return true;

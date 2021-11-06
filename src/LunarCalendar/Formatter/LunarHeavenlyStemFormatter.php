@@ -20,6 +20,39 @@ class LunarHeavenlyStemFormatter extends TermFormatter
     protected static $allow_keys = ['key', 'label'];
 
     /**
+     * Create instance from input key
+     *
+     * @param string $key
+     * @return self
+     */
+    public static function createFromKey(string $key): self
+    {
+        foreach(self::$terms as $offset => $attrs) {
+            if($attrs['key'] == $key) {
+                $h_term = new LunarHeavenlyStemFormatter($offset);
+
+                break;
+            }
+        }
+
+        if(!isset($h_term)) {
+            throw new \Exception("Invalid Heavenly Stem key.");
+        }
+        
+        return $h_term;
+    }
+
+    public function __construct(int $offset)
+    {
+        if($offset < 0 || $offset > 9) {
+            throw new \Exception("Error. Heavenly Stems only have offset from 0 to 9. Your offset is $offset.");
+        }
+
+        parent::__construct($offset);
+        $this->setAttrsByOffset();
+    }
+
+    /**
      * Allow to custom Term's label, key and other additional attributes
      *
      * @param array $terms
