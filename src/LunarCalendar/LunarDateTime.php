@@ -3,20 +3,26 @@
 namespace LunarCalendar;
 
 use LunarCalendar\Converter\GregorianToLunarDateTime;
-use LunarCalendar\Formatter\LunarDateTimeStorageInterface;
+use LunarCalendar\Formatter\LunarDateTimeStorage;
 
 class LunarDateTime extends \DateTime
 {
     public const GREGORIAN_FORMAT   = 1;
     public const LUNAR_FORMAT       = 2;
 
-    #[LunarDateTimeStorageInterface]
-    protected $lunar_date;
+    /**
+     * Store lunar date time
+     *
+     * @var LunarCalendar\Formatter\LunarDateTimeStorage;
+     */
+    protected $lunarDateTime;
 
     public function __construct(string $datetime = "now", ?\DateTimeZone $timezone = null)
     {
         parent::__construct($datetime, $timezone);
-        $this->lunar_date = $this->getLunarDateTimeStorage();
+
+        $this->lunarDateTime = new LunarDateTimeStorage();
+        $this->setLunarDateTimeStorage();
     }
 
     /**
@@ -24,7 +30,7 @@ class LunarDateTime extends \DateTime
      *
      * @return void
      */
-    private function getLunarDateTimeStorage(): LunarDateTimeStorageInterface
+    private function setLunarDateTimeStorage(): void
     {
         $lunarDateTime = new GregorianToLunarDateTime(
             (int)parent::format('d'),
@@ -36,7 +42,8 @@ class LunarDateTime extends \DateTime
             (float)($this->getOffset() / 3600)
         );
 
-        return $lunarDateTime->output();
+        $this->lunarDateTime = $lunarDateTime->output();
+        $this->setLeapYearOffset();
     }
     
     /**
@@ -98,31 +105,31 @@ class LunarDateTime extends \DateTime
     {
         switch($key) {
             case 'd':
-                $output = $this->addLeadingZero($this->lunar_date->get('d'));
+                $output = $this->addLeadingZero($this->lunarDateTime->get('d'));
                 break;
             case 'j':
-                $output = (string)$this->lunar_date->get('d');
+                $output = (string)$this->lunarDateTime->getDay();
                 break;
             case 'J':
-                $output = (string)$this->lunar_date->get('j'); 
+                $output = (string)$this->lunarDateTime->getJulianDayCount(); 
                 break;
             case 'm':
-                $output = $this->addLeadingZero($this->lunar_date->get('m'));
+                $output = $this->addLeadingZero($this->lunarDateTime->getMonth());
                 break;
             case 'n':
-                $output = (string)$this->lunar_date->get('m');
+                $output = (string)$this->lunarDateTime->getMonth();
                 break;
             case 'l':
-                $output = (string)$this->lunar_date->get('l');
+                $output = (string)$this->lunarDateTime->getLeapMonthOffset();
                 break;
             case 'L':
-                $output = ($this->isLeapYear())? '1' : '0';
+                $output = (string)$this->lunarDateTime->GetLeapYearOffset();
                 break;
             case 'Y':
-                $output = (string)$this->lunar_date->get('Y');
+                $output = (string)$this->lunarDateTime->getYear();
                 break;
             case 'y':
-                $output = substr((string)$this->lunar_date->get('Y'), -2);
+                $output = substr((string)$this->lunarDateTime->getYear(), -2);
                 break; 
             default:
                 throw new \Exception("Invalid Lunar date time format key '$key'.");
@@ -132,54 +139,50 @@ class LunarDateTime extends \DateTime
     }
 
     /**
-     * Check if is Lunar leap year
+     * Set Leap year offset
      *
      * @return boolean
      */
-    public function isLeapYear(): bool
+    private function setLeapYearOffset(): void
     {
-        if(1 == $this->lunar_date->get('l')) {
-            return true;
+        if(1 == $this->lunarDateTime->getLeapMonthOffset()) {
+            $this->lunarDateTime->setLeapYearOffset(1);
+            return;
         }
 
-        if(!$this->lunar_date->has('L')) {
-            $d        = 15;
-            $m        = 1;
-            $Y        = (int)parent::format('Y');
-            $timezone = $this->getOffset() / 3600;
-            $leapYear = 0;
+        // Start calculate
+        $d        = 15;
+        $m        = 1;
+        $Y        = (int)parent::format('Y');
+        $timezone = $this->getOffset() / 3600;
+        $leapYear = 0;
 
-            for($i = 0; $i < 15; ++$i) {
-                if($m > 12) {
-                    $Y++;
-                    $m = 1;
-                }
-
-                $lunarDateTime = (new GregorianToLunarDateTime($d, $m, $Y, 0, 0, 0, $timezone))->output();
-
-                if(1 == $lunarDateTime->get('l') && $lunarDateTime->get('Y') == $this->lunar_date->get('Y')) {
-                    $leapYear = 1;
-                    break;
-                }
-
-                $m += 1;
+        for($i = 0; $i < 15; ++$i) {
+            if($m > 12) {
+                $Y++;
+                $m = 1;
             }
 
-            $this->lunar_date->set('L', $leapYear);
+            $lunarDateTime = (new GregorianToLunarDateTime($d, $m, $Y, 0, 0, 0, $timezone))->output();
+
+            if(1 == $lunarDateTime->get('l') && $lunarDateTime->get('Y') == $this->lunarDateTime->get('Y')) {
+                $leapYear = 1;
+                break;
+            }
+
+            $m += 1;
         }
 
-        return (1 == $this->lunar_date->get('L'))
-                    ? true
-                    : false;
+        $this->lunarDateTime->setLeapYearOffset($leapYear);
     }
 
     /**
-     * Return instance of LunarDateTimeStorageInterface
+     * Return instance of LunarDateTimeStorage
      *
-     * @return LunarDateTimeStorageInterface
+     * @return LunarDateTimeStorage
      */
-    public function getLunarStorage(): LunarDateTimeStorageInterface
+    public function getLunarStorage(): LunarDateTimeStorage
     {
-        return $this->lunar_date;
+        return $this->lunarDateTime;
     }
 }

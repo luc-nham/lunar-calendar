@@ -37,7 +37,7 @@ class LunarSexagenary extends LunarDateTime implements HasTermInterface
     public function __construct(string $datetime = "now", ?\DateTimeZone $timezone = null)
     {
         parent::__construct($datetime, $timezone);
-        $this->sexagenaries = new LunarDateTimeToSexagenaries($this->lunar_date);
+        $this->sexagenaries = new LunarDateTimeToSexagenaries($this->lunarDateTime);
     }
 
     /**
