@@ -75,52 +75,6 @@ class SexagenaryToDateTime
     }
 
     /**
-     * Quick create instance from foreseen Sexagenaries term key
-     *
-     * @param string $h_day         giap, at, binh, dinh,.. nham, quy
-     * @param string $e_day         ty, suu, dan, mao, .. tuat, hoi
-     * @param string $e_month       ty, suu, dan, mao, .. tuat, hoi
-     * @param string $e_year        ty, suu, dan, mao, .. tuat, hoi
-     * @param string|null $e_hour   ty, suu, dan, mao, .. tuat, hoi
-     * @return self
-     */
-    public static function createFromTermKeys(string $h_day, string $e_day, string $e_month, string $e_year, ?string $e_hour = null): self
-    {
-        if(!$e_hour) {
-            $e_hour = 'ty';
-        }
-
-        return new self(
-            HeavenlyStem::createFromKey($h_day),
-            EarthlyBranch::createFromKey($e_day),
-            EarthlyBranch::createFromKey($e_month),
-            EarthlyBranch::createFromKey($e_year),
-            EarthlyBranch::createFromKey($e_hour),
-        );
-    }
-
-    /**
-     * Quick create instance from foreseen Sexagenaries term offset
-     *
-     * @param integer $h_day    0 as 'giap', 1 as 'at'... 9 as 'quy'
-     * @param integer $e_day    0 as 'ty', 1 as 'suu'... 11 as 'hoi'
-     * @param integer $e_month  0 as 'ty', 1 as 'suu'... 11 as 'hoi'
-     * @param integer $e_year   0 as 'ty', 1 as 'suu'... 11 as 'hoi'
-     * @param integer $e_hour   0 as 'ty', 1 as 'suu'... 11 as 'hoi'
-     * @return void
-     */
-    public static function createFromTermOffset(int $h_day, int $e_day, int $e_month, int $e_year, int $e_hour = 0)
-    {
-        return new self(
-            new HeavenlyStem($h_day),
-            new EarthlyBranch($e_day),
-            new EarthlyBranch($e_month),
-            new EarthlyBranch($e_year),
-            new EarthlyBranch($e_hour),
-        );
-    }
-
-    /**
      * Set lunar year begin matching
      *
      * @param integer|string $year
