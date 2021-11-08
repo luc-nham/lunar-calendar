@@ -2,7 +2,7 @@
 
 namespace LunarCalendar\Formatter;
 
-class TermFormatter implements TermInterface
+class BaseTerm implements TermInterface
 {
     protected $offset;
     protected $key;

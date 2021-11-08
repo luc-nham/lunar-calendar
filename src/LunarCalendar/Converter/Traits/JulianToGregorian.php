@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace LunarCalendar\Converter;
+namespace LunarCalendar\Converter\Traits;
 
 trait JulianToGregorian
 {

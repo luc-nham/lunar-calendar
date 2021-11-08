@@ -2,7 +2,7 @@
 
 namespace LunarCalendar;
 
-use LunarCalendar\Converter\GregorianToLunarConverter;
+use LunarCalendar\Converter\GregorianToLunarDateTime;
 use LunarCalendar\Formatter\LunarDateTimeStorageInterface;
 
 class LunarDateTime extends \DateTime
@@ -26,7 +26,7 @@ class LunarDateTime extends \DateTime
      */
     private function getLunarDateTimeStorage(): LunarDateTimeStorageInterface
     {
-        $lunarDateTime = new GregorianToLunarConverter(
+        $lunarDateTime = new GregorianToLunarDateTime(
             (int)parent::format('d'),
             (int)parent::format('m'),
             (int)parent::format('Y'),
@@ -136,7 +136,7 @@ class LunarDateTime extends \DateTime
      *
      * @return boolean
      */
-    private function isLeapYear(): bool
+    public function isLeapYear(): bool
     {
         if(1 == $this->lunar_date->get('l')) {
             return true;
@@ -155,7 +155,7 @@ class LunarDateTime extends \DateTime
                     $m = 1;
                 }
 
-                $lunarDateTime = (new GregorianToLunarConverter($d, $m, $Y, 0, 0, 0, $timezone))->output();
+                $lunarDateTime = (new GregorianToLunarDateTime($d, $m, $Y, 0, 0, 0, $timezone))->output();
 
                 if(1 == $lunarDateTime->get('l') && $lunarDateTime->get('Y') == $this->lunar_date->get('Y')) {
                     $leapYear = 1;
@@ -171,5 +171,15 @@ class LunarDateTime extends \DateTime
         return (1 == $this->lunar_date->get('L'))
                     ? true
                     : false;
+    }
+
+    /**
+     * Return instance of LunarDateTimeStorageInterface
+     *
+     * @return LunarDateTimeStorageInterface
+     */
+    public function getLunarStorage(): LunarDateTimeStorageInterface
+    {
+        return $this->lunar_date;
     }
 }

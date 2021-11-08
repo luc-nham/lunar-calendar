@@ -2,7 +2,7 @@
 
 namespace LunarCalendar\Formatter;
 
-class SolarTermFormatter extends TermFormatter
+class SolarTerm extends BaseTerm
 {
     /**
      * 24 Solar Term with key is Sunlongitude dgrees at start new term
@@ -38,6 +38,12 @@ class SolarTermFormatter extends TermFormatter
 
     private static $allow_keys = ['key', 'label'];
 
+    /**
+     * Allow modifiy terms
+     *
+     * @param array $terms
+     * @return void
+     */
     public static function customTerms(array $terms): void
     {
         foreach($terms as $sunlongitude => $attrs) {
@@ -49,31 +55,6 @@ class SolarTermFormatter extends TermFormatter
                 self::$terms[$sunlongitude][$key] = $value;
             }
         }
-    }
-
-    public function create(float $sunlongitude): self
-    {
-        if($sunlongitude >= 360 || $sunlongitude < 0) {
-            throw new \Exception("Error. Degrees of Sunlongitude must be in range 0 - 359.xxxx");
-        }
-
-        $offset = 0;
-
-        foreach(self::$terms as $slBegin => $attrs) {
-            if($slBegin + 15 > $sunlongitude) {
-                
-                $this->setOffset($offset);
-                $this->setSunlongitude($slBegin);
-                $this->setKey($attrs['key']);
-                $this->setLabel($attrs['label']);
-
-                break;
-            }
-
-            ++$offset;
-        }
-
-        return $this;
     }
 
     /**
