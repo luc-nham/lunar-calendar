@@ -2,7 +2,7 @@
 
 namespace LunarCalendar\Formatter;
 
-class LunarDateTimeStorageFormatter implements LunarDateTimeStorageInterface
+class LunarDateTimeStorage implements LunarDateTimeStorageInterface
 {
     protected $datetime = [
         'H'     => 0,
@@ -84,8 +84,8 @@ class LunarDateTimeStorageFormatter implements LunarDateTimeStorageInterface
      */
     public function setYear(int|string $year): LunarDateTimeStorageInterface
     {
-        if($year < 1000 || $year > 9999) {
-            throw new \Exception("Error. Lunar year must be a number with four digits.");
+        if($year < 1) {
+            throw new \Exception("Error. Minium Lunar year number must be 1.");
         }
 
         return $this->set(self::YEAR, $year);

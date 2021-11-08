@@ -2,22 +2,34 @@
 
 namespace LunarCalendar\Formatter;
 
-class LunarHeavenlyStemFormatter extends TermFormatter
+class EarthlyBranchTerm extends BaseTerm
 {
     protected static $terms = [
-        0   => ['key' => 'giap',    'label' => 'Giáp'   ],
-        1   => ['key' => 'at',      'label' => 'Ất'     ],
-        2   => ['key' => 'binh',    'label' => 'Bính'   ],
-        3   => ['key' => 'dinh',    'label' => 'Đinh'   ],
-        4   => ['key' => 'mau',     'label' => 'Mậu'    ],
-        5   => ['key' => 'ky',      'label' => 'Kỷ'     ],
-        6   => ['key' => 'canh',    'label' => 'Canh'   ],
-        7   => ['key' => 'tan',     'label' => 'Tân'    ],
-        8   => ['key' => 'nham',    'label' => 'Nhâm'   ],
-        9   => ['key' => 'quy',     'label' => 'Quý'    ],
+        0   => ['key' => 'ty',      'label' => 'Tý'     ],
+        1   => ['key' => 'suu',     'label' => 'Sửu'    ],
+        2   => ['key' => 'dan',     'label' => 'Dần'    ],
+        3   => ['key' => 'mao',     'label' => 'Mão'    ],
+        4   => ['key' => 'thin',    'label' => 'Thìn'   ],
+        5   => ['key' => 'ti',      'label' => 'Tị'     ],
+        6   => ['key' => 'ngo',     'label' => 'Ngọ'    ],
+        7   => ['key' => 'mui',     'label' => 'Mùi'    ],
+        8   => ['key' => 'than',    'label' => 'Thân'   ],
+        9   => ['key' => 'dau',     'label' => 'Dậu'    ],
+        10  => ['key' => 'tuat',    'label' => 'Tuất'   ],
+        11  => ['key' => 'hoi',     'label' => 'Hợi'    ],
     ];
-
+    
     protected static $allow_keys = ['key', 'label'];
+
+    public function __construct(int $offset)
+    {
+        if($offset < 0 || $offset > 11) {
+            throw new \Exception("Error. Earthly Branches only have offset from 0 to 11. Your offset is $offset.");
+        }
+
+        parent::__construct($offset);
+        $this->setAttrsByOffset();
+    }
 
     /**
      * Create instance from input key
@@ -29,27 +41,17 @@ class LunarHeavenlyStemFormatter extends TermFormatter
     {
         foreach(self::$terms as $offset => $attrs) {
             if($attrs['key'] == $key) {
-                $h_term = new LunarHeavenlyStemFormatter($offset);
+                $e_term = new EarthlyBranchTerm($offset);
 
                 break;
             }
         }
 
-        if(!isset($h_term)) {
-            throw new \Exception("Invalid Heavenly Stem key.");
+        if(!isset($e_term)) {
+            throw new \Exception("Invalid Earthly Branch key.");
         }
         
-        return $h_term;
-    }
-
-    public function __construct(int $offset)
-    {
-        if($offset < 0 || $offset > 9) {
-            throw new \Exception("Error. Heavenly Stems only have offset from 0 to 9. Your offset is $offset.");
-        }
-
-        parent::__construct($offset);
-        $this->setAttrsByOffset();
+        return $e_term;
     }
 
     /**

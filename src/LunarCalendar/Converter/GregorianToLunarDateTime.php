@@ -4,10 +4,10 @@ namespace LunarCalendar\Converter;
 
 use LunarCalendar\Converter\Traits\BaseCalendarConverters;
 use LunarCalendar\Converter\Traits\GregorianToJulian;
-use LunarCalendar\Formatter\LunarDateTimeStorageFormatter;
+use LunarCalendar\Formatter\LunarDateTimeStorage;
 use LunarCalendar\Formatter\LunarDateTimeStorageInterface;
 
-class GregorianToLunarConverter
+class GregorianToLunarDateTime
 {
     use BaseCalendarConverters;
     use GregorianToJulian;
@@ -69,9 +69,9 @@ class GregorianToLunarConverter
     /**
      * Convert a input to Lunar date time
      *
-     * @return LunarDateTimeStorageFormatter
+     * @return LunarDateTimeStorage
      */
-    private function _convert(): LunarDateTimeStorageFormatter
+    private function _convert(): LunarDateTimeStorage
     {
         $inputJd    = $this->getJd();
         $dayNumber  = floor($inputJd);
@@ -117,7 +117,7 @@ class GregorianToLunarConverter
             $lunarYear -= 1;
         }
 
-        return LunarDateTimeStorageFormatter::create()
+        return LunarDateTimeStorage::create()
             ->setDay((int)$lunarDay)
             ->setMonth((int)$lunarMonth)
             ->setYear((int)$lunarYear)

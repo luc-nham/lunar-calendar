@@ -2,13 +2,14 @@
 
 namespace LunarCalendar;
 
-use LunarCalendar\Converter\GregorianToJulian;
-use LunarCalendar\Converter\JulianToSunlongitude;
-use LunarCalendar\Formatter\SolarTermFormatter;
+use LunarCalendar\Converter\Traits\GregorianToJulian;
+use LunarCalendar\Converter\Traits\JulianToGregorian;
+use LunarCalendar\Converter\Traits\JulianToSunlongitude;
+use LunarCalendar\Formatter\SolarTerm as BaseSolarTerm;
 
 class SolarTerm extends \DateTime
 {
-    use GregorianToJulian, JulianToSunlongitude;
+    use GregorianToJulian, JulianToGregorian, JulianToSunlongitude ;
 
     protected $jd;
     protected $sunlongitude;
@@ -35,14 +36,14 @@ class SolarTerm extends \DateTime
         return $this;
     }
 
-    public function getTerm(): SolarTermFormatter
+    public function getTerm(): BaseSolarTerm
     {
         if(null == $this->jd || null == $this->sunlongitude) {
             $this->init();
         }
 
         $offset = floor($this->sunlongitude / 15);
-        $term   = new SolarTermFormatter((int)$offset);
+        $term   = new BaseSolarTerm((int)$offset);
         
         return $term->setAttrsByOffset();
     }

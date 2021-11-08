@@ -79,7 +79,7 @@ trait BaseCalendarConverters
      * @param integer $a11
      * @return integer
      */
-    protected function getLeapMonthOffset(int $a11, int|float $timezone) {
+    protected function getLeapMonthOffset(int|float $a11, int|float $timezone) {
         $k           = floor(($a11 - 2415021.076998695) / 29.530588853 + 0.5);
         $last        = 0;
         $i           = 1; // We start with the month following lunar month 11
