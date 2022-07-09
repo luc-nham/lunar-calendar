@@ -61,9 +61,9 @@ class SolarTerm extends \DateTime
     /**
      * Get Date Time begin of the Term
      *
-     * @return \DateTime
+     * @return \LunarCalendar\SolarTerm
      */
-    public function getDateTimeBegin(): \DateTime
+    public function getDateTimeBegin()
     {
         if(null == $this->jd || null == $this->sunlongitude) {
             $this->init();
