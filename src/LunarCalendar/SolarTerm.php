@@ -103,7 +103,10 @@ class SolarTerm extends \DateTime
         } 
         while (($longitudeBegin < 15 && $preLongitude > 15) || ($longitudeBegin > 15 && $preLongitude < $longitudeBegin));
 
-        return $clone->setTimestamp($timestamp);
+        $clone->setTimestamp($timestamp);
+        $clone->init();
+
+        return $clone;
     }
 
     /**
@@ -115,5 +118,25 @@ class SolarTerm extends \DateTime
         $this->init();
 
         return $obj;
+    }
+
+    /**
+     * Return Sun Longitude
+     *
+     * @return float
+     */
+    public function getSl()
+    {
+        return $this->sunlongitude;
+    }
+
+    /**
+     * Return Julian days count
+     *
+     * @return float
+     */
+    public function getJd()
+    {
+        return $this->jd;
     }
 }
