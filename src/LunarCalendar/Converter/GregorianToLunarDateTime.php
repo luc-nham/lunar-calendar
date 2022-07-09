@@ -132,7 +132,7 @@ class GregorianToLunarDateTime
     /**
      * Convert Solar to Lunar and store result
      *
-     * @return void
+     * @return \LunarCalendar\Formatter\LunarDateTimeStorageInterface
      */
     public function output(): LunarDateTimeStorageInterface
     {
