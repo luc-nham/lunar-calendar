@@ -20,7 +20,12 @@ class SolarTerm extends \DateTime
         $this->init();
     }
 
-    public function init(): self
+    /**
+     * Init Solar Term data
+     *
+     * @return \LunarCalendar\SolarTerm
+     */
+    public function init()
     {
         $this->jd = $this->gregorianToJd(
             (int)$this->format('d'),
@@ -36,7 +41,12 @@ class SolarTerm extends \DateTime
         return $this;
     }
 
-    public function getTerm(): BaseSolarTerm
+    /**
+     * Get Solar Term
+     *
+     * @return \LunarCalendar\Formatter\SolarTerm
+     */
+    public function getTerm()
     {
         if(null == $this->jd || null == $this->sunlongitude) {
             $this->init();
@@ -48,6 +58,11 @@ class SolarTerm extends \DateTime
         return $term->setAttrsByOffset();
     }
 
+    /**
+     * Get Date Time begin of the Term
+     *
+     * @return \DateTime
+     */
     public function getDateTimeBegin(): \DateTime
     {
         if(null == $this->jd || null == $this->sunlongitude) {
@@ -91,7 +106,10 @@ class SolarTerm extends \DateTime
         return $clone->setTimestamp($timestamp);
     }
 
-    public function modify($modifier)
+    /**
+     * {@inheritDoc}
+     */
+    public function modify(string $modifier): SolarTerm|false
     {
         $obj = parent::modify($modifier);
         $this->init();
