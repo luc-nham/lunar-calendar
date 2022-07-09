@@ -28,8 +28,8 @@ class LunarDateTimeToGregorian
     /**
      * Quick create instance from LunarDateTimeStorageInterface
      *
-     * @param LunarDateTimeStorageInterface $lunarStorage
-     * @return void
+     * @param \LunarCalendar\Formatter\LunarDateTimeStorageInterface $lunarStorage
+     * @return \LunarCalendar\Converter\LunarDateTimeToGregorian
      */
     public static function createFromLunarStorage(LunarDateTimeStorageInterface $lunarStorage): self 
     {

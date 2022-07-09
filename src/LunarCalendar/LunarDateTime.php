@@ -13,7 +13,7 @@ class LunarDateTime extends \DateTime
     /**
      * Store lunar date time
      *
-     * @var LunarCalendar\Formatter\LunarDateTimeStorage;
+     * @var \LunarCalendar\Formatter\LunarDateTimeStorage;
      */
     protected $lunarDateTime;
 
@@ -143,7 +143,7 @@ class LunarDateTime extends \DateTime
      *
      * @return boolean
      */
-    private function setLeapYearOffset(): void
+    private function setLeapYearOffset()
     {
         if(1 == $this->lunarDateTime->getLeapMonthOffset()) {
             $this->lunarDateTime->setLeapYearOffset(1);
@@ -179,9 +179,9 @@ class LunarDateTime extends \DateTime
     /**
      * Return instance of LunarDateTimeStorage
      *
-     * @return LunarDateTimeStorage
+     * @return \LunarCalendar\Formatter\LunarDateTimeStorage
      */
-    public function getLunarStorage(): LunarDateTimeStorage
+    public function getLunarStorage()
     {
         return $this->lunarDateTime;
     }
