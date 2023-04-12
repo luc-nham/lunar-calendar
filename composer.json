@@ -1,0 +1,20 @@
+{
+    "name": "vantran/lunar-calendar",
+    "description": "Thư viện PHP Âm lịch Việt Nam",
+    "type": "library",
+    "require": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Vantran\\LunarCalendar\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "vantran445",
+            "email": "CaoVan.Info@gmail.com"
+        }
+    ]
+}
