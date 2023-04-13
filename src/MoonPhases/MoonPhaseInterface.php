@@ -11,10 +11,11 @@ use VanTran\LunarCalendar\Mjd\MjdInterface;
 interface MoonPhaseInterface extends MjdInterface
 {
     /**
-     * Trả về tổng số lượng pha Mặt trăng đã qua kể từ 1900-01-01T00:00+0000
+     * Trả về tổng số chu kỳ Mặt trăng đã qua kể từ 1900-01-01T00:00+0000, mỗi chu kỳ được xác định là một vòng hoàn
+     * thành quanh quỹ đạo của Trái đất.
      * @return int
      */
-    public function getTotalPhases(): int;
+    public function getTotalCycles(): int;
 
     /**
      * Trả về pha tương ứng chưa đến từ số lượng pha bổ sung (Tìm pha trong tương lai so với điểm đầu vào)
