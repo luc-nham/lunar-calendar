@@ -8,7 +8,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Vantran\\LunarCalendar\\": "src/"
+            "VanTran\\LunarCalendar\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "VanTran\\LunarCalendar\\Tests\\": "tests/"
         }
     },
     "authors": [
