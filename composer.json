@@ -2,8 +2,9 @@
     "name": "vantran/lunar-calendar",
     "description": "Thư viện PHP Âm lịch Việt Nam",
     "type": "library",
-    "require": {
-        "phpunit/phpunit": "^10.0"
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "vantran/lunar-calendar-cli": "^0.0.2"
     },
     "license": "MIT",
     "autoload": {

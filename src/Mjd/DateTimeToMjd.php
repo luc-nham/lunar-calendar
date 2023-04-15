@@ -1,5 +1,6 @@
 <?php namespace VanTran\LunarCalendar\Mjd;
 
+use DateTime;
 use DateTimeInterface;
 use VanTran\LunarCalendar\Mjd\UnixToMjd;
 
@@ -14,11 +15,15 @@ class DateTimeToMjd extends UnixToMjd
     /**
      * Tạo đối tượng mới
      * 
-     * @param DateTimeInterface $datime
+     * @param ?DateTimeInterface $datime
      * @return void
      */
-    public function __construct(DateTimeInterface $datime)
+    public function __construct(?DateTimeInterface $datime = null)
     {
+        if (null == $datime) {
+            $datime = new DateTime('now');
+        }
+        
         parent::__construct(
             $datime->getTimestamp(),
             $datime->getOffset()
