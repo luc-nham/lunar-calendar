@@ -9,7 +9,7 @@ class BaseMjd implements MjdInterface
      * @param int $offset Phần bù chênh lệch giờ địa phương so với UTC, tính bằng giây
      * @return void 
      */
-    public function __construct(public float $jd, public int $offset = self::VN_OFFSET) {}
+    public function __construct(protected float $jd, protected int $offset = self::VN_OFFSET) {}
 
     /**
      * {@inheritdoc}
