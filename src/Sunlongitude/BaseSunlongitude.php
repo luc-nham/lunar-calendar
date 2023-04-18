@@ -11,6 +11,16 @@ use VanTran\LunarCalendar\Mjd\BaseMjd;
  */
 class BaseSunlongitude extends BaseMjd implements SunlongitudeInterface
 {
+    protected $midnightDegrees;
+
+    /**
+     * Tạo đối tượng mới
+     * 
+     * @param float $jd Số ngày MJD
+     * @param float $degrees Góc KDMT
+     * @param int $offset Bù UTC, tính bằng giây
+     * @return void 
+     */
     public function __construct(protected float $jd, protected float $degrees, protected int $offset = self::VN_OFFSET)
     {
         
@@ -18,9 +28,6 @@ class BaseSunlongitude extends BaseMjd implements SunlongitudeInterface
 
     /**
      * {@inheritdoc}
-     * 
-     * @param bool $withDecimal 
-     * @return int|float 
      */
     public function getDegrees(bool $withDecimal = false): int|float 
     { 
@@ -45,5 +52,19 @@ class BaseSunlongitude extends BaseMjd implements SunlongitudeInterface
         $lambda = $L + $ec ;
         
         return $L =  $lambda - 360 * floor($lambda / (360));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMidnightDegrees(bool $withDecimal = false): int|float 
+    { 
+        if (null === $this->midnightDegrees) {
+            $this->midnightDegrees = $this->getDegreesFromJd($this->getMidnightJd());
+        }
+
+        return ($withDecimal)
+            ? $this->midnightDegrees
+            : floor($this->midnightDegrees);
     }
 }
