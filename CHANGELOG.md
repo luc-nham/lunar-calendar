@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.0.3
+
+### Các bổ sung hoặc sửa đổi
+- Cập nhật thư viện `vantran/lunar-calendar-cli` 0.0.2 -> 0.0.3
+- Thêm giao diện `VanTran\LunarCalendar\Lunar\LunarInputInterface` giúp xác định một đối tượng triển khai có thể truy xuất các giá trị thời gian Âm lịch.
+- Thêm lớp `VanTran\LunarCalendar\Lunar\LunarParser::class` hỗ trợ phân tích cú pháp chuỗi thời gian Âm lịch
+
 ## v0.0.2
 
 ### Các bổ sung hoặc sửa đổi
