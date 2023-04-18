@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b24f573a1dd0a918c252db80be37fc67",
+    "content-hash": "5cebfd872c6ab227670e49a67440c2fb",
     "packages": [],
     "packages-dev": [
         {
@@ -58,20 +58,21 @@
         },
         {
             "name": "lunar-calendar/lunar-calendar",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vantran445/lunar-calendar.git",
-                "reference": "2265553148b8c6a5c0ed71955735f219a59938de"
+                "reference": "fd985b2b861caedafca4d9506f253394007ae245"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vantran445/lunar-calendar/zipball/2265553148b8c6a5c0ed71955735f219a59938de",
-                "reference": "2265553148b8c6a5c0ed71955735f219a59938de",
+                "url": "https://api.github.com/repos/vantran445/lunar-calendar/zipball/fd985b2b861caedafca4d9506f253394007ae245",
+                "reference": "fd985b2b861caedafca4d9506f253394007ae245",
                 "shasum": ""
             },
-            "require": {
-                "phpunit/phpunit": "^10.0"
+            "require-dev": {
+                "phpunit/phpunit": "^10.0",
+                "vantran/lunar-calendar-cli": "^0.0.2"
             },
             "type": "library",
             "autoload": {
@@ -92,9 +93,9 @@
             "description": "Thư viện PHP Âm lịch Việt Nam",
             "support": {
                 "issues": "https://github.com/vantran445/lunar-calendar/issues",
-                "source": "https://github.com/vantran445/lunar-calendar/tree/0.0.1"
+                "source": "https://github.com/vantran445/lunar-calendar/tree/0.0.2"
             },
-            "time": "2023-04-13T12:35:42+00:00"
+            "time": "2023-04-15T13:54:28+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2421,21 +2422,21 @@
         },
         {
             "name": "vantran/lunar-calendar-cli",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vantran445/lunar-calendar-cli.git",
-                "reference": "fdf3d5fd4846aafa9ae43e7c418c142e0c1fe5af"
+                "reference": "6771dad7aee218358e37d33fd1f65a82575fc281"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vantran445/lunar-calendar-cli/zipball/fdf3d5fd4846aafa9ae43e7c418c142e0c1fe5af",
-                "reference": "fdf3d5fd4846aafa9ae43e7c418c142e0c1fe5af",
+                "url": "https://api.github.com/repos/vantran445/lunar-calendar-cli/zipball/6771dad7aee218358e37d33fd1f65a82575fc281",
+                "reference": "6771dad7aee218358e37d33fd1f65a82575fc281",
                 "shasum": ""
             },
             "require": {
                 "brick/varexporter": "^0.3.8",
-                "lunar-calendar/lunar-calendar": "^0.0.1",
+                "lunar-calendar/lunar-calendar": "^0.0.2",
                 "symfony/console": "^6.2"
             },
             "bin": [
@@ -2461,9 +2462,9 @@
             "description": "Giao diện dòng lệnh cho ứng dụng Âm lịch Việt Nam",
             "support": {
                 "issues": "https://github.com/vantran445/lunar-calendar-cli/issues",
-                "source": "https://github.com/vantran445/lunar-calendar-cli/tree/0.0.2"
+                "source": "https://github.com/vantran445/lunar-calendar-cli/tree/0.0.3"
             },
-            "time": "2023-04-15T11:52:38+00:00"
+            "time": "2023-04-15T14:30:20+00:00"
         }
     ],
     "aliases": [],
