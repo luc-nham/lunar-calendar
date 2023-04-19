@@ -37,6 +37,6 @@ class GregorianToMjd extends BaseMjd
             $jdn -= $this->offset / 86400;
         }
 
-        $this->jd = $jdn;
+        parent::__construct($jdn, $offset);
     }
 }
