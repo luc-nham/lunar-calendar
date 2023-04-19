@@ -76,10 +76,7 @@ class MjdToNewMoonPhase extends BaseMoonPhase implements NewMoonPhaseInterface
         }
 
         $this->totalCysles = $k1;
-
-        $this->phase = new BaseMjd(
-            $this->truephase($this->totalCysles, 0.0),
-            $mjd->getOffset()
-        );
+        $this->jd = $this->truephase($k1, 0.0);
+        $this->offset = $mjd->getOffset();
     } 
 }
