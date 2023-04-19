@@ -9,7 +9,7 @@ use VanTran\LunarCalendar\Mjd\MjdInterface;
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\MoonPhases
  */
-class BaseMoonPhase implements MoonPhaseInterface
+class BaseMoonPhase extends BaseMjd implements MoonPhaseInterface
 {
     /**
      * Chu kỳ số ngày Mặt trăng quay quanh Trái đất
@@ -17,15 +17,16 @@ class BaseMoonPhase implements MoonPhaseInterface
     public const SYN_MOON = 29.53058868;
 
     /**
-     * Tạo đối tượng mới. 
+     * Tạo đối tượng mới
      * 
-     * @param Mjd $nm Thời điểm của Pha 'hiện tại' (1)
+     * @param float $jd Số ngày MJD của pha Mặt trăng
      * @param int $totalCysles Tổng số pha mặt trăng kể từ 1900-01-01T00:00+0000 cho đến Pha hiện tại 'hiện tại'
+     * @param int $offset 
      * @return void 
      */
-    public function __construct(protected MjdInterface $phase, protected int $totalCysles)
+    public function __construct(float $jd, protected int $totalCysles, int $offset = self::VN_OFFSET)
     {
-        
+        parent::__construct($jd, $offset);
     }
 
     /**
@@ -138,7 +139,7 @@ class BaseMoonPhase implements MoonPhaseInterface
         $totalCysles = $this->getTotalCycles() + $phaseNumber;
         $mjd = $this->truephase($totalCysles, 0.0);
 
-        return new BaseMoonPhase(new BaseMjd($mjd, $this->getOffset()), $totalCysles);
+        return new BaseMoonPhase($mjd, $totalCysles, $this->getOffset());
     }
 
     /**
@@ -160,32 +161,4 @@ class BaseMoonPhase implements MoonPhaseInterface
     { 
         return $this->totalCysles;
     }
-
-    /**
-     * {@inheritdoc}
-     * @return float 
-     */
-    public function getJd(): float 
-    { 
-        return $this->phase->getJd();
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return float 
-     */
-    public function getMidnightJd(): float 
-    { 
-        return $this->phase->getMidnightJd();
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return int 
-     */
-    public function getOffset(): int 
-    { 
-        return $this->phase->getOffset();
-    }
-    
 }
