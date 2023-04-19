@@ -21,9 +21,9 @@ class BaseSunlongitude extends BaseMjd implements SunlongitudeInterface
      * @param int $offset Bù UTC, tính bằng giây
      * @return void 
      */
-    public function __construct(protected float $jd, protected float $degrees, protected int $offset = self::VN_OFFSET)
+    public function __construct(float $jd, protected float $degrees, int $offset = self::VN_OFFSET)
     {
-        
+        parent::__construct($jd, $offset);
     }
 
     /**
