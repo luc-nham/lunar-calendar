@@ -1,7 +1,6 @@
 <?php namespace VanTran\LunarCalendar\MoonPhases;
 
 use VanTran\LunarCalendar\Mjd\BaseMjd;
-use VanTran\LunarCalendar\Mjd\MjdInterface;
 
 /**
  * Lớp cơ sở cho tính toán các Pha của một chu kỳ Trăng
