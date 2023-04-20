@@ -4,7 +4,7 @@
     "type": "library",
     "require-dev": {
         "phpunit/phpunit": "^10.0",
-        "vantran/lunar-calendar-cli": "^0.0.3"
+        "vantran/lunar-calendar-cli": "^0.0.4"
     },
     "license": "MIT",
     "autoload": {
