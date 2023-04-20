@@ -1,12 +1,14 @@
-<?php namespace VanTran\LunarCalendar\Mjd;
+<?php namespace VanTran\LunarCalendar\MoonPhases;
+
+use VanTran\LunarCalendar\Mjd\GregorianToMjd;
 
 /**
- * Lớp tính toán mốc ngày MJD từ một nhóm thời gian dương lịch
+ * Bộ chuyển đổi mốc ngày lịch Gregorian thành pha Trăng mới
  * 
  * @author Văn Trần <caovan.info@gmail.com>
- * @package VanTran\LunarCalendar\Mjd
+ * @package VanTran\LunarCalendar\MoonPhases
  */
-class GregorianToMjd extends BaseMjd
+class GregorianToNewMoonPhase extends MjdToNewMoonPhase
 {
     /**
      * Tạo đối tượng mới
@@ -28,15 +30,9 @@ class GregorianToMjd extends BaseMjd
         protected int $hour = 0, 
         protected int $minute = 0,
         protected int $second = 0
-    )
-    {
-        $jdn = gregoriantojd($this->month, $this->day, $this->year);
-        $jdn += ($this->hour * 3600 + $this->minute * 60 + $this->second) / 86400;
-
-        if ($this->offset !== 0) {
-            $jdn -= $this->offset / 86400;
-        }
-
-        parent::__construct($jdn, $offset);
+    ) {
+        parent::__construct(
+            new GregorianToMjd($offset, $year, $month, $day, $hour, $minute, $second)
+        );
     }
 }

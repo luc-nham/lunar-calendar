@@ -1,8 +1,9 @@
-<?php namespace VanTran\LunarCalendar\Lunar;
+<?php namespace VanTran\LunarCalendar\Tests\Lunar;
 
 use DateTimeZone;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use VanTran\LunarCalendar\Lunar\LunarParser;
 
 class LunarParserTest extends TestCase
 {

@@ -20,7 +20,6 @@ class MjdToSunlongitude extends BaseSunlongitude
     {
         parent::__construct(
             $mjd->getJd(),
-            $this->getDegreesFromJd($mjd->getJd()),
             $mjd->getOffset()
         );
     }
