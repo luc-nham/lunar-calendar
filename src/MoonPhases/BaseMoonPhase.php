@@ -1,14 +1,14 @@
 <?php namespace VanTran\LunarCalendar\MoonPhases;
 
+use Exception;
 use VanTran\LunarCalendar\Mjd\BaseMjd;
-
 /**
  * Lớp cơ sở cho tính toán các Pha của một chu kỳ Trăng
  * 
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\MoonPhases
  */
-class BaseMoonPhase extends BaseMjd implements MoonPhaseInterface
+abstract class BaseMoonPhase extends BaseMjd implements MoonPhaseInterface
 {
     /**
      * Chu kỳ số ngày Mặt trăng quay quanh Trái đất
@@ -16,16 +16,63 @@ class BaseMoonPhase extends BaseMjd implements MoonPhaseInterface
     public const SYN_MOON = 29.53058868;
 
     /**
+     * Trả về một trong các giá trị của bộ chọn pha bao gồm:
+    * - 0.0 :   Trăng mới - Sóc (New moon)
+    * - 0.25:   Bán nguyệt đầu tháng - Thượng huyền (First quarter)
+    * - 0.50:   Trăng tròn - Rằm (Full moon)
+    * - 0.75:   Bán nguyệt cuối tháng - Hạ huyền (Last quarter)
+     * @return float 
+     */
+    abstract protected function getPhaseSelector(): float;
+
+    /**
      * Tạo đối tượng mới
      * 
-     * @param float $jd Số ngày MJD của pha Mặt trăng
-     * @param int $totalCysles Tổng số pha mặt trăng kể từ 1900-01-01T00:00+0000 cho đến Pha hiện tại 'hiện tại'
-     * @param int $offset 
+     * @param float $jd Số ngày MJD của điểm bắt đầu pha Mặt trăng đang tính toán
+     * @param int $totalCysles Tổng số pha mặt trăng kể từ 1900-01-01T00:00+0000 cho đến điểm đang tính
+     * @param int $offset Phần bù UTC, tính bằng giây
      * @return void 
      */
     public function __construct(float $jd, protected int $totalCysles, int $offset = self::VN_OFFSET)
     {
         parent::__construct($jd, $offset);
+    }
+
+    /**
+     * Tính toán và trả về tổng số chu kỳ mặt trăng kể từ 1900-01-01T00:00+0000
+     * 
+     * @param float $mjd Mốc ngày MJD của thời điểm cần tính
+     * @return int 
+     */
+    protected function getTotalCyclesFromMjd(float $mjd): int
+    {
+        $sdate = $mjd;
+        $adate = $sdate - 45;
+        $dates = explode('/', jdtogregorian($adate));
+        $yy = $dates[2];
+        $mm = $dates[0];
+
+        $k1 = floor(($yy + (($mm - 1) * (1 / 12)) - 1900) * 12.3685);
+        $adate = $nt1 = $this->meanphase((int) $adate, $k1);
+
+        while (true) {
+            $adate += self::SYN_MOON;
+            $k2 = $k1 + 1;
+            $nt2 = $this->meanphase((int) $adate, $k2);
+
+            if (abs($nt2 - $sdate) < 0.75) {
+                $nt2 = $this->truephase($k2, 0.0);
+            }
+
+            if ($nt1 <= $sdate && $nt2 > $sdate) {
+                break;
+            }
+
+            $nt1 = $nt2;
+            $k1 = $k2;
+        }
+
+        return $k1;
     }
 
     /**
@@ -129,23 +176,28 @@ class BaseMoonPhase extends BaseMjd implements MoonPhaseInterface
 
     /**
      * {@inheritdoc}
-     * 
-     * @param int $phaseNumber 
-     * @return MoonPhaseInterface 
      */
     public function add(int $phaseNumber): MoonPhaseInterface 
     { 
-        $totalCysles = $this->getTotalCycles() + $phaseNumber;
-        $mjd = $this->truephase($totalCysles, 0.0);
+        $selectors = [0.0, 0.25, 0.5, 0.75];
+        $objSelector = $this->getPhaseSelector();
 
-        return new BaseMoonPhase($mjd, $totalCysles, $this->getOffset());
+        if (!in_array($objSelector, $selectors)) {
+            throw new Exception("Error. Invalid selector value.");
+        }
+
+        $totalCysles = $this->getTotalCycles() + $phaseNumber;
+        $mjd = $this->truephase($totalCysles, $objSelector);
+
+        $newPhase = clone($this);
+        $newPhase->setJd($mjd);
+        $newPhase->setTotalCycles($totalCysles);
+
+        return $newPhase;
     }
 
     /**
      * {@inheritdoc}
-     * 
-     * @param int $phaseNumber 
-     * @return MoonPhaseInterface 
      */
     public function subtract(int $phaseNumber): MoonPhaseInterface 
     { 
@@ -154,10 +206,31 @@ class BaseMoonPhase extends BaseMjd implements MoonPhaseInterface
 
     /**
      * {@inheritdoc}
-     * @return int 
      */
     public function getTotalCycles(): int
     { 
         return $this->totalCysles;
+    }
+
+    /**
+     * Đặt giá trị MJD tương ứng với điểm bắt đầu của một pha
+     * 
+     * @param float $jd 
+     * @return void 
+     */
+    public function setJd(float $jd): void
+    {
+        $this->jd = $jd;
+    }
+
+    /**
+     * Đặt tổng số chu kỳ Trăng đã qua kể từ 1900-01-01T00:00+0000
+     * 
+     * @param int $quantity 
+     * @return void 
+     */
+    public function setTotalCycles(int $quantity): void
+    {
+        $this->totalCysles = $quantity;
     }
 }
