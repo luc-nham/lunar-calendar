@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e4583214e06c250ada1b4df639db0c9",
+    "content-hash": "9c101d7c2eb2b55f3e04c71f1c0ca4cd",
     "packages": [],
     "packages-dev": [
         {
@@ -2422,16 +2422,16 @@
         },
         {
             "name": "vantran/lunar-calendar-cli",
-            "version": "0.0.4",
+            "version": "0.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vantran445/lunar-calendar-cli.git",
-                "reference": "5b63efc478548388e176bada5d26db260e9c0cef"
+                "reference": "c83438c5c810a4dc30829374471166b96a23cedb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vantran445/lunar-calendar-cli/zipball/5b63efc478548388e176bada5d26db260e9c0cef",
-                "reference": "5b63efc478548388e176bada5d26db260e9c0cef",
+                "url": "https://api.github.com/repos/vantran445/lunar-calendar-cli/zipball/c83438c5c810a4dc30829374471166b96a23cedb",
+                "reference": "c83438c5c810a4dc30829374471166b96a23cedb",
                 "shasum": ""
             },
             "require": {
@@ -2462,9 +2462,9 @@
             "description": "Giao diện dòng lệnh cho ứng dụng Âm lịch Việt Nam",
             "support": {
                 "issues": "https://github.com/vantran445/lunar-calendar-cli/issues",
-                "source": "https://github.com/vantran445/lunar-calendar-cli/tree/0.0.4"
+                "source": "https://github.com/vantran445/lunar-calendar-cli/tree/0.0.5"
             },
-            "time": "2023-04-20T14:51:52+00:00"
+            "time": "2023-04-20T15:32:01+00:00"
         }
     ],
     "aliases": [],
