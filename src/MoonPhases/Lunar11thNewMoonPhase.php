@@ -1,6 +1,5 @@
 <?php namespace VanTran\LunarCalendar\MoonPhases;
 
-use VanTran\LunarCalendar\Sunlongitude\BaseSunlongitude;
 use VanTran\LunarCalendar\Sunlongitude\MjdToSunlongitude;
 
 /**
@@ -39,9 +38,9 @@ class Lunar11thNewMoonPhase extends GregorianToNewMoonPhase implements Lunar11th
             30
         );
 
-        $sl = new BaseSunlongitude($this->getMidnightJd(), 0);
+        $sl = new MjdToSunlongitude($this);
 
-        if ($sl->getDegrees() >= 270) {
+        if ($sl->getMidnightDegrees() >= 270) {
             $nm = $this->subtract(1);
             
             $this->setJd($nm->getJd());
