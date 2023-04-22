@@ -17,6 +17,11 @@ class BaseSunlongitude extends BaseMjd implements SunlongitudeInterface
     protected $degrees;
 
     /**
+     * @var float Số đo góc KDMT tại thời điểm nửa đêm giờ địa phương
+     */
+    protected $midnightDegrees;
+
+    /**
      * Tạo đối tượng mới
      * 
      * @param float $jd Số ngày MJD
@@ -26,6 +31,20 @@ class BaseSunlongitude extends BaseMjd implements SunlongitudeInterface
     public function __construct(float $jd, int $offset = self::VN_OFFSET)
     {
         parent::__construct($jd, $offset);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMidnightDegrees(bool $withDecimal = false): int|float 
+    { 
+        if (null === $this->midnightDegrees) {
+            $this->midnightDegrees = $this->getDegreesFromJd($this->getMidnightJd());
+        }
+
+        return ($withDecimal)
+            ? $this->midnightDegrees
+            : floor($this->midnightDegrees);
     }
 
     /**
