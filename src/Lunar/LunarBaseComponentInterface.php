@@ -29,4 +29,10 @@ interface LunarBaseComponentInterface
      * @return null|LunarLeapMonthInterface 
      */
     public function getLeapMonth(): null|LunarLeapMonthInterface;
+
+    /**
+     * Trả về số ngày trong 1 tháng Âm lịch
+     * @return int 
+     */
+    public function getDayOfMonth(): int;
 }
