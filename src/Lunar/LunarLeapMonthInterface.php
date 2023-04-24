@@ -12,7 +12,7 @@ interface LunarLeapMonthInterface extends MjdInterface
 
     /**
      * Trả về vị trí tháng nhuận trong năm, chẳng hạn năm 2033 nhuận tháng 11, trả về 11.
-     * @return int 
+     * @return null|int 
      */
-    public function getMonth(): int;
+    public function getMonth(): null|int;
 }
