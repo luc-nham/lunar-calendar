@@ -3,7 +3,9 @@
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\ExpectationFailedException;
 use VanTran\LunarCalendar\Lunar\LunarDateTimeCorrector;
+use VanTran\LunarCalendar\Lunar\LunarLeapMonth;
 use VanTran\LunarCalendar\Lunar\LunarParser;
+use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhase;
 
 class LunarDateTimeCorrectorTest extends BaseTest
 {
@@ -27,5 +29,23 @@ class LunarDateTimeCorrectorTest extends BaseTest
         $nm = $corrector->get11thNewMoon();
 
         $this->assertEquals($midnightJd, $nm->getMidnightJd());
+    }
+
+    #[DataProviderExternal(LunarLeapMonthProvider::class, 'listOf20thCentury')]
+    #[DataProviderExternal(LunarLeapMonthProvider::class, 'listOf21thCentury')]
+    public function testLeapMonth($lunarYear, $leapMonth, $newMoonDate, $timestamp, $midnightJd): void
+    {
+        $day = rand(1, 30);
+        $month = rand(1, 12);
+
+        $parser = new LunarParser("$day/$month/$lunarYear", self::getTimeZone());
+        $corrector = new LunarDateTimeCorrector($parser);
+        $leap = $corrector->getLeapMonth();
+
+        $this->assertEquals($leapMonth, $leap->getMonth(), sprintf(
+            "Year expected: %d",
+            $lunarYear
+        ));
+        $this->assertEquals($midnightJd, $leap->getMidnightJd());
     }
 }

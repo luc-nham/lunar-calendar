@@ -38,28 +38,25 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
      */
     protected function correct(): void
     {
-        $this->correct11thNewMoon()
-                ->correctLeapMonth();
+        $this->correct11thNewMoon();
+        $this->correctLeapMonth();
     }
 
     /**
      * Xác định điểm Sóc tháng 11 của năm Âm lịch cần tìm
      * @return LunarDateTimeCorrector 
      */
-    protected function correct11thNewMoon(): self
+    protected function correct11thNewMoon(): void
     {
         $this->newMoon11th = new Lunar11thNewMoonPhase(
             $this->lunar->getYear(), 
             $this->lunar->getOffset()
         );
-
-        return $this;
     }
 
-    protected function correctLeapMonth(): self
+    protected function correctLeapMonth(): void
     {
         $this->leapMonth = new LunarLeapMonth($this->get11thNewMoon());
-        return $this;
     }
 
     /**

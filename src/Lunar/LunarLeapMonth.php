@@ -90,6 +90,10 @@ class LunarLeapMonth extends BaseMjd implements LunarLeapMonthInterface
         $leaps = $this->collectMonthsCanBeLeap();
         $counter = count($leaps);
 
+        if ($this->newMoon11th->getYear() === 2052) {
+            var_dump($leaps);
+        }
+
         // Trường hợp năm có thể nhuận, nhưng không thể tìm được tháng nhuận, cần kiểm tra lại phương pháp tính
         if ($counter == 0) {
             throw new Exception("Error. Can not find lunar months can be leap.");

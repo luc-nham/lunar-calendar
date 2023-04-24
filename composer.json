@@ -4,12 +4,14 @@
     "type": "library",
     "require-dev": {
         "phpunit/phpunit": "^10.0",
-        "vantran/lunar-calendar-cli": "^0.0.5"
+        "symfony/console": "^6.2",
+        "brick/varexporter": "^0.3.8"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "VanTran\\LunarCalendar\\": "src/"
+            "VanTran\\LunarCalendar\\": "src/",
+            "VanTran\\LunarCalendarCli\\": "bin"
         }
     },
     "autoload-dev": {
@@ -22,5 +24,9 @@
             "name": "vantran445",
             "email": "CaoVan.Info@gmail.com"
         }
+    ],
+    "bin": [
+        "bin/lunar-calendar",
+        "bin/lunar"
     ]
 }
