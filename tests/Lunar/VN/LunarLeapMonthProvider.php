@@ -401,11 +401,11 @@ class LunarLeapMonthProvider
                 'jd' => 2469917.7083333335
             ],
             [
-                'lunar_year' => 2052,
-                'leap_month' => 11,
-                'new_moon' => '20-01-2053 00:00:00 +07:00',
-                'timestamp' => 2620918800,
-                'jd' => 2470922.7083333335
+                'lunar_year' => '2052',
+                'leap_month' => 8,
+                'new_moon' => '23-09-2052 00:00:00 +07:00',
+                'timestamp' => 2610637200,
+                'jd' => 2470803.7083333335
             ],
             [
                 'lunar_year' => 2055,
