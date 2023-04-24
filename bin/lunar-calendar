@@ -4,6 +4,7 @@
 
 use Symfony\Component\Console\Application;
 use VanTran\LunarCalendarCli\Commands\CreateLeapMonthList;
+use VanTran\LunarCalendarCli\Commands\CreateNewMoonList;
 use VanTran\LunarCalendarCli\Commands\MjdCreateRandomList;
 use VanTran\LunarCalendarCli\Commands\NmpCreate11thMonthList;
 use VanTran\LunarCalendarCli\Commands\NmpCreateListFromDate;
@@ -26,5 +27,6 @@ $application->add(new MjdCreateRandomList());
 $application->add(new SlgCreateRandomList());
 
 $application->add(new CreateLeapMonthList());
+$application->add(new CreateNewMoonList());
 
 $application->run();
