@@ -35,14 +35,14 @@ class BaseMjd implements MjdInterface
      */
     public function getMidnightJd(): float 
     { 
-        if ($this->offset === self::UTC_OFFSET) {
-            return floor($this->jd);
+        if ($this->getOffset() === self::UTC_OFFSET) {
+            return floor($this->getJd());
         }
 
-        $decimal = 1 - $this->offset / 86400;
-        $utcMidnight = floor($this->jd);
+        $decimal = 1 - $this->getOffset() / 86400;
+        $utcMidnight = floor($this->getJd());
 
-        if ($this->jd >= $utcMidnight + $decimal) {
+        if ($this->getJd() >= $utcMidnight + $decimal) {
             $midnight = $utcMidnight + $decimal;
         }
         else {
