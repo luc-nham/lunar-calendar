@@ -1,5 +1,7 @@
 <?php namespace VanTran\LunarCalendar\Lunar;
 
+use DateTimeZone;
+
 /**
  * Giao diện xác định đối tượng triển khai có thể truy cập được các mốc ngày tháng trong Âm lịch
  * 
@@ -55,4 +57,10 @@ interface LunarInputInterface
      * @return bool 
      */
     public function isLeapMonth(): bool;
+
+    /**
+     * Trả về múi giờ địa phương
+     * @return null|DateTimeZone 
+     */
+    public function getTimezone(): ?DateTimeZone;
 }
