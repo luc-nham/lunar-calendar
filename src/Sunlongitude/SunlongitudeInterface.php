@@ -18,4 +18,12 @@ interface SunlongitudeInterface extends MjdInterface
      * @return int|float 
      */
     public function getDegrees(bool $withDecimal = false): int|float;
+
+    /**
+     * Trả về góc KDMT tại điểm nửa đêm theo giờ địa phương
+     * 
+     * @param bool $withDecimal 
+     * @return int|float 
+     */
+    public function getMidnightDegrees(bool $withDecimal = false): int|float;
 }

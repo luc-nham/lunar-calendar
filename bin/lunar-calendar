@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+
+<?php
+
+use Symfony\Component\Console\Application;
+use VanTran\LunarCalendarCli\Commands\CreateDayOfMonthList;
+use VanTran\LunarCalendarCli\Commands\CreateLeapMonthList;
+use VanTran\LunarCalendarCli\Commands\CreateNewMoonList;
+use VanTran\LunarCalendarCli\Commands\MjdCreateRandomList;
+use VanTran\LunarCalendarCli\Commands\NmpCreate11thMonthList;
+use VanTran\LunarCalendarCli\Commands\NmpCreateListFromDate;
+use VanTran\LunarCalendarCli\Commands\SlgCreateRandomList;
+
+$rootPath = dirname(__DIR__, 1);
+
+if (file_exists($rootPath . '/vendor/autoload.php')) {
+    require $rootPath . '/vendor/autoload.php';
+} else {
+    require $rootPath . '/../../autoload.php';
+}
+
+$application = new Application("Lunar Calendar CLI", '0.0.1');
+
+$application->add(new NmpCreateListFromDate());
+$application->add(new NmpCreate11thMonthList());
+
+$application->add(new MjdCreateRandomList());
+$application->add(new SlgCreateRandomList());
+
+$application->add(new CreateLeapMonthList());
+$application->add(new CreateNewMoonList());
+$application->add(new CreateDayOfMonthList());
+
+$application->run();

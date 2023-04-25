@@ -1,28 +1,18 @@
 <?php namespace VanTran\LunarCalendar\Lunar;
 
-use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
+use VanTran\LunarCalendar\Mjd\MjdInterface;
 
-interface LunarLeapMonthInterface
+interface LunarLeapMonthInterface extends MjdInterface
 {
     /**
-     * Xác định có tháng nhuận hay không
-     * 
+     * Xác định 1 năm Âm lịch có thể nhuận được hay không
      * @return bool 
      */
     public function isLeap(): bool;
 
     /**
-     * Trả về vị trí tháng nhuận trong năm, chẳng hạn năm 2033 nhuận tháng 11, trả về 11. Trả về false nếu không có 
-     * tháng nhuận.
-     * 
-     * @return false|int 
+     * Trả về vị trí tháng nhuận trong năm, chẳng hạn năm 2033 nhuận tháng 11, trả về 11.
+     * @return null|int 
      */
-    public function getMonthOffset(): false|int;
-
-    /**
-     * Trả về điểm Sóc (Trăng mới) của tháng nhuận nếu có, hoặc null nếu không.
-     * 
-     * @return null|NewMoonPhaseInterface 
-     */
-    public function getNewMoon(): ?NewMoonPhaseInterface;
+    public function getMonth(): null|int;
 }

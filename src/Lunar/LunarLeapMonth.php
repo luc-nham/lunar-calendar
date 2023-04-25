@@ -1,129 +1,92 @@
 <?php namespace VanTran\LunarCalendar\Lunar;
 
 use Exception;
+use VanTran\LunarCalendar\Mjd\BaseMjd;
+use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhase;
 use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
-use VanTran\LunarCalendar\Sunlongitude\BaseSunlongitude;
+use VanTran\LunarCalendar\Sunlongitude\MjdToSunlongitude;
 
-class LunarLeapMonth implements LunarLeapMonthInterface
+/**
+ * Lớp tính toán tháng nhuận âm lịch từ điểm Sóc tháng 11 của năm Âm lịch
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Lunar
+ */
+class LunarLeapMonth extends BaseMjd implements LunarLeapMonthInterface
 {
-    protected $offset;
+    /**
+     * @var null|int Số (vị trí) tháng nhuận âm lịch, null nếu không có tháng nhuận
+     */
+    protected $month;
 
-    protected $newMoon;
-
+    /**
+     * Tạo đối tượng mới
+     * 
+     * @param Lunar11thNewMoonPhaseInterface $newMoon11th Điểm Sóc tháng 11 của 1 năm Âm lịch
+     * @return void 
+     * @throws Exception 
+     */
     public function __construct(protected Lunar11thNewMoonPhaseInterface $newMoon11th)
     {
-        
-    }
-
-    /**
-     * Xác định năm Âm lịch có thể có tháng nhuận hay không. Nếu một năm chia hết cho 19 hoặc dư 3, 6, 9, 11, 14 và 17
-     * thì năm Âm lịch đó sẽ có tháng nhuận.
-     * 
-     * @return bool 
-     */
-    public function canYearBeLeap(): bool
-    {
-        return in_array(
-            $this->newMoon11th->getYear() % 19,
-            [0, 3, 6, 9, 11, 14, 17]
-        );
-    }
-
-    /**
-     * Xác định 1 tháng có thể trở thành tháng nhuận hay không dựa vào điểm Sóc của tháng đó và điểm Sóc của tháng kế
-     * tiếp. 1 tháng có thể trở thành tháng nhuận khi nó không chứa điểm Trung khí nào.
-     * 
-     * @param NewMoonPhase $newMoon 
-     * @param NewMoonPhase $nextNewMoon 
-     * @return bool 
-     */
-    public function canMonthBeLeap(NewMoonPhaseInterface $newMoon, NewMoonPhaseInterface $nextNewMoon): bool
-    {
-        $leap = false;
-        $sunLongitude = new BaseSunlongitude($newMoon->getMidnightJd(), 0);
-        $nexSunLongitude = new BaseSunlongitude($nextNewMoon->getMidnightJd(), 0);
-
-        if ($sunLongitude->getDegrees() / 30 == $nexSunLongitude->getDegrees() / 30) {
-            $leap = true;
+        // Nếu năm đó không nhuận thì không cần tính nữa
+        if (in_array($this->newMoon11th->getYear() % 19, [0, 3, 6, 9, 11, 14, 17])) {
+            $this->init();
         }
-
-        return $leap;
     }
 
     /**
-     * Thu thập các tháng có thể trở thành tháng nhuận trong năm
-     * @return array 
-     */
-    protected function collectMonthsCanBeLeap(): array
-    {
-        $offset = 12;
-        $months = [];
-
-        $nextNewMoon = $this->newMoon11th->add(2);
-
-        for ($i = 0; $i < 13; $i ++) {
-            $newMoon = $nextNewMoon->subtract(1);
-
-            if ($this->canMonthBeLeap($newMoon, $nextNewMoon)) {
-                $months[] = [
-                    'offset' => $offset,
-                    'new_moon' => $newMoon
-                ];
-            }
-
-            $nextNewMoon = $newMoon;
-            $offset --;
-        }
-
-        return $months;
-    }
-
-    /**
-     * Khởi tạo các thuộc tính dữ liệu
-     * 
+     * Khởi tạo dữ liệu
      * @return void 
      * @throws Exception 
      */
     protected function init(): void
     {
-        if (!$this->canYearBeLeap()) {
-            return;
+        $lastNewMoon = new Lunar11thNewMoonPhase(
+            $this->newMoon11th->getYear() - 1, 
+            $this->getOffset()
+        );
+
+        $counter = 0;
+        $result = [];
+        $nm = $lastNewMoon->add(1);
+        $getDeg = function (NewMoonPhaseInterface $newMoonPhase): int
+        {
+            $sl = new MjdToSunlongitude($newMoonPhase);
+            return floor($sl->getMidnightDegrees() / 30);
+        };
+
+        do {
+            $nextNm = $nm->add(1);
+            $deg = $getDeg($nm);
+            $nextDeg = $getDeg($nextNm);
+
+            if ($deg == $nextDeg) {
+                array_push($result, [
+                    'month' => $counter - 1,
+                    'jd'    => $nm->getJd()
+                ]);
+            }
+
+            $nm = $nextNm;
+
+            $counter ++;
+        } while ($counter < 13);
+
+        $counter = count($result);
+        
+        if ($counter === 0) {
+            throw new Exception("Error. Can not find the leap month.");
         }
 
-        $leaps = $this->collectMonthsCanBeLeap();
-        $counter = count($leaps);
-
-        if ($counter == 0) {
-            throw new Exception("Error. Can not find lunar months can be leap.");
-            
-        }
-
-        if ($counter  > 1) {
-            $this->offset = 11;
-            $this->newMoon = $this->newMoon11th->add(1);
+        if ($counter > 1) {
+            $this->month = 11;
+            $this->jd = $this->newMoon11th->add(1)->getJd();
         }
         else {
-            $this->offset = $leaps[0]['offset'];
-            $this->newMoon = $leaps[0]['new_moon'];
+            $this->month = $result[0]['month'];
+            $this->jd = $result[0]['jd'];
         }
-}
-
-    /**
-     * Trả về vị trí tháng nhuận Âm lịch (số tháng)
-     * @return int|false 
-     */
-    public function getOffset(): int|false
-    {
-        return ($this->offset) ? $this->offset : false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getNewMoon(): ?NewMoonPhaseInterface
-    {
-        return $this->newMoon;
     }
 
     /**
@@ -131,14 +94,22 @@ class LunarLeapMonth implements LunarLeapMonthInterface
      */
     public function isLeap(): bool 
     { 
-        return ($this->offset) ? true : false;
+        return ($this->getMonth()) ? true : false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getMonthOffset(): false|int 
+    public function getMonth(): null|int 
     { 
-        return ($this->offset) ? $this->offset : false;
+        return $this->month;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOffset(): int
+    {
+        return $this->newMoon11th->getOffset();
     }
 }
