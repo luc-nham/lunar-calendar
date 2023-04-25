@@ -1,5 +1,6 @@
 <?php namespace VanTran\LunarCalendar\Lunar;
 
+use DateTimeZone;
 use VanTran\LunarCalendar\Mjd\MjdInterface;
 use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
@@ -29,4 +30,10 @@ interface LunarBaseComponentInterface extends MjdInterface
      * @return int 
      */
     public function getDayOfMonth(): int;
+
+    /**
+     * Trả về múi giờ địa phương
+     * @return null|DateTimeZone 
+     */
+    public function getTimeZone(): ?DateTimeZone;
 }
