@@ -41,6 +41,11 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected $dayOfMonth;
 
+    /**
+     * @var int Số ngày trong năm Âm lịch
+     */
+    protected $dayOfYear;
+
     public function __construct(protected LunarInputInterface $input)
     {
         $this->init();
@@ -263,5 +268,32 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
     public function getTimeZone(): ?DateTimeZone 
     { 
         return $this->input->getTimezone();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDayOfYear(): int
+    {
+        if (!$this->dayOfYear) {
+            $add = 2;
+            $subtract = 10;
+            $nm11th = $this->get11thNewMoon();
+
+            if ($this->getLeapMonth()->isLeap()) {
+               if ($this->getLeapMonth()->getMonth() == 11) {
+                $add ++;
+               } else {
+                $subtract ++;
+               }
+            }
+
+            $nextYear1thNm = $nm11th->add($add);
+            $crrYear1thNm = $nm11th->subtract($subtract);
+
+            $this->dayOfYear = $nextYear1thNm->getMidnightJd() - $crrYear1thNm->getMidnightJd();
+        }
+
+        return $this->dayOfYear;
     }
 }
