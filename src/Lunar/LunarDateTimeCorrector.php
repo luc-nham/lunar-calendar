@@ -1,5 +1,6 @@
 <?php namespace VanTran\LunarCalendar\Lunar;
 
+use DateTimeZone;
 use Exception;
 use VanTran\LunarCalendar\Mjd\BaseMjd;
 use VanTran\LunarCalendar\MoonPhases\BaseNewMoonPhase;
@@ -40,7 +41,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected $dayOfMonth;
 
-    public function __construct(protected LunarInputInterface $lunar)
+    public function __construct(protected LunarInputInterface $input)
     {
         $this->init();
     }
@@ -79,7 +80,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected function validateLunarYear(): void
     {
-        $year = $this->lunar->getYear();
+        $year = $this->input->getYear();
 
         if ($year < self::MIN_YEAR || $year > self::MAX_YEAR) {
             throw new Exception('Error. Support lunar year from ' . self::MIN_YEAR . ' to ' . self::MAX_YEAR);
@@ -94,19 +95,19 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected function validateLeapMonth(): void
     {
-        if ($this->lunar->isLeapMonth()) {
+        if ($this->input->isLeapMonth()) {
             $leap = $this->getLeapMonth();
 
             if ($leap == null) {
-                throw new Exception('Error. The Lunar year ' . $this->lunar->getYear() . ' dose not have leap month.');
+                throw new Exception('Error. The Lunar year ' . $this->input->getYear() . ' dose not have leap month.');
             }
 
-            if ($leap->getMonth() != $this->lunar->getMonth()) {
+            if ($leap->getMonth() != $this->input->getMonth()) {
                 throw new Exception(sprintf(
                     "Error. The leap month of lunar year %d is %d, not %d.",
-                    $this->lunar->getYear(),
+                    $this->input->getYear(),
                     $leap->getMonth(),
-                    $this->lunar->getMonth()
+                    $this->input->getMonth()
                 ));
             }
         }
@@ -120,7 +121,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected function validateLunarDay(): void
     {
-        if ($this->lunar->getDay() > $this->getDayOfMonth()) {
+        if ($this->input->getDay() > $this->getDayOfMonth()) {
             throw new Exception('Lunar day invalid. Maximum day of current lunar month is ' . $this->getDayOfMonth() . ' days.');
         }
     }
@@ -132,8 +133,8 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
     protected function init11thNewMoon(): void
     {
         $this->newMoon11th = new Lunar11thNewMoonPhase(
-            $this->lunar->getYear(), 
-            $this->lunar->getOffset()
+            $this->input->getYear(), 
+            $this->input->getOffset()
         );
     }
 
@@ -157,8 +158,8 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected function initNewMoon(): void
     {
-        $month = $this->lunar->getMonth();
-        $isLeap = $this->lunar->isLeapMonth();
+        $month = $this->input->getMonth();
+        $isLeap = $this->input->isLeapMonth();
         $leap = $this->getLeapMonth();
 
         if ($month == 11) {
@@ -209,10 +210,10 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected function initJd(): void
     {
-        if ($this->lunar->getDay() == 1) {
+        if ($this->input->getDay() == 1) {
             $jd = $this->getNewMoon()->getJd();
         } else {
-            $jd = $this->getNewMoon()->getJd() + $this->lunar->getDay() - 1;
+            $jd = $this->getNewMoon()->getJd() + $this->input->getDay() - 1;
         }
 
         $this->jd = $jd;
@@ -255,6 +256,14 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     public function getOffset(): int
     {
-        return $this->lunar->getOffset();
+        return $this->input->getOffset();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTimeZone(): ?DateTimeZone 
+    { 
+        return $this->input->getTimezone();
     }
 }
