@@ -154,6 +154,11 @@ class LunarParser implements LunarInputInterface
         }
     }
 
+    /**
+     * Phân tích chuỗi thời gian
+     * @param string $datetime 
+     * @return void 
+     */
     protected function parseDateTime(string &$datetime): void
     {
         $data = date_parse($datetime);
