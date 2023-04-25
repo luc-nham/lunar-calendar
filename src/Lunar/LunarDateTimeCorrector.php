@@ -144,11 +144,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected function initLeapMonth(): void
     {
-        $leap = new LunarLeapMonth($this->get11thNewMoon());
-        
-        if ($leap->isLeap()) {
-            $this->leapMonth = $leap;
-        }
+        $this->leapMonth = new LunarLeapMonth($this->get11thNewMoon());
     }
 
     /**
@@ -238,7 +234,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
     /**
      * {@inheritdoc}
      */
-    public function getLeapMonth(): ?LunarLeapMonthInterface 
+    public function getLeapMonth(): LunarLeapMonthInterface 
     { 
         return $this->leapMonth;
     }
