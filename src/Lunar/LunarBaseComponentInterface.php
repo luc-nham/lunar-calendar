@@ -21,9 +21,9 @@ interface LunarBaseComponentInterface extends MjdInterface
 
     /**
      * Trả về tháng nhuận Âm lịch, 1 năm có thể nhuận hoặc không
-     * @return null|LunarLeapMonthInterface 
+     * @return LunarLeapMonthInterface 
      */
-    public function getLeapMonth(): null|LunarLeapMonthInterface;
+    public function getLeapMonth(): LunarLeapMonthInterface;
 
     /**
      * Trả về số ngày trong 1 tháng Âm lịch
