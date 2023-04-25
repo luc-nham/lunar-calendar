@@ -32,6 +32,12 @@ interface LunarBaseComponentInterface extends MjdInterface
     public function getDayOfMonth(): int;
 
     /**
+     * Trả về số ngày trong năm Âm lịch
+     * @return int 
+     */
+    public function getDayOfYear(): int;
+
+    /**
      * Trả về múi giờ địa phương
      * @return null|DateTimeZone 
      */
