@@ -207,10 +207,12 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
     protected function initJd(): void
     {
         if ($this->input->getDay() == 1) {
-            $jd = $this->getNewMoon()->getJd();
+            $jd = $this->getNewMoon()->getMidnightJd();
         } else {
-            $jd = $this->getNewMoon()->getJd() + $this->input->getDay() - 1;
+            $jd = $this->getNewMoon()->getMidnightJd() + $this->input->getDay() - 1;
         }
+
+        $jd += ($this->input->getHour() * 3600 + $this->input->getMinute() * 60 + $this->input->getSecond()) / 86400;
 
         $this->jd = $jd;
     }
