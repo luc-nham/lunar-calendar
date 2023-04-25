@@ -133,7 +133,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
 
     /**
      * Khởi tạo điểm Sóc tháng 11 của năm Âm lịch cần tìm
-     * @return LunarDateTimeinitor 
+     * @return void 
      */
     protected function init11thNewMoon(): void
     {
