@@ -1,13 +1,14 @@
 <?php namespace VanTran\LunarCalendar\Lunar;
 
 use Exception;
-use VanTran\LunarCalendar\Mjd\MjdInterface;
+use VanTran\LunarCalendar\Mjd\BaseMjd;
 use VanTran\LunarCalendar\MoonPhases\BaseNewMoonPhase;
 use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhase;
 use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\MoonPhaseInterface;
+use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
 
-class LunarDateTimeCorrector implements LunarBaseComponentInterface
+class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterface
 {
     /**
      * Năm tối thiểu hỗ trợ lập lịch
@@ -18,11 +19,6 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
      * Năm tối đa hỗ trợ lập lịch
      */
     public const MAX_YEAR = 2100;
-
-    /**
-     * @var MjdInterface
-     */
-    protected $mjd;
 
     /**
      * @var MoonPhaseInterface
@@ -56,7 +52,7 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
     protected function init(): void
     {
         // Xác thực năm đầu vào nằm trong khoảng thời gian cho phép
-        $this->validateYear();
+        $this->validateLunarYear();
 
         // Khởi tạo được dữ liệu tháng 11 Âm lịch của năm
         $this->init11thNewMoon();
@@ -68,7 +64,12 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
         // Khởi tạo điểm sóc đầu vào
         $this->initNewMoon();
 
+        // Khởi tạo số ngày của tháng
+        $this->initDayOfMonth();
+        $this->validateLunarDay();
 
+        // Khởi tạo mốc ngày MJD tương ứng với điểm Âm lịch đầu vào
+        $this->initJd();
     }
     
     /**
@@ -76,7 +77,7 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
      * @return void 
      * @throws Exception 
      */
-    protected function validateYear(): void
+    protected function validateLunarYear(): void
     {
         $year = $this->lunar->getYear();
 
@@ -108,6 +109,19 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
                     $this->lunar->getMonth()
                 ));
             }
+        }
+    }
+
+    /**
+     * Xác thực ngày Âm lịch đầu vào không được vượt quá tổng số ngày của tháng
+     * 
+     * @return void 
+     * @throws Exception 
+     */
+    protected function validateLunarDay(): void
+    {
+        if ($this->lunar->getDay() > $this->getDayOfMonth()) {
+            throw new Exception('Lunar day invalid. Maximum day of current lunar month is ' . $this->getDayOfMonth() . ' days.');
         }
     }
 
@@ -180,17 +194,34 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Khởi tạo tổng số ngày của tháng
+     * @return void 
      */
-    public function getMjd(): MjdInterface 
-    { 
-        return $this->mjd;
+    protected function initDayOfMonth(): void
+    {
+        $nextNm = $this->getNewMoon()->add(1);
+        $this->dayOfMonth = $nextNm->getMidnightJd() - $this->getNewMoon()->getMidnightJd();
+    }
+
+    /**
+     * Tính toán và khởi tạo số ngày MJD tương ứng với mốc Âm lịch đầu vào
+     * @return void 
+     */
+    protected function initJd(): void
+    {
+        if ($this->lunar->getDay() == 1) {
+            $jd = $this->getNewMoon()->getJd();
+        } else {
+            $jd = $this->getNewMoon()->getJd() + $this->lunar->getDay() - 1;
+        }
+
+        $this->jd = $jd;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getNewMoon(): MoonPhaseInterface 
+    public function getNewMoon(): NewMoonPhaseInterface 
     { 
         return $this->newMoon;
     }
@@ -217,5 +248,13 @@ class LunarDateTimeCorrector implements LunarBaseComponentInterface
     public function getDayOfMonth(): int
     {
         return $this->dayOfMonth;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOffset(): int
+    {
+        return $this->lunar->getOffset();
     }
 }
