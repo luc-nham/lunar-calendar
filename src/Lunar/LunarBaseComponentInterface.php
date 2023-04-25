@@ -2,21 +2,15 @@
 
 use VanTran\LunarCalendar\Mjd\MjdInterface;
 use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhaseInterface;
-use VanTran\LunarCalendar\MoonPhases\MoonPhaseInterface;
+use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
 
-interface LunarBaseComponentInterface
+interface LunarBaseComponentInterface extends MjdInterface
 {
-    /**
-     * Trả về điểm mốc MJD tương ứng với thời điểm Âm lịch
-     * @return MjdInterface 
-     */
-    public function getMjd(): MjdInterface;
-
     /**
      * Trả về điểm Sóc tương ứng với thời điểm Âm lịch
      * @return NewMoonPhaseInterface 
      */
-    public function getNewMoon(): MoonPhaseInterface;
+    public function getNewMoon(): NewMoonPhaseInterface;
 
     /**
      * Trả về điểm Sóc tháng 11 Âm lịch của năm Âm lịch
