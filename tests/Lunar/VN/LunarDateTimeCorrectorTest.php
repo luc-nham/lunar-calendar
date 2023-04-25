@@ -19,7 +19,7 @@ class LunarDateTimeCorrectorTest extends BaseTest
     #[DataProviderExternal(Lunar11thNewMoonProvider::class, 'listOf21thCentury')]
     public function test11thNewMoons(int|string $lunarYear, string $date, float $midnightJd): void
     {
-        $day = rand(1, 30);
+        $day = rand(1, 29);
         $month = rand(1, 12);
 
         $parser = new LunarParser("$day/$month/$lunarYear", self::getTimeZone());
@@ -44,7 +44,7 @@ class LunarDateTimeCorrectorTest extends BaseTest
     #[DataProviderExternal(LunarLeapMonthProvider::class, 'listOf21thCentury')]
     public function testLeapMonth($lunarYear, $leapMonth, $newMoonDate, $timestamp, $midnightJd): void
     {
-        $day = rand(1, 30);
+        $day = rand(1, 29);
         $month = rand(1, 12);
 
         $parser = new LunarParser("$day/$month/$lunarYear", self::getTimeZone());
