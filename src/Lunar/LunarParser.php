@@ -8,67 +8,17 @@ use DateTimeZone;
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\Lunar
  */
-class LunarParser implements LunarInputInterface
+class LunarParser extends LunarDateTimeInput
 {
-    /**
-     * @var string Múi giờ địa phương mặc định cho Âm lịch Việt Nam
-     */
-    public const DEFAULT_TIMEZONE = '+07:00';
-
-    /**
-     * @var int Phần bù UTC mặc định
-     */
-    public const DEFAULT_OFFSET = 25200;
-
-    /**
-     * @var int Năm gồm 4 chữ số
-     */
-    protected $year;
-
-    /**
-     * @var int tháng từ 1 đến 12
-     */
-    protected $month;
-
-    /**
-     * @var int Ngày từ 1 đến 30 (Âm lịch không có 31 ngày)
-     */
-    protected $day;
-
-    /**
-     * @var int Giờ từ 0 đến 23
-     */
-    protected $hour;
-
-    /**
-     * @var int Phút từ 0 đến 59
-     */
-    protected $minute;
-
-    /**
-     * @var int Giây từ 0 đến 59
-     */
-    protected $second;
-
-    /**
-     * @var bool Xác định có phải tháng nhuận
-     */
-    protected $leap = false;
-
-    /**
-     * @var int Bù chênh lệnh UTC, tính bằng giây
-     */
-    protected $offset;
-
     /**
      * @var array Các cảnh báo trong quá trình phân tích
      */
-    protected $warnings = [];
+    private $warnings = [];
 
     /**
      * @var array Lỗi trong quá trình phân tích
      */
-    protected $errors = [];
+    private $errors = [];
 
     /**
      * Tạo đối tượng mới
@@ -77,8 +27,12 @@ class LunarParser implements LunarInputInterface
      * @param null|DateTimeZone $timezone 
      * @return void 
      */
-    public function __construct(protected string $datetime, protected ?DateTimeZone $timezone = null)
+    public function __construct(private string $datetime, ?DateTimeZone $timezone = null)
     {
+        if ($timezone) {
+            $this->setTimeZone($timezone);
+        }
+
         $this->parse();
     }
 
@@ -113,8 +67,8 @@ class LunarParser implements LunarInputInterface
         $leapSign = '(+)';
 
         if (str_contains($this->datetime, $leapSign)) {
-            $this->leap = true;
             $datetime = str_replace($leapSign, '', $datetime);
+            $this->setLeap(true);
         }
         else {
             $pattern = '/[0-9]{1,2}\+[\/|\-|\.]/';
@@ -127,7 +81,7 @@ class LunarParser implements LunarInputInterface
             $replacement = str_replace('+', '', $matches[0]);
     
             $datetime = str_replace($matches[0], $replacement, $datetime);
-            $this->leap = true;
+            $this->setLeap(true);
         }
     }
 
@@ -167,17 +121,25 @@ class LunarParser implements LunarInputInterface
         $this->errors = $data['errors'];
 
         foreach (['year', 'month', 'day'] as $key) {
-            if (!$data[$key]) {
+            $val = $data[$key];
+
+            if (!$val) {
                 $this->errors[] = ucfirst($key) . ' is required';
             }
             else {
-                $this->{$key} = $data[$key];
+                if ($key == 'year') {
+                    $this->setYear($val);
+                } elseif ($key == 'month') {
+                    $this->setMonth($val);
+                } else {
+                    $this->setDay($val);
+                }
             }
         }
 
-        $this->hour = (int)$data['hour'];
-        $this->minute = (int)$data['minute'];
-        $this->second = (int)$data['second'];
+        $this->setHour((int)$data['hour'])
+                ->seMinute((int)$data['minute'])
+                ->setSecond((int)$data['second']);
 
         // Phân tích các thông tin múi giờ
         if (!$this->hasError()) {
@@ -236,7 +198,8 @@ class LunarParser implements LunarInputInterface
     protected function parseZone(array &$data): void
     {
         if ($this->timezone) {
-            $this->offset = $this->getOffsetFromTimeZone($this->timezone);
+            $offset = $this->getOffsetFromTimeZone($this->getTimeZone());
+            $this->setOffset($offset);
         }
         else {
             if (
@@ -244,8 +207,8 @@ class LunarParser implements LunarInputInterface
                 isset($data['zone_type']) &&
                 $data['zone_type'] == 1            
             ) {
-                $this->offset = $data['zone'];
-                $h = $this->offset / 3600;
+                $this->setOffset($data['zone']);
+                $h = $this->getOffset() / 3600;
                 $d = $h - floor($h);
 
                 $h = ($h >= 0)
@@ -253,18 +216,18 @@ class LunarParser implements LunarInputInterface
                     : str_pad(abs($h), 3, '-0', STR_PAD_LEFT);
 
                 $tz = $h . ':' . str_pad($d, 2, '0', STR_PAD_LEFT);
-                $this->timezone = new DateTimeZone($tz);
+                $this->setTimeZone(new DateTimeZone($tz));
             }
             elseif (
                 isset($data['zone_type']) && 
                 isset($data['tz_id'])
             ) {
-                $this->timezone = new DateTimeZone($data['tz_id']);
-                $this->offset = $this->getOffsetFromTimeZone($this->timezone);
+                $this->setTimeZone(new DateTimeZone($data['tz_id']));
+                $this->setOffset($this->getOffsetFromTimeZone($this->getTimeZone()));
             }
             else {
-                $this->offset = self::DEFAULT_OFFSET;
-                $this->timezone = new DateTimeZone(self::DEFAULT_TIMEZONE);
+                $this->setOffset(self::VN_OFFSET);
+                $this->setTimeZone(new DateTimeZone(self::VN_TIMEZONE));
             }
         }
     }
@@ -290,84 +253,11 @@ class LunarParser implements LunarInputInterface
     }
 
     /**
-     * {@inheritdoc}
-     * @return int 
+     * Trả về mảng các cảnh báo phân tích cú pháp
+     * @return array 
      */
-    public function getDay(): int
+    public function getWarnings(): array
     {
-        return $this->day;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return int 
-     */
-    public function getMonth(): int
-    {
-        return $this->month;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return int 
-     */
-    public function getYear(): int
-    {
-        return $this->year;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return int 
-     */
-    public function getHour(): int
-    {
-        return $this->hour;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return int 
-     */
-    public function getMinute(): int
-    {
-        return $this->minute;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return int 
-     */
-    public function getSecond(): int
-    {
-        return $this->second;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return bool 
-     */
-    public function isLeapMonth(): bool
-    {
-        return $this->leap;
-    }
-
-    /**
-     * {@inheritdoc}
-     * @return int 
-     */
-    public function getOffset(): int
-    {
-        return ($this->offset) ? $this->offset : 0;
-    }
-
-    /**
-     * Trả về múi giờ địa phương
-     * 
-     * @return null|DateTimeZone 
-     */
-    public function getTimeZone(): ?DateTimeZone
-    {
-        return $this->timezone;
+        return $this->warnings;
     }
 }
