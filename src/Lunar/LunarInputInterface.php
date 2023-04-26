@@ -11,6 +11,26 @@ use DateTimeZone;
 interface LunarInputInterface
 {
     /**
+     * Năm tối thiểu được hỗ trợ
+     */
+    public const MIN_YEAR = 1901;
+
+    /**
+     * Năm tối đa được hỗ trợ
+     */
+    public const MAX_YEAR = 2100;
+
+    /**
+     * Độ lệch múi giờ cho Âm lịch Việt Nam
+     */
+    public const VN_OFFSET = 25200;
+
+    /**
+     * Múi giờ địa phương mặc định cho Âm lịch Việt Nam.
+     */
+    public const VN_TIMEZONE = '+0700';
+
+    /**
      * Trả về năm gồm 4 chữ số
      * @return int 
      */
