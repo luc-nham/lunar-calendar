@@ -9,6 +9,12 @@ use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\MoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
 
+/**
+ * Lớp phân tích các dữ liệu ngày tháng Âm lịch đầu vào, tính toán và khởi tạo các thành phần liên quan.
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Lunar
+ */
 class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterface
 {
     /**
@@ -46,6 +52,13 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected $dayOfYear;
 
+    /**
+     * Tạo đối tượng mới
+     * 
+     * @param LunarInputInterface $input Các mốc Âm lịch đầu vào
+     * @return void 
+     * @throws Exception 
+     */
     public function __construct(protected LunarInputInterface $input)
     {
         $this->init();
