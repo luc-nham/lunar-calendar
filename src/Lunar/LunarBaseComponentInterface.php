@@ -5,6 +5,12 @@ use VanTran\LunarCalendar\Mjd\MjdInterface;
 use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
 
+/**
+ * Giao diện xác định các thành phần cấu tạo cơ bản của một thời điểm Âm lịch để giúp việc lập lịch chính xác.
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Lunar
+ */
 interface LunarBaseComponentInterface extends MjdInterface
 {
     /**
