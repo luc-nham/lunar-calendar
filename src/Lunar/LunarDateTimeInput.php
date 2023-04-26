@@ -59,6 +59,23 @@ class LunarDateTimeInput implements LunarInputInterface
      */
     protected $timezone;
 
+    public function __construct(array $datetime = [])
+    {
+        if (!empty($datetime)) {
+            foreach ($datetime as $key => $value) {
+                if (property_exists($this, $key)) {
+                    if ($key === 'timezone') {
+                        $method = 'setTimeZone';
+                    } else {
+                        $method = 'set' . ucfirst($key);
+                    }
+
+                    call_user_func([$this, $method], $value);
+                }
+            }
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
