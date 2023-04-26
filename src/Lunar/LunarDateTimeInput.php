@@ -57,7 +57,7 @@ class LunarDateTimeInput implements LunarInputInterface
      * 
      * @var DateTimeZone Múi giờ địa phương
      */
-    private $timezone;
+    protected $timezone;
 
     /**
      * {@inheritdoc}
@@ -128,6 +128,10 @@ class LunarDateTimeInput implements LunarInputInterface
      */
     public function getTimezone(): ?DateTimeZone 
     { 
+        if (!$this->timezone) {
+            $this->timezone = new DateTimeZone(self::VN_TIMEZONE);
+        }
+
         return $this->timezone;
     }
 
