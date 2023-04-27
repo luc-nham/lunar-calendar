@@ -1,6 +1,7 @@
 <?php namespace VanTran\LunarCalendar;
 
 use DateTime;
+use DateTimeInterface;
 use DateTimeZone;
 use Exception;
 use Throwable;
@@ -117,7 +118,7 @@ class LunarDateTime implements LunarDateTimeInteface
      * Khởi tạo bộ định dạng thời gian đầu ra
      * @return void 
      */
-    public function initFormatter(): void
+    protected function initFormatter(): void
     {
         $this->formatter = new LunarDateTimeFormatter($this->component);
     }
