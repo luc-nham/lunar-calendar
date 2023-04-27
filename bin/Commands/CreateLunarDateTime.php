@@ -17,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use VanTran\LunarCalendar\Lunar\LunarDateTimeCorrector;
 use VanTran\LunarCalendar\Lunar\LunarDateTimeFormatter;
 use VanTran\LunarCalendar\Lunar\LunarParser;
+use VanTran\LunarCalendar\LunarDateTime;
 use VanTran\LunarCalendarCli\Traits\JulianToDateTime;
 
 #[AsCommand(
@@ -134,8 +135,9 @@ class CreateLunarDateTime extends Command
         // Input argumments
         $this->addArgument(
             'datetime', 
-            InputArgument::REQUIRED, 
+            InputArgument::OPTIONAL, 
             'Thời gian Âm lịch',
+            'now'
         );
 
         $this->addArgument(
@@ -172,18 +174,16 @@ class CreateLunarDateTime extends Command
     protected function getList(InputInterface $input): array
     {
         $timezone = new DateTimeZone($input->getArgument('timezone'));
-        $paser = new LunarParser($input->getArgument('datetime'), $timezone);
-        $corrector = new LunarDateTimeCorrector($paser);
-        $formatter = new LunarDateTimeFormatter($corrector);
-        $date = $this->jdToDateTime($corrector->getJd(), $timezone);
+        $lunar = new LunarDateTime($input->getArgument('datetime'), $timezone);
+        $date = $lunar->toDateTime();
 
         return [
-            'lunar' => $formatter->format($input->getOption('date-format')),
+            'lunar' => $lunar->format($input->getOption('date-format')),
             'gregory' => $date->format($input->getOption('date-format')),
             'timezone' => $timezone->getName(),
-            'offset' => $corrector->getOffset(),
+            'offset' => $lunar->getOffset(),
             'timestamp' => $date->getTimestamp(),
-            'jd' => $corrector->getJd()
+            'jd' => $lunar->getJd()
         ];
     }
 }
