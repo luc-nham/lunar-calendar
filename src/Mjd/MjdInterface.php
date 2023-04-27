@@ -32,6 +32,12 @@ interface MjdInterface
     public function getMidnightJd(): float;
 
     /**
+     * Trả về phần chênh lệch MJD giữa thời điểm MJD thực và MJD lúc nửa đêm
+     * @return float 
+     */
+    public function getDiffJd(): float;
+
+    /**
      * Trả về phần bù thời gian chênh lệch so với UTC
      * @return int 
      */

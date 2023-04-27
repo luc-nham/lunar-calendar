@@ -9,6 +9,12 @@ use VanTran\LunarCalendar\MoonPhases\Lunar11thNewMoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\MoonPhaseInterface;
 use VanTran\LunarCalendar\MoonPhases\NewMoonPhaseInterface;
 
+/**
+ * Lớp phân tích các dữ liệu ngày tháng Âm lịch đầu vào, tính toán và khởi tạo các thành phần liên quan.
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Lunar
+ */
 class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterface
 {
     /**
@@ -41,6 +47,18 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected $dayOfMonth;
 
+    /**
+     * @var int Số ngày trong năm Âm lịch
+     */
+    protected $dayOfYear;
+
+    /**
+     * Tạo đối tượng mới
+     * 
+     * @param LunarInputInterface $input Các mốc Âm lịch đầu vào
+     * @return void 
+     * @throws Exception 
+     */
     public function __construct(protected LunarInputInterface $input)
     {
         $this->init();
@@ -98,7 +116,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
         if ($this->input->isLeapMonth()) {
             $leap = $this->getLeapMonth();
 
-            if ($leap == null) {
+            if (!$leap->isLeap()) {
                 throw new Exception('Error. The Lunar year ' . $this->input->getYear() . ' dose not have leap month.');
             }
 
@@ -128,7 +146,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
 
     /**
      * Khởi tạo điểm Sóc tháng 11 của năm Âm lịch cần tìm
-     * @return LunarDateTimeinitor 
+     * @return void 
      */
     protected function init11thNewMoon(): void
     {
@@ -144,11 +162,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
      */
     protected function initLeapMonth(): void
     {
-        $leap = new LunarLeapMonth($this->get11thNewMoon());
-        
-        if ($leap->isLeap()) {
-            $this->leapMonth = $leap;
-        }
+        $this->leapMonth = new LunarLeapMonth($this->get11thNewMoon());
     }
 
     /**
@@ -211,10 +225,12 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
     protected function initJd(): void
     {
         if ($this->input->getDay() == 1) {
-            $jd = $this->getNewMoon()->getJd();
+            $jd = $this->getNewMoon()->getMidnightJd();
         } else {
-            $jd = $this->getNewMoon()->getJd() + $this->input->getDay() - 1;
+            $jd = $this->getNewMoon()->getMidnightJd() + $this->input->getDay() - 1;
         }
+
+        $jd += ($this->input->getHour() * 3600 + $this->input->getMinute() * 60 + $this->input->getSecond()) / 86400;
 
         $this->jd = $jd;
     }
@@ -238,7 +254,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
     /**
      * {@inheritdoc}
      */
-    public function getLeapMonth(): ?LunarLeapMonthInterface 
+    public function getLeapMonth(): LunarLeapMonthInterface 
     { 
         return $this->leapMonth;
     }
@@ -265,5 +281,32 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
     public function getTimeZone(): ?DateTimeZone 
     { 
         return $this->input->getTimezone();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDayOfYear(): int
+    {
+        if (!$this->dayOfYear) {
+            $add = 2;
+            $subtract = 10;
+            $nm11th = $this->get11thNewMoon();
+
+            if ($this->getLeapMonth()->isLeap()) {
+               if ($this->getLeapMonth()->getMonth() == 11) {
+                $add ++;
+               } else {
+                $subtract ++;
+               }
+            }
+
+            $nextYear1thNm = $nm11th->add($add);
+            $crrYear1thNm = $nm11th->subtract($subtract);
+
+            $this->dayOfYear = $nextYear1thNm->getMidnightJd() - $crrYear1thNm->getMidnightJd();
+        }
+
+        return $this->dayOfYear;
     }
 }

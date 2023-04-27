@@ -13,7 +13,6 @@ class BaseMjd implements MjdInterface
 
     /**
      * {@inheritdoc}
-     * @return int 
      */
     public function getOffset(): int
     { 
@@ -31,7 +30,6 @@ class BaseMjd implements MjdInterface
 
     /**
      * {@inheritdoc}
-     * @return float 
      */
     public function getMidnightJd(): float 
     { 
@@ -50,5 +48,13 @@ class BaseMjd implements MjdInterface
         }
 
         return $midnight;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDiffJd(): float
+    {
+        return $this->getJd() - $this->getMidnightJd();
     }
 }
