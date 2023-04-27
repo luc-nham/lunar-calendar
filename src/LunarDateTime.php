@@ -50,6 +50,21 @@ class LunarDateTime implements LunarDateTimeInteface
     }
 
     /**
+     * Khởi tạo nhanh ngày tháng Âm lịch
+     * 
+     * @param null|DateTimeZone $timezone Múi giờ địa phương. Nếu không cung cấp mặc định sẽ sử dụng '+07:00'
+     * @return LunarDateTime 
+     */
+    public static function now(?DateTimeZone $timezone = null): LunarDateTime
+    {
+        if (!$timezone) {
+            $timezone = new DateTimeZone(self::VN_TIMEZONE);
+        }
+
+        return new self('now', $timezone);
+    }
+
+    /**
      * Khởi tạo dữ liệu
      * 
      * @return void 
