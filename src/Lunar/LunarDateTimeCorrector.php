@@ -116,7 +116,7 @@ class LunarDateTimeCorrector extends BaseMjd implements LunarBaseComponentInterf
         if ($this->input->isLeapMonth()) {
             $leap = $this->getLeapMonth();
 
-            if ($leap == null) {
+            if (!$leap->isLeap()) {
                 throw new Exception('Error. The Lunar year ' . $this->input->getYear() . ' dose not have leap month.');
             }
 
