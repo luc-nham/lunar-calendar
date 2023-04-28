@@ -225,7 +225,7 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getOffset(): int 
     { 
-        return $this->component->getOffset();
+        return $this->getComponent()->getOffset();
     }
 
     /**
