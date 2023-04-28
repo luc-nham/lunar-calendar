@@ -59,7 +59,10 @@ class LunarDateTime implements LunarDateTimeInteface
      * @param int $type Xác định kiểu dữ liệu thời gian đầu vào là Âm lịch (1) hay Dương lịch (2)
      * @return void 
      */
-    public function __construct(private $datetime = 'now', private ?DateTimeZone $timezone = null, private int $type = self::LUNAR_INPUT)
+    public function __construct(
+        private $datetime = 'now', 
+        private ?DateTimeZone $timezone = null, 
+        private int $type = self::LUNAR_INPUT)
     {
 
     }
@@ -106,6 +109,10 @@ class LunarDateTime implements LunarDateTimeInteface
         return $ins;
     }
 
+    /**
+     * Trả về múi giờ địa phương mặc định +0700
+     * @return DateTimeZone 
+     */
     public static function getDefaultTimeZone(): DateTimeZone
     {
         if (!self::$defaultTimeZone) {
@@ -218,7 +225,7 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getOffset(): int 
     { 
-        return $this->component->getOffset();
+        return $this->getComponent()->getOffset();
     }
 
     /**
@@ -249,7 +256,7 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getJd(): float 
     { 
-        return $this->component->getJd();
+        return $this->getComponent()->getJd();
     }
 
     /**
@@ -257,7 +264,7 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getMidnightJd(): float 
     { 
-        return $this->component->getMidnightJd();
+        return $this->getComponent()->getMidnightJd();
     }
 
     /**
@@ -265,6 +272,6 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getDiffJd(): float 
     { 
-        return $this->component->getDiffJd();
+        return $this->getComponent()->getDiffJd();
     }
 }
