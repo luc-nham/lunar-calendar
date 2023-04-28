@@ -21,6 +21,16 @@ use VanTran\LunarCalendar\Lunar\LunarParser;
 class LunarDateTime implements LunarDateTimeInteface
 {
     /**
+     * Xác định kiểu chuỗi thời gian đầu vào là Âm lịch
+     */
+    public const LUNAR_INPUT = 1;
+
+    /**
+     * Xác định kiểu chuỗi thời gian đầu vào là Âm lịch
+     */
+    public const GREGORIAN_INPUT = 2;
+
+    /**
      * @var DateTimeZone Múi giờ địa phương mặc định +0700
      */
     private static $defaultTimeZone;
@@ -46,11 +56,10 @@ class LunarDateTime implements LunarDateTimeInteface
      * 
      * @param string $datetime Chuỗi thòi gian âm lịch, để trống hoặc đặt 'now' để lấy thời điểm hiện tại
      * @param null|DateTimeZone $timezone Múi giờ địa phương. Nếu không cung cấp mặc định sẽ sử dụng '+07:00'
+     * @param int $type Xác định kiểu dữ liệu thời gian đầu vào là Âm lịch (1) hay Dương lịch (2)
      * @return void 
-     * @throws Exception 
-     * @throws Throwable 
      */
-    public function __construct(private $datetime = 'now', private ?DateTimeZone $timezone = null)
+    public function __construct(private $datetime = 'now', private ?DateTimeZone $timezone = null, private int $type = self::LUNAR_INPUT)
     {
 
     }
@@ -97,7 +106,7 @@ class LunarDateTime implements LunarDateTimeInteface
         return $ins;
     }
 
-    protected static function getDefaultTimeZone(): DateTimeZone
+    public static function getDefaultTimeZone(): DateTimeZone
     {
         if (!self::$defaultTimeZone) {
             self::$defaultTimeZone = new DateTimeZone(self::VN_TIMEZONE);
@@ -116,8 +125,8 @@ class LunarDateTime implements LunarDateTimeInteface
     {
         $datetime = $this->datetime;
 
-        if ($datetime === 'now' || $datetime === '') {
-            $date = new DateTime('now', $this->getTimezone());
+        if ($datetime === 'now' || $datetime === '' || $this->type === self::GREGORIAN_INPUT) {
+            $date = new DateTime($datetime, $this->getTimezone());
             $input = (new LunarDateTimeInput())
                         ->setYear($date->format('Y'))
                         ->setMonth($date->format('n'))

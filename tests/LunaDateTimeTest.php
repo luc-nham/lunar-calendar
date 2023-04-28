@@ -40,5 +40,8 @@ class LunaDateTimeTest extends TestCase
 
         $this->assertEquals('09/03/2023', $lunar->format('d/m/Y'));
         $this->assertEquals($date->getTimezone()->getName(), $lunar->getTimezone()->getName());
+
+        $lunar = new LunarDateTime('2023-04-28', LunarDateTime::getDefaultTimeZone(), LunarDateTime::GREGORIAN_INPUT);
+        $this->assertEquals('09/03/2023', $lunar->format('d/m/Y'));
     }
 }
