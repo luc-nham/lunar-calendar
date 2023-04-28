@@ -256,7 +256,7 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getJd(): float 
     { 
-        return $this->component->getJd();
+        return $this->getComponent()->getJd();
     }
 
     /**
@@ -264,7 +264,7 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getMidnightJd(): float 
     { 
-        return $this->component->getMidnightJd();
+        return $this->getComponent()->getMidnightJd();
     }
 
     /**
@@ -272,6 +272,6 @@ class LunarDateTime implements LunarDateTimeInteface
      */
     public function getDiffJd(): float 
     { 
-        return $this->component->getDiffJd();
+        return $this->getComponent()->getDiffJd();
     }
 }
