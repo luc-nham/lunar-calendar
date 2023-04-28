@@ -59,7 +59,10 @@ class LunarDateTime implements LunarDateTimeInteface
      * @param int $type Xác định kiểu dữ liệu thời gian đầu vào là Âm lịch (1) hay Dương lịch (2)
      * @return void 
      */
-    public function __construct(private $datetime = 'now', private ?DateTimeZone $timezone = null, private int $type = self::LUNAR_INPUT)
+    public function __construct(
+        private $datetime = 'now', 
+        private ?DateTimeZone $timezone = null, 
+        private int $type = self::LUNAR_INPUT)
     {
 
     }
@@ -106,6 +109,10 @@ class LunarDateTime implements LunarDateTimeInteface
         return $ins;
     }
 
+    /**
+     * Trả về múi giờ địa phương mặc định +0700
+     * @return DateTimeZone 
+     */
     public static function getDefaultTimeZone(): DateTimeZone
     {
         if (!self::$defaultTimeZone) {
