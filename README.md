@@ -80,3 +80,37 @@ $solar = $lunar->toDateTime();
 
 echo $solar->format('Y-m-d H:i:s P'); // 2023-10-20 00:00:00 +0700
 ```
+
+### Tạo thời gian Âm lịch từ Dương lịch
+Lớp `VanTran\LunarCalendar\LunarDateTime` có hai phương pháp để tạo ra mốc ngày Âm lịch từ một mốc ngày Dương lịch:
+```php
+<?php
+
+use VanTran\LunarCalendar\LunarDateTime;
+
+/**
+ * Để tạo đối tượng Âm lịch từ chuỗi thời gian dương lịch, cần cung cấp 3 tham số cho hàm tạo:
+ * - Tham số thứ nhất là chuỗi thời gian Dương lịch, cần tuân thủ định dạng tiêu chuẩn của PHP
+ * - Tham số thứ 2 là múi giờ địa phương, truyền vào null sẽ tự động áp dụng múi giờ mặc định +07:00
+ * - Tham số thứ 3 là phân loại kiểu chuỗi thời gian đầu vào: mặc định (1) sẽ xác định tham số thứ nhất là chuỗi thời
+ *   gian Âm lịch. Truyền vào giá trị (2) để xác định tham số thứ nhất là chuỗi Dương lịch.
+ */
+$datetime = '2023-02-05';
+$lunar = new LunarDateTime(
+    $datetime, 
+    LunarDateTime::getDefaultTimeZone(), 
+    LunarDateTime::GREGORIAN_INPUT
+); 
+
+echo $lunar->format('d/m/Y'); // Đầu ra: 15/01/2023
+
+/**
+ * Phương pháp thứ 2 là chuyển đổi từ một đối tượng triển khai DateTimeInterface, hãy lưu ý đến múi giờ địa phương của
+ * đối tượng nên được xác định trước.
+ */
+$timezone = new DateTimeZone('UTC');
+$date = new DateTime('2023-02-05', $timezone);
+$lunar = LunarDateTime::createFromDateTime($date);
+
+echo $lunar->format('d/m/Y'); // Đầu ra: 15/01/2023
+```
