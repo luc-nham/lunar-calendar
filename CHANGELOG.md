@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.2
+
+### Các bổ sung hoặc sửa đổi
+- Sửa một số lỗi khi truy xuất giá trị MJD và độ lệch múi giờ của lớp `VanTran\LunarCalendar\LunarDateTime` 
+
 ## v1.0.1
 
 ### Các bổ sung hoặc sửa đổi
