@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.3
+
+### Các bổ sung hoặc sửa đổi
+- Sửa lỗi định dạng số giờ Âm lịch
+
 ## v1.0.2
 
 ### Các bổ sung hoặc sửa đổi
