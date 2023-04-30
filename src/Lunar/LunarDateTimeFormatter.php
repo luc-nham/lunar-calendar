@@ -175,7 +175,7 @@ class LunarDateTimeFormatter
                 break;
 
             case 'G':
-                $val = round($comp->getDiffJd() * 24 % 24, 0, PHP_ROUND_HALF_DOWN);
+                $val = round($comp->getDiffJd() * 24, 0) % 24;
                 break;
 
             case 'g':
