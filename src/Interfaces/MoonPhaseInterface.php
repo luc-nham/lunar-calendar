@@ -19,7 +19,7 @@ interface MoonPhaseInterface extends JulianDayNumberInterface
      * thành quanh quỹ đạo của Trái đất.
      * @return int
      */
-    public function getTotalPhase(): int;
+    public function getTotalCycles(): int;
 
     /**
      * Trả về pha tương ứng chưa đến từ số lượng pha bổ sung (Tìm pha trong tương lai so với điểm đầu vào)
