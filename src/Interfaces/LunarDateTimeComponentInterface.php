@@ -19,7 +19,7 @@ interface LunarDateTimeComponentInterface extends JulianDayNumberInterface
      * Trả về điểm Sóc tháng 11 Âm lịch của năm Âm lịch
      * @return WinterSolsticeNewMoonInterface 
      */
-    public function get11thNewMoon(): WinterSolsticeNewMoonInterface;
+    public function getWsNewMoon(): WinterSolsticeNewMoonInterface;
 
     /**
      * Trả về tháng nhuận Âm lịch, 1 năm có thể nhuận hoặc không
