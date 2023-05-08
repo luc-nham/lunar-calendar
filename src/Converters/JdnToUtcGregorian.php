@@ -11,7 +11,7 @@ use VanTran\LunarCalendar\Storages\DateTimeStorageMutable;
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\Converters
  */
-class BaseJdnToGregorian extends DateTimeStorageMutable
+class JdnToUtcGregorian extends DateTimeStorageMutable
 {
     /**
      * Tạo mới đối tượng

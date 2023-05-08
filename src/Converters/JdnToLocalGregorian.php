@@ -10,7 +10,7 @@ use VanTran\LunarCalendar\Interfaces\JulianDayNumberInterface;
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\Converters
  */
-class JdnToLocalGregorian extends BaseJdnToGregorian
+class JdnToLocalGregorian extends JdnToUtcGregorian
 {
     /**
      * Tạo đối tượng mới

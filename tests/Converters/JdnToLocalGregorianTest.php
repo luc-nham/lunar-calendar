@@ -1,7 +1,7 @@
 <?php namespace VanTran\LunarCalendar\Tests\Converters;
 
 use PHPUnit\Framework\TestCase;
-use VanTran\LunarCalendar\Converters\BaseJdnToGregorian;
+use VanTran\LunarCalendar\Converters\JdnToUtcGregorian;
 use VanTran\LunarCalendar\Converters\GregorianToJDNConverter;
 use VanTran\LunarCalendar\Converters\JdnToLocalGregorian;
 use VanTran\LunarCalendar\Interfaces\JulianDayNumberInterface;
@@ -29,7 +29,7 @@ class JdnToLocalGregorianTest extends TestCase
         $localCvt = new JdnToLocalGregorian($jd);
 
         // UTC tương ứng
-        $utcCvt = new BaseJdnToGregorian($jd->getJd());
+        $utcCvt = new JdnToUtcGregorian($jd->getJd());
 
         $this->assertEquals($year, $localCvt->getYear());
         $this->assertEquals($month, $localCvt->getMonth());
