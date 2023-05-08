@@ -11,7 +11,10 @@ use Exception;
 class GregorianToJDNConverter extends BaseJDN
 {
     /**
-     * Tạo đối tượng mới
+     * Tạo đối tượng mới. Khi $offset được truyền vào khác 0, lớp sẽ hiểu rằng ngày tháng tương ứng với giờ địa phương,
+     * đầu ra sẽ là số ngày JDN tính theo UTC tương ứng với thời điểm chuyển đổi. Chẳng hạn, vào lúc 7 giờ sáng ngày
+     * 01 tháng 01 năm 1970 theo giờ Việt Nam (GMT+7), chênh lệch với UTC ($offset) là 25200 giây, và thời gian UTC lúc
+     * đó là 00:00 ngày 01 tháng 01 năm 1970, thì số ngày Julian tính toán được sẽ là 2440587.5 
      * 
      * @param int $year Năm từ -4714
      * @param int $month Tháng từ 1 - 12
