@@ -54,7 +54,7 @@ class GregorianToJDNConverter extends BaseJDN
                 throw new Exception("Invalid month number.");
             }
             else {
-                if ($this->day <= 0 || $this->day > 21) {
+                if ($this->day <= 0 || $this->day > 31) {
                     throw new Exception("Invalid day number.");
                 }
             }
