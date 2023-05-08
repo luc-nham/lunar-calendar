@@ -13,12 +13,12 @@ interface DateTimeStorageInterface
     /**
      * Năm tối thiểu được hỗ trợ
      */
-    public const MIN_YEAR = 1901;
+    public const MIN_YEAR = -4713;
 
     /**
      * Năm tối đa được hỗ trợ
      */
-    public const MAX_YEAR = 2100;
+    public const MAX_YEAR = 2500;
 
     /**
      * Trả về năm gồm 4 chữ số
