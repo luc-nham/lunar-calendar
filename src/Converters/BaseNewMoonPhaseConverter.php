@@ -19,12 +19,7 @@ class BaseNewMoonPhaseConverter extends AbstractMoonPhaseConverter
     public function __construct(float $jd, int $offset = 0, protected int $mode = self::NORMAL_MODE)
     {
         if ($this->mode === self::NORMAL_MODE) {
-            $diff = $jd - floor($jd);
-            $jd = floor($jd) + 0.4999884;
-
-            if ($diff >= 0.5) {
-                $jd += 1;
-            }
+            $jd += 1;
         }
         else {
             $jd -= 0.000001; // Hiệu chỉnh sai số
