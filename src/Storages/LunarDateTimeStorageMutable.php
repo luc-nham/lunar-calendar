@@ -32,17 +32,4 @@ class LunarDateTimeStorageMutable extends DateTimeStorageMutable implements Luna
     { 
         return $this->leap;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function setDay(int $day): void
-    {
-        if ($day < 1 || $day > 30) {
-            throw new Exception("Error. The day must be from 1 to 30.");
-        }
-
-        $this->day = $day;
-    }
-    
 }
