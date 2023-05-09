@@ -192,16 +192,18 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
             $month = $this->storage->getMonth() + 1;
 
             $this->storage->setDay($day);
-            $this->storage->setMonth($month);
+            $this->storage->setMonth(
+                ($month > 12) ? 1 : $month
+            );
             
             # Trường hợp tháng tháng trở thành tháng 1 năm sau, cần khởi tạo lại toàn bộ dữ liệu
             if ($month == 13) {
-                $year = $this->storage->getYear() + 1;
-
-                $this->storage->setMonth(1);
-                $this->storage->setYear($year);
+                $this->storage->setYear(
+                    $this->storage->getYear() + 1
+                );
                 
-                return $this->init();
+                $this->init();
+                return;
             }
 
             # Trường hợp tháng trở thành tháng nhuận, khởi tạo lại 1 số bước
@@ -230,9 +232,11 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
             $jd = $this->getNewMoon()->getMidnightJd() + $this->storage->getDay() - 1;
         }
 
-        $jd += ($this->storage->getHour() * 3600 + $this->storage->getMinute() * 60 + $this->storage->getSecond()) / 86400;
+        $jd += ($this->storage->getHour() * 3600 
+            + $this->storage->getMinute() * 60 + $this->storage->getSecond())
+            / 86400;
 
-        $this->setJd($jd);
+        $this->setJd($jd + 0.0000001); // Hiệu chỉnh sai số
     }
 
     /**
@@ -300,5 +304,13 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
         }
 
         return $this->dayOfYear;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOffset(): int
+    {
+        return $this->storage->getOffset();
     }
 }
