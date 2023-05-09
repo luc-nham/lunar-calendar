@@ -146,8 +146,7 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
     }
 
     /**
-     * Bởi đầu vào là dương lịch, do vậy không vậy ghi đè lại hàm này để loại bỏ đi các phần mã không cần thiết mà có
-     * thể gây ra lỗi.
+     * Bởi đầu vào là dương lịch, do vậy cần ghi đè lại hàm này để loại bỏ đi các phần mã không cần thiết có thể gây lỗi
      * 
      * @return void 
      */
