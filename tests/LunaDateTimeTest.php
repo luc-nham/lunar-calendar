@@ -1,6 +1,5 @@
 <?php namespace VanTran\LunarCalendar\Tests;
 
-use DateTime;
 use DateTimeZone;
 use Exception;
 use PHPUnit\Framework\ExpectationFailedException;
