@@ -26,7 +26,7 @@ class LunaDateTimeTest extends TestCase
      */
     public function testToDateTime(): void
     {
-        $lunar = new LunarDateTime('09/03/2023', $this->timezone);
+        $lunar = new LunarDateTime('09/03/2023 +0700');
         $date = $lunar->toDateTime();
 
         $this->assertEquals('2023-04-28T00:00:00+07:00', $date->format('c'));
@@ -49,5 +49,11 @@ class LunaDateTimeTest extends TestCase
 
         $lunar = new LunarDateTime('2023-04-28', $this->timezone, LunarDateTime::GREGORIAN_INPUT);
         $this->assertEquals('09/03/2023', $lunar->format('d/m/Y'));
+    }
+
+    public function testWithTimeZoneIncluded(): void
+    {
+        $lunar = new LunarDateTime('01/10/2023 +0700');
+        $this->assertNotNull($lunar->getTimezone());
     }
 }

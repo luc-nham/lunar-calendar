@@ -49,7 +49,7 @@ class LunarDateTime implements LunarDateTimeInteface
      * Tạo đối tượng mới
      * 
      * @param string $datetime Chuỗi thòi gian âm lịch, để trống hoặc đặt 'now' để lấy thời điểm hiện tại
-     * @param null|DateTimeZone $timezone Múi giờ địa phương. Nếu không cung cấp mặc định sẽ sử dụng '+07:00'
+     * @param null|DateTimeZone $timezone Múi giờ địa phương
      * @param int $type Xác định kiểu dữ liệu thời gian đầu vào là Âm lịch (1) hay Dương lịch (2)
      * @return void 
      */
@@ -58,13 +58,13 @@ class LunarDateTime implements LunarDateTimeInteface
         private ?DateTimeZone $timezone = null, 
         private int $type = self::LUNAR_INPUT)
     {
-
+        $this->initComponent();
     }
 
     /**
      * Khởi tạo nhanh ngày tháng Âm lịch
      * 
-     * @param null|DateTimeZone $timezone Múi giờ địa phương. Nếu không cung cấp mặc định sẽ sử dụng '+07:00'
+     * @param null|DateTimeZone $timezone Múi giờ địa phương
      * @return LunarDateTime 
      */
     public static function now(?DateTimeZone $timezone = null): LunarDateTime
@@ -85,44 +85,53 @@ class LunarDateTime implements LunarDateTimeInteface
     }
 
     /**
+     * Khởi tạo các thành phần cấu tạo Âm lịch
+     * @return void 
+     * @throws Exception 
+     */
+    private function initComponent(): void
+    {
+        $datetime = $this->datetime;
+
+        if ($datetime === 'now' || $datetime === '' || $this->type === self::GREGORIAN_INPUT) {
+            $date = new DateTime($datetime);
+
+            if ($this->getTimezone()) {
+                $date->setTimezone($this->getTimezone());
+            }
+            else {
+                $this->timezone = $date->getTimezone();
+            }
+
+            $input = new GregorianToLunarStorageMutable($date);
+            
+            $this->gregorian = $date;
+            $component = new GregorianToLunarCorrector($input);
+        }
+        else {
+            $paser = new LunarDateTimeParser($datetime, $this->getTimezone());
+
+            if (!$this->timezone && $paser->getTimezone()) {
+                $this->timezone = $paser->getTimezone();
+            }
+
+            if ($paser->hasError()) {
+                throw new Exception("Parse error. Lunar date time invalid.");
+            }
+
+            $component = new LunarDateTimeCorrector($paser);
+        }
+
+        $this->component = $component;
+    }
+
+    /**
      * Trả về các thành phần cấu tạo và thời gian Âm lịch đã được hợp lệ hóa
      * 
      * @return LunarDateTimeComponentInterface 
-     * @throws Exception 
      */
     private function getComponent(): LunarDateTimeComponentInterface
     {
-        if (!$this->component) {
-            $datetime = $this->datetime;
-
-            if ($datetime === 'now' || $datetime === '' || $this->type === self::GREGORIAN_INPUT) {
-                $date = new DateTime($datetime);
-
-                if ($this->getTimezone()) {
-                    $date->setTimezone($this->getTimezone());
-                }
-                else {
-                    $this->timezone = $date->getTimezone();
-                }
-
-                $input = new GregorianToLunarStorageMutable($date);
-                
-                $this->gregorian = $date;
-                $component = new GregorianToLunarCorrector($input);
-            }
-            else {
-                $paser = new LunarDateTimeParser($datetime, $this->getTimezone());
-
-                if ($paser->hasError()) {
-                    throw new Exception("Parse error. Lunar date time invalid.");
-                }
-
-                $component = new LunarDateTimeCorrector($paser);
-            }
-
-            $this->component = $component;
-        }
-
         return $this->component;
     }
 
