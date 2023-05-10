@@ -3,6 +3,7 @@
 <?php
 
 use Symfony\Component\Console\Application;
+use VanTran\LunarCalendar\Commands\CreateLunarLeapMonthList;
 use VanTran\LunarCalendar\Commands\CreateLunarWsNmpList;
 use VanTran\LunarCalendar\Commands\CreateNewMoonPhaseList;
 
@@ -18,5 +19,6 @@ $application = new Application("Lunar Calendar CLI", '0.0.1');
 
 $application->add(new CreateNewMoonPhaseList());
 $application->add(new CreateLunarWsNmpList());
+$application->add(new CreateLunarLeapMonthList());
 
 $application->run();
