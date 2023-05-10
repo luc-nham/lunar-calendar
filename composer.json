@@ -16,7 +16,11 @@
     },
     "autoload-dev": {
         "psr-4": {
+<<<<<<< Updated upstream
             "VanTran\\LunarCalendar\\Tests\\": "tests/"
+=======
+            "LunarCalendar\\Tests\\": "tests/"
+>>>>>>> Stashed changes
         }
     },
     "authors": [
