@@ -3,6 +3,7 @@
 <?php
 
 use Symfony\Component\Console\Application;
+use VanTran\LunarCalendar\Commands\CreateLunarWsNmpList;
 use VanTran\LunarCalendar\Commands\CreateNewMoonPhaseList;
 
 $rootPath = dirname(__DIR__, 1);
@@ -16,5 +17,6 @@ if (file_exists($rootPath . '/vendor/autoload.php')) {
 $application = new Application("Lunar Calendar CLI", '0.0.1');
 
 $application->add(new CreateNewMoonPhaseList());
+$application->add(new CreateLunarWsNmpList());
 
 $application->run();
