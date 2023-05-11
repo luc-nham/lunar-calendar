@@ -6,7 +6,7 @@
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\Interfaces
  */
-interface SexagenariesInterface
+interface SexagenariesHandlerInterface
 {
     /**
      * Trả về số chỉ mục của hệ thống Can Chi.

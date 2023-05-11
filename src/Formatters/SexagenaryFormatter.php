@@ -1,7 +1,7 @@
 <?php namespace VanTran\LunarCalendar\Formatters;
 
 use VanTran\LunarCalendar\Interfaces\FormatterInterface;
-use VanTran\LunarCalendar\Interfaces\SexagenariesInterface;
+use VanTran\LunarCalendar\Interfaces\SexagenariesHandlerInterface;
 
 /**
  * Định dạng hệ thống Can Chi đầu ra
@@ -48,10 +48,10 @@ class SexagenaryFormatter implements FormatterInterface
     /**
      * Tạo đối tượng mới 
      * 
-     * @param SexagenariesInterface $sexagenaries 
+     * @param SexagenariesHandlerInterface $sexagenaries 
      * @return void 
      */
-    public function __construct(private SexagenariesInterface $sexagenaries)
+    public function __construct(private SexagenariesHandlerInterface $sexagenaries)
     {
 
     }

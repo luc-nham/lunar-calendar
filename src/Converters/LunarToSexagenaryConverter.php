@@ -2,9 +2,9 @@
 
 use Exception;
 use VanTran\LunarCalendar\Interfaces\LunarDateTimeInteface;
-use VanTran\LunarCalendar\Interfaces\SexagenariesInterface;
+use VanTran\LunarCalendar\Interfaces\SexagenariesHandlerInterface;
 
-class LunarToSexagenaryConverter implements SexagenariesInterface
+class LunarToSexagenaryConverter implements SexagenariesHandlerInterface
 {
     /**
      * @var float Số ngày Julian giả định theo giờ địa phương

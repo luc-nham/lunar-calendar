@@ -4,12 +4,12 @@ use VanTran\LunarCalendar\Converters\LunarToSexagenaryConverter;
 use VanTran\LunarCalendar\Formatters\SexagenaryFormatter;
 use VanTran\LunarCalendar\Interfaces\FormatterInterface;
 use VanTran\LunarCalendar\Interfaces\LunarDateTimeInteface;
-use VanTran\LunarCalendar\Interfaces\SexagenariesInterface;
+use VanTran\LunarCalendar\Interfaces\SexagenariesHandlerInterface;
 
 class LunarSexagenary implements FormatterInterface
 {
     /**
-     * @var SexagenariesInterface
+     * @var SexagenariesHandlerInterface
      */
     private $handler;
     private $formatter;
@@ -53,9 +53,9 @@ class LunarSexagenary implements FormatterInterface
 
     /**
      * Trả về bộ xử lý hệ thống Can Chi
-     * @return SexagenariesInterface 
+     * @return SexagenariesHandlerInterface 
      */
-    protected function getHandler(): SexagenariesInterface
+    protected function getHandler(): SexagenariesHandlerInterface
     {
         if (!$this->handler) {
             $this->handler = $this->getDefaultHandler();
