@@ -1,6 +1,5 @@
 <?php namespace VanTran\LunarCalendar\Commands;
 
-use DateTimeZone;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 use VanTran\LunarCalendar\LunarDateTime;
