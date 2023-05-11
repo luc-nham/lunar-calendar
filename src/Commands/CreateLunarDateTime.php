@@ -4,6 +4,7 @@ use DateTimeZone;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 use VanTran\LunarCalendar\LunarDateTime;
+use VanTran\LunarCalendar\LunarSexagenary;
 
 #[AsCommand(
     name: 'create:lunar-datetime',
@@ -56,6 +57,7 @@ class CreateLunarDateTime extends AbstractLunarCommandListOutput
             $this->input->getOption('input-type')
         );
         $gregorian = $lunar->toDateTime();
+        $se = new LunarSexagenary($lunar);
 
         return [
             [
@@ -73,6 +75,10 @@ class CreateLunarDateTime extends AbstractLunarCommandListOutput
             [
                 'Số ngày Julian',
                 $lunar->getJd()
+            ],
+            [
+                'Can Chi',
+                $se->format('Ngày D+, tháng M+, năm Y+, giờ H+')
             ]
         ];
     }
