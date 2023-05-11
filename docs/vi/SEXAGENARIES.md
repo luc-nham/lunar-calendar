@@ -132,3 +132,30 @@ echo "\r\n";
 // Phân biệt 1 Chi
 echo $dayBranch->getType(); // branch
 ```
+## 4. Tùy chỉnh tên Can Chi
+
+Trong phiên bản 2.0.0 chỉ hỗ trợ định dạng tên Can Chi bằng Tiếng Việt. Tuy nhiên, có nhiều cách để bạn có thể bạn hòan toàn có thể tùy chỉnh lại tên mong muốn. Một ví dụ đơn giản sử dụng số đại diện:
+
+```php
+// Tùy chỉnh tên hiển thị 12 Địa chi theo Tiếng Anh
+$customBranchLabels = [
+    'Rat',
+    'Water buffalo',
+    'Tiger',
+    'Cat',
+    'Dragon',
+    'Snake',
+    'Horse',
+    'Goat',
+    'Monkey',
+    'Rooster',
+    'Dog',
+    'Pig'
+];
+
+// Chi của tháng
+$monthBranch = $sexagenary->getTerm('m');
+$index = $monthBranch->getIndex();
+
+echo $customBranchLabels[$index]; // Snake
+```
