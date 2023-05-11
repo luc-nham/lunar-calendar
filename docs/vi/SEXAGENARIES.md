@@ -3,7 +3,7 @@ Ngày tháng Âm lịch luôn song hành với Hệ thống Can Chi, không ch�
 
 Lớp `LunarSexagenary` được thiết kế để có thể tương tác với hệ thống 10 Can và 12 Chi.
 
-## Khởi tạo hệ thống Can Chi
+## 1. Khởi tạo hệ thống Can Chi
 Lớp `LunarSexagenary` yêu cầu tiêm phụ thuộc một đối tượng `LunarDateTime`, nó sẽ sử dụng các dữ liệu thời gian Âm lịch để chuyển đổi thành các mốc Can Chi tương ứng.
 
 ```php
@@ -16,7 +16,7 @@ $lunar = new LunarDateTime('2023-04-30 13:00 +07:00');
 $sexagenary = new LunarSexagenary($lunar);
 ```
 
-## Định dạng đầu ra
+## 2. Định dạng đầu ra
 Bảng dưới đây lệt kê các ký tự đại diện được sử dụng riêng lẻ hoặc kết hợp để định dạng các đối tượng Can Chi.
 
 | Ký tự đơn | Ký tự kết hợp |               Mô tả               |
@@ -39,7 +39,7 @@ Sử dụng Ký tự đơn khi bạn chỉ muốn truy xuất giá trị của m
 
 > *Phiên bản 2.0.0 chỉ hỗ trợ định dạng Can Chi bằng tiếng Việt. Ví dụ: Giáp, Ất, Dần Mão...*
 
-### Truy xuất giá trị đơn lẻ
+### 2.1 Truy xuất giá trị đơn lẻ
 Trường hợp bạn chỉ cần định dạng một đối tượng Can hoặc Chi duy nhất, sử dụng Ký tự đơn là phương pháp nhanh chóng và dễ dàng nhất để đạt được giá trị mong muốn. Chẳng hạn thay vì `'%D'` hãy sử dụng `'D'`. Mặc dù cả 2 cách đều cho ra kết quả giống nhau, nhưng thời gian thực thi sẽ khác nhau.
 
 ```php
@@ -50,7 +50,7 @@ echo 'Can ngày hôm nay là ' . $sexagenary->format('D');
 echo 'Chi ngày hôm nay là' . $sexagenary->format('d');
 ```
 
-### Định dạng kết hợp
+### 2.2 Định dạng kết hợp
 Lớp `LunarSexagenary` hỗ trợ định dạng kết hợp một nhóm các đối tượng với nhau. Khi đó, hãy sử dụng các ký tự định dạng có tiền tố `%` hoặc hậu tố `+`. Lưu ý trong trường hợp này, ký tự đơn sẽ không hoạt động.
 
 ```php
@@ -59,4 +59,36 @@ echo $sexagenary->format('Ngày %d, tháng %m, năm %Y %y');
 
 // ngày Bính Ngọ, tháng Định Tị, năm Quý Mão, giờ Kỷ Mùi
 echo $sexagenary->format('ngày D+, tháng M+, năm Y+, giờ H+');
+```
+
+## 3. Khởi tạo đối tượng Can hoặc Chi
+Nếu lớp `LunarSexagenary` chỉ có khả năng định dạng các nhãn / tên Can hoặc Chi thì nó sẽ gây ra nhiều bất tiện trong nhiều trường hợp. Chẳng hạn, bạn cần tạo một biểu mẫu lựa chọn Can Chi, hay một biểu thức so sánh, sẽ tốt hơn nếu chúng ta có thể sử dụng một số hoặc ký tự đại diện thay thì tên hiển thị của đối tượng:
+
+```php
+
+    // Sử dụng tên hiển thị, phương pháp này hoạt động, nhưng mã xấu và bất tiện
+    $day = 'Giáp';
+
+    if ($day == 'Giáp') {
+        echo "Làm sao tối viết được tiếng Việt khi không có UNIKEY hay gì đó tương tự?";
+        echo "Giáp là gì? Tôi không phải người Việt.";
+        echo "Giáp? What dose it mean?";
+    }
+
+    // Sử dụng số đại diện. Thay vì cần một bộ gõ UNIKEY, ai cũng có thể viết mã. Chỉ cần nắm quy tắc đại diện, họ sẽ
+    // hiểu 0 đại diện cho can đầu tiên, mà nó có thể là bất kỳ tên gọi nào của ngôn ngữ khác.
+    $day = 0;
+
+    if ($day === 0) {
+        echo "Hôm này là ngày Giáp";
+        echo "Today is day of Giap year of Monkey.";
+    }
+
+    // Sử dụng ký tự đại diện, tương tự như số đại diện
+    $day = 'a';
+
+    if ($day === 'a') {
+        echo "Hôm này là ngày Giáp";
+        echo "Today is day of Giap";
+    }
 ```
