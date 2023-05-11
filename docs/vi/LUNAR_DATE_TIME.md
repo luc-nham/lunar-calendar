@@ -142,3 +142,30 @@ $timezone = new DateTimeZone('+0700');
 $lunar = new LunarDateTime('25/02/2023', $timezone);
 echo $lunar->format('d/m/Y P'); // 25/02/2023 +07:00
 ```
+## Chuyển đổi Âm lịch sang Dương lịch
+Lớp `LunarDateTime` cũng cung cấp một phương thức `toDateTime` để hỗ trợ chuyển đổi một thời điểm Âm lịch sang Dương lịch tương ứng. Khi thực hiện, múi giờ địa phương sẽ được đồng bộ.
+
+```php
+<?php
+
+use VanTran\LunarCalendar\LunarDateTime;
+
+// Truyền trực tiếp múi giờ địa phương (+0700)
+$lunar = new LunarDateTime('25/02/2023 +0700');
+$gregorian = $lunar->toDateTime();
+
+echo $gregorian->format('d/m/Y H:i:s P'); // 16/03/2023 00:00:00 +07:00
+```
+
+## Phương thức khác
+Lớp `LunarDateTime` cũng cung cấp một số phương thức `public`, giúp truy xuất các giá trị cần thiết.
+
+| Tên phương thức   |                                       Mô tả                               |
+| ----------------- | ------------------------------------------------------------------------- |
+|`getJd()`          | Trả về số ngày Julian (JDN) tương ứng với thời điểm Âm lịch.              |
+|`getMidnightJd()`  | Trả về số ngày Julian (JDN) của thời điểm nửa đêm (00:00)                 |
+|`getOffset()`      | Trả về chênh lệch giờ địa phương với giờ Greenwich (GMT), tính bằng giây  |
+|`getTimestamp()`   | Trả về số giây kể từ Unix Epoch (ngày 1 tháng 1 năm 1970 00:00:00 GMT)    |
+|`getTimezone()`    | Trả về đối tượng `DateTimeZone` tương ứng với thời điểm tạo Âm lịch       |
+
+Lưu ý, số ngày Julian (JDN) đầu ra tuân theo tiêu chuẩn quốc tế, nghĩa là ngày Julius mới sẽ bắt đầu vào lúc 12:00 buổi trưa, và theo giờ UTC.
