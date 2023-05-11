@@ -34,6 +34,7 @@ Bảng dưới đây lệt kê các ký tự đại diện được sử dụng 
 |           |      M+       |       Tương đương `%M %m`         |
 |           |      Y+       |       Tương đương `%Y %y`         |
 |           |      H+       |       Tương đương `%H %h`         |
+*Bảng 2.1*
 
 Sử dụng Ký tự đơn khi bạn chỉ muốn truy xuất giá trị của một đối tượng duy nhất, chẳng hạn Can ngày hoặc Can tháng; sử dụng Ký tự kết hợp khi bạn muốn định dạng một liên kết các đối tượng với nhau.
 
@@ -62,7 +63,7 @@ echo $sexagenary->format('ngày D+, tháng M+, năm Y+, giờ H+');
 ```
 
 ## 3. Khởi tạo đối tượng Can hoặc Chi
-Nếu lớp `LunarSexagenary` chỉ có khả năng định dạng các nhãn / tên Can hoặc Chi thì nó sẽ gây ra nhiều bất tiện trong nhiều trường hợp. Chẳng hạn, bạn cần tạo một biểu mẫu lựa chọn Can Chi, hay một biểu thức so sánh, sẽ tốt hơn nếu chúng ta có thể sử dụng một số hoặc ký tự đại diện thay thì tên hiển thị của đối tượng:
+Nếu lớp `LunarSexagenary` chỉ có khả năng định dạng các nhãn / tên Can hoặc Chi thì nó sẽ gây ra nhiều bất tiện trong nhiều trường hợp. Chẳng hạn, bạn cần tạo một biểu mẫu lựa chọn Can Chi, hay một biểu thức so sánh, sẽ tốt hơn nếu chúng ta có thể sử dụng một số hoặc ký tự đại diện thay vì tên hiển thị của đối tượng:
 
 ```php
 
@@ -91,4 +92,43 @@ Nếu lớp `LunarSexagenary` chỉ có khả năng định dạng các nhãn / 
         echo "Hôm này là ngày Giáp";
         echo "Today is day of Giap";
     }
+```
+
+Để lấy các giá trị số và ký tự đại diện, lớp `LunarSexagenary` cung cấp một phương thức `getTerm`. Với tham số duy nhất là ký tự định dạng đại diện (xem bảng 2.1), lưu ý, hàm chỉ hỗ trợ danh sách các ký tự đơn: D, d, m, m, Y, y, H, h, N.
+
+Bảng dưới đây liệt kê các số và ký tự đại diện tương ứng với 10 Can và 12 Chi.
+
+|  Số  | Ký tự |   Can  |   Chi   |
+| ---- | ----- | ------ | ------- |
+|   0  |   a   |  Giáp  |   Tý    |
+|   1  |   b   |  Ất    |   Sửủ   |
+|   2  |   c   |  Bính  |   Dần   |
+|   3  |   d   |  Đinh  |   Mão   |
+|   4  |   e   |  Mậu   |   Thìn  |
+|   5  |   f   |  Kỷ    |   Tị    |
+|   6  |   g   |  Canh  |   Ngọ   |
+|   7  |   h   |  Tân   |   Mùi   |
+|   8  |   i   |  Nhâm  |   Thân  |
+|   9  |   j   |  Quý   |   Dậu   |
+|  10  |   k   |        |   Tuất  |
+|  11  |   l   |        |   Hợi   |
+
+*Bảng 3.1*
+
+```php
+$dayStem = $sexagenary->getTerm('D');
+$dayBranch = $sexagenary->getTerm('d');
+
+// Can ngày Bính số đại diện là 2, ký tự đại diện là c
+echo $dayStem->getIndex() . '| ' . $dayStem->getCharacter() . "\r\n";
+
+// Chi ngày Ngọ có số đại diện là 6, ký tự đại diện là g
+echo $dayBranch->getIndex() . '| ' . $dayBranch->getCharacter()  . "\r\n";
+
+// Phân biệt 1 Can
+echo $dayStem->getType(); // stem
+echo "\r\n";
+
+// Phân biệt 1 Chi
+echo $dayBranch->getType(); // branch
 ```
