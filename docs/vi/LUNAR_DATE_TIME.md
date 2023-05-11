@@ -27,8 +27,7 @@ Trước khi đi vào xử lý ngày tháng, hãy tìm hiểu về các định 
 | Z    | Độ lệch múi giờ, tính bằng giây |
 | C    | Chuỗi `(+)` xác định tháng nhuận - kết hợp khi sử dụng 'l' hoặc 'L' thay vì 'm' hoặc 'n' |
 
-## Xử lý đầu vào
-### Đầu vào là thời gian Âm lịch
+## Khởi tạo thời gian Âm lịch
 Hàm tạo của lớp `VanTran\LunarCalendar\LunarDateTime` có thể phân tích cú pháp 1 chuỗi thời gian Âm lịch đầu vào và chuyển đổi nó thành thời gian chính xác. Danh sách một số định dạng phổ biến nhất được hỗ trợ:
 
 | Thời gian đầu vào         | Định dạng được hỗ trợ    |
@@ -56,8 +55,8 @@ echo "\r\n";
 echo $lunar->format('h:ia');    // Đầu ra: 08:30pm
 ```
 
-### Xử lý đầu vào là tháng nhuận
-Không giống như Dương lịch, tháng Nhuận trong Âm lịch khá phức tạp và không cố định vào tháng 02. Để xử lý thời gian Âm lịch trong tháng nhuận, có 2 giải pháp như sau:
+## Xử lý tháng nhuận
+Không giống như Dương lịch chỉ nhuận vào tháng 02, tháng Nhuận trong Âm lịch khá phức tạp và không cố định. Để xử lý thời gian Âm lịch trong tháng nhuận, có 2 giải pháp như sau:
 - Đặt dấu '+' phía sau tháng nhuận, thích hợp khi sử dụng định dạng phân tách ngày tháng bằng dấu gạch chéo, vd 20/02+/2023. Nếu bạn ưa thích các loại dấu phân tách khác, hãy cân nhắc sử dụng giải pháp thứ 2.
 - Đặt '(+)' ở phía sau chuỗi thời gian. Chẳng hạn: 20-02-2023 (+) sẽ dễ đọc hơn 20-02+-2023
 
@@ -83,9 +82,63 @@ if ($lunar->format('C')) {
 echo $output; // Đầu ra: 20-02-2023 nhuận
 ```
 
-### Khớp dữ liệu bị sai
+## Khớp dữ liệu bị sai
 Tất nhiên, nếu lớp `VanTran\LunarCalendar\LunarDateTime` chỉ nhận 1 đầu vào và định dạng lại đầu ra tùy chỉnh thì nó không mang nhiều ý nghĩa lắm. Điểm thú vị là nó có thể nhận biết được thời gian đầu vào bị sai và tự động sửa chữa lại cho đúng. Một số trường hợp thường xảy ra:
 - Bạn đang ở ngày 29 của một tháng, nhưng bạn không biết chính xác ngày mai là ngày 30 hay mùng 01 của tháng kế tiếp.
 - Năm nay nhuận tháng 8, nhưng bạn nhớ lầm là tháng 5
 
 Cụ thể hơn, hãy xem xét ví dụ sau:
+
+```php
+<?php
+
+use VanTran\LunarCalendar\LunarDateTime;
+
+// Năm 2025 Âm lịch tháng 12 chỉ có 29 ngày
+$lunar = new LunarDateTime('30/12/2025 +07:00');
+echo $lunar->format('d/m/Y'); // 01/01/2026
+```
+
+## Tính ngày tháng Âm lịch từ Dương lịch
+Thông thường, Dương lịch được sử dụng phổ biến và rộng rãi hơn trong mọi trường hợp. Lớp `LunarDateTime` cũng cung cấp các phương pháp để tính toán ngày tháng Âm lịch từ một mốc Dương lịch.
+
+```php
+<?php
+
+use VanTran\LunarCalendar\LunarDateTime;
+
+// Tìm ngày Âm lịch từ ngày 11 tháng 05 năm 2023 dương lịch
+$timezone = new DateTimeZone('+0700');
+$lunar = new LunarDateTime('2023-05-11', $timezone, LunarDateTime::GREGORIAN_INPUT);
+
+echo $lunar->format('d/m/Y'); // 22/03/2023
+
+// Phương thức tĩnh
+$lunar = LunarDateTime::createFromGregorian('2023-05-11', $timezone);
+echo $lunar->format('d/m/Y'); // 22/03/2023
+```
+
+## Xử lý múi giờ địa phương
+Để lập lịch chính xác, múi giờ địa phương là một tham số trọng yếu. Đối với Âm lịch Việt Nam, múi giờ tiêu chuẩn là `UTC+07:00`. Đồng thời cũng có 1 múi giờ khác là `Asia/Ho_Chi_Minh`. Tuy nhiên, hãy lưu ý nếu bạn sử dụng múi giờ này vì nó bị ảnh hưởng bởi một số yếu tố địa chính trị. Chẳng hạn từ 15 tháng 3 năm 1945 – tháng 9 năm 1945, trong giai đoạn Nhật đô hộ Việt Nam, múi giờ khi đó bị áp đặt là `UTC+09:00`. 
+
+Có 2 phương pháp để bổ sung múi giờ địa phương khi khởi tạo thời gian Âm lịch:
+- Truyền trực tiếp tham số múi giờ được hỗ trợ vào chuỗi thời gian
+- Khởi tạo và sử dụng đối tượng `DateTimeZone`
+
+```php
+<?php
+
+use VanTran\LunarCalendar\LunarDateTime;
+
+// Truyền trực tiếp múi giờ địa phương (+0700)
+$lunar = new LunarDateTime('25/02/2023 +0700');
+echo $lunar->format('d/m/Y P'); // 25/02/2023 +07:00
+
+$lunar = new LunarDateTime('25/02/2023 Asia/Ho_Chi_Minh');
+echo $lunar->format('d/m/Y P'); // 25/02/2023 +07:00
+
+// Khởi tạo đối tượng DateTimeZone
+$timezone = new DateTimeZone('+0700');
+$lunar = new LunarDateTime('25/02/2023', $timezone);
+echo $lunar->format('d/m/Y P'); // 25/02/2023 +07:00
+```
