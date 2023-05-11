@@ -1,16 +1,16 @@
 <?php namespace VanTran\LunarCalendar;
 
 use DateTime;
-use DateTimeInterface;
 use DateTimeZone;
 use Exception;
 use Throwable;
-use VanTran\LunarCalendar\Lunar\GregorianToLunarCorrector;
-use VanTran\LunarCalendar\Lunar\LunarBaseComponentInterface;
-use VanTran\LunarCalendar\Lunar\LunarDateTimeCorrector;
-use VanTran\LunarCalendar\Lunar\LunarDateTimeFormatter;
-use VanTran\LunarCalendar\Lunar\LunarDateTimeInput;
-use VanTran\LunarCalendar\Lunar\LunarParser;
+use VanTran\LunarCalendar\Correctors\GregorianToLunarCorrector;
+use VanTran\LunarCalendar\Correctors\LunarDateTimeCorrector;
+use VanTran\LunarCalendar\Formatters\LunarDateTimeFormatter;
+use VanTran\LunarCalendar\Interfaces\LunarDateTimeComponentInterface;
+use VanTran\LunarCalendar\Interfaces\LunarDateTimeInteface;
+use VanTran\LunarCalendar\Parsers\LunarDateTimeParser;
+use VanTran\LunarCalendar\Storages\GregorianToLunarStorageMutable;
 
 /**
  * Ngày tháng Âm lịch
@@ -31,13 +31,7 @@ class LunarDateTime implements LunarDateTimeInteface
     public const GREGORIAN_INPUT = 2;
 
     /**
-     * @var DateTimeZone Múi giờ địa phương mặc định +0700
-     */
-    private static $defaultTimeZone;
-
-    /**
-     * 
-     * @var LunarBaseComponentInterface Các thành phần chính cấu tạo Âm lịch
+     * @var LunarDateTimeComponentInterface
      */
     private $component;
 
@@ -55,7 +49,7 @@ class LunarDateTime implements LunarDateTimeInteface
      * Tạo đối tượng mới
      * 
      * @param string $datetime Chuỗi thòi gian âm lịch, để trống hoặc đặt 'now' để lấy thời điểm hiện tại
-     * @param null|DateTimeZone $timezone Múi giờ địa phương. Nếu không cung cấp mặc định sẽ sử dụng '+07:00'
+     * @param null|DateTimeZone $timezone Múi giờ địa phương
      * @param int $type Xác định kiểu dữ liệu thời gian đầu vào là Âm lịch (1) hay Dương lịch (2)
      * @return void 
      */
@@ -64,91 +58,62 @@ class LunarDateTime implements LunarDateTimeInteface
         private ?DateTimeZone $timezone = null, 
         private int $type = self::LUNAR_INPUT)
     {
-
+        $this->initComponent();
     }
 
     /**
      * Khởi tạo nhanh ngày tháng Âm lịch
      * 
-     * @param null|DateTimeZone $timezone Múi giờ địa phương. Nếu không cung cấp mặc định sẽ sử dụng '+07:00'
+     * @param null|DateTimeZone $timezone Múi giờ địa phương
      * @return LunarDateTime 
      */
     public static function now(?DateTimeZone $timezone = null): LunarDateTime
     {
-        if (!$timezone) {
-            $timezone = new DateTimeZone(self::VN_TIMEZONE);
-        }
-
         return new self('now', $timezone);
     }
 
     /**
-     * Khởi tạo đối tượng từ 1 đối tượng DateTime
+     * Khởi tạo / chuyển đổi một mốc thời gian Dương lịch sang Âm lịch
      * 
-     * @param DateTime $datetime 
+     * @param string $datetime 
+     * @param null|DateTimeZone $timezone 
      * @return LunarDateTime 
-     * @throws Exception 
      */
-    public static function createFromDateTime(DateTimeInterface $datetime): self
+    public static function createFromGregorian(string $datetime, ?DateTimeZone $timezone = null): self
     {
-        $input = new LunarDateTimeInput();
-        $input->setYear($datetime->format('Y'))
-                ->setMonth($datetime->format('n'))
-                ->setDay($datetime->format('j'))
-                ->setHour($datetime->format('H'))
-                ->seMinute($datetime->format('i'))
-                ->setSecond($datetime->format('s'))
-                ->setOffset($datetime->getOffset())
-                ->setTimeZone($datetime->getTimezone());
-        
-        $component = new GregorianToLunarCorrector($input);
-
-        $ins = new self('', $datetime->getTimezone());
-        $ins->setComponent($component);
-
-        return $ins;
+        return new self($datetime, $timezone, self::GREGORIAN_INPUT);
     }
 
     /**
-     * Trả về múi giờ địa phương mặc định +0700
-     * @return DateTimeZone 
-     */
-    public static function getDefaultTimeZone(): DateTimeZone
-    {
-        if (!self::$defaultTimeZone) {
-            self::$defaultTimeZone = new DateTimeZone(self::VN_TIMEZONE);
-        }
-
-        return self::$defaultTimeZone;
-    }
-
-    /**
-     * Khởi tạo các thành phần cấu tạo âm lịch
+     * Khởi tạo các thành phần cấu tạo Âm lịch
      * @return void 
      * @throws Exception 
-     * @throws Throwable 
      */
-    protected function initComponent(): void
+    private function initComponent(): void
     {
         $datetime = $this->datetime;
 
         if ($datetime === 'now' || $datetime === '' || $this->type === self::GREGORIAN_INPUT) {
-            $date = new DateTime($datetime, $this->getTimezone());
-            $input = (new LunarDateTimeInput())
-                        ->setYear($date->format('Y'))
-                        ->setMonth($date->format('n'))
-                        ->setDay($date->format('j'))
-                        ->setHour($date->format('H'))
-                        ->seMinute($date->format('i'))
-                        ->setSecond($date->format('s'))
-                        ->setOffset($date->getOffset())
-                        ->setTimeZone($date->getTimezone());
+            $date = new DateTime($datetime);
+
+            if ($this->getTimezone()) {
+                $date->setTimezone($this->getTimezone());
+            }
+            else {
+                $this->timezone = $date->getTimezone();
+            }
+
+            $input = new GregorianToLunarStorageMutable($date);
             
             $this->gregorian = $date;
             $component = new GregorianToLunarCorrector($input);
         }
         else {
-            $paser = new LunarParser($datetime, $this->getTimezone());
+            $paser = new LunarDateTimeParser($datetime, $this->getTimezone());
+
+            if (!$this->timezone && $paser->getTimezone()) {
+                $this->timezone = $paser->getTimezone();
+            }
 
             if ($paser->hasError()) {
                 throw new Exception("Parse error. Lunar date time invalid.");
@@ -157,27 +122,22 @@ class LunarDateTime implements LunarDateTimeInteface
             $component = new LunarDateTimeCorrector($paser);
         }
 
-        $this->setComponent($component);
+        $this->component = $component;
     }
 
     /**
-     * Trả về các thành phần cấu tạo Âm lịch
+     * Trả về các thành phần cấu tạo và thời gian Âm lịch đã được hợp lệ hóa
      * 
-     * @return LunarBaseComponentInterface 
-     * @throws Exception 
-     * @throws Throwable 
+     * @return LunarDateTimeComponentInterface 
      */
-    protected function getComponent(): LunarBaseComponentInterface
+    private function getComponent(): LunarDateTimeComponentInterface
     {
-        if (!$this->component) {
-            $this->initComponent();
-        }
-
         return $this->component;
     }
 
     /**
      * Trả về bộ định dạng thời gian đầu ra
+     * 
      * @return LunarDateTimeFormatter 
      * @throws Exception 
      * @throws Throwable 
@@ -185,21 +145,15 @@ class LunarDateTime implements LunarDateTimeInteface
     protected function getFormatter(): LunarDateTimeFormatter
     {
         if (!$this->formatter) {
-            $this->formatter = new LunarDateTimeFormatter($this->getComponent());
+            try {
+                $component = $this->getComponent();
+                $this->formatter = new LunarDateTimeFormatter($component);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
         }
 
         return $this->formatter;
-    }
-
-    /**
-     * Thay đổi các thành phần Âm lịch
-     * 
-     * @param LunarBaseComponentInterface $component 
-     * @return void 
-     */
-    public function setComponent(LunarBaseComponentInterface $component): void
-    {
-        $this->component = $component;
     }
 
     /**
@@ -213,11 +167,9 @@ class LunarDateTime implements LunarDateTimeInteface
     /**
      * {@inheritdoc}
      */
-    public function getTimezone(): DateTimeZone 
+    public function getTimezone(): ?DateTimeZone 
     { 
-        return (!$this->timezone)
-            ? self::getDefaultTimeZone()
-            : $this->timezone;
+        return $this->timezone;
     }
 
     /**
@@ -262,16 +214,8 @@ class LunarDateTime implements LunarDateTimeInteface
     /**
      * {@inheritdoc}
      */
-    public function getMidnightJd(): float 
+    public function getMidnightJd(): float
     { 
         return $this->getComponent()->getMidnightJd();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDiffJd(): float 
-    { 
-        return $this->getComponent()->getDiffJd();
     }
 }

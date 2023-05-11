@@ -1,6 +1,6 @@
 <?php namespace VanTran\LunarCalendar\Tests;
 
-use DateTime;
+use DateTimeZone;
 use Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
@@ -9,6 +9,13 @@ use VanTran\LunarCalendar\LunarDateTime;
 
 class LunaDateTimeTest extends TestCase
 {
+    private $timezone;
+
+    public function setup(): void
+    {
+        $this->timezone = new DateTimeZone('+0700');
+    }
+
     /**
      * Kiểm tra chuyển đổi về Dương lịch
      * 
@@ -19,7 +26,7 @@ class LunaDateTimeTest extends TestCase
      */
     public function testToDateTime(): void
     {
-        $lunar = new LunarDateTime('09/03/2023');
+        $lunar = new LunarDateTime('09/03/2023 +0700');
         $date = $lunar->toDateTime();
 
         $this->assertEquals('2023-04-28T00:00:00+07:00', $date->format('c'));
@@ -35,13 +42,18 @@ class LunaDateTimeTest extends TestCase
      */
     public function testCreateFromDateTime(): void
     {
-        $date = new DateTime('2023-04-28 UTC');
-        $lunar = LunarDateTime::createFromDateTime($date);
+        $lunar = LunarDateTime::createFromGregorian('2023-04-28 UTC');
 
         $this->assertEquals('09/03/2023', $lunar->format('d/m/Y'));
-        $this->assertEquals($date->getTimezone()->getName(), $lunar->getTimezone()->getName());
+        $this->assertEquals('UTC', $lunar->getTimezone()->getName());
 
-        $lunar = new LunarDateTime('2023-04-28', LunarDateTime::getDefaultTimeZone(), LunarDateTime::GREGORIAN_INPUT);
+        $lunar = new LunarDateTime('2023-04-28', $this->timezone, LunarDateTime::GREGORIAN_INPUT);
         $this->assertEquals('09/03/2023', $lunar->format('d/m/Y'));
+    }
+
+    public function testWithTimeZoneIncluded(): void
+    {
+        $lunar = new LunarDateTime('01/10/2023 +0700');
+        $this->assertNotNull($lunar->getTimezone());
     }
 }

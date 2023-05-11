@@ -1,5 +1,21 @@
 # Changelog
 
+## v2.0.0
+
+### Các bổ sung hoặc sửa đổi
+- Tái cấu trúc mã
+- Sửa một số lỗi quan trọng
+- Bổ sung hệ thống Can Chi
+- Bổ sung tài liệu
+
+### Các thành phần xóa bỏ
+- Các thành phần mã cũ được tái cấu trúc lại
+
+## v1.0.3
+
+### Các bổ sung hoặc sửa đổi
+- Sửa lỗi định dạng số giờ Âm lịch
+
 ## v1.0.2
 
 ### Các bổ sung hoặc sửa đổi

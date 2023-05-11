@@ -10,8 +10,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "VanTran\\LunarCalendar\\": "src/",
-            "VanTran\\LunarCalendarCli\\": "bin"
+            "VanTran\\LunarCalendar\\": "src/"
         }
     },
     "autoload-dev": {
