@@ -135,6 +135,16 @@ abstract class AbstractLunarCommandListOutput extends Command
     }
 
     /**
+     * Tiều đề bảng dữ liệu
+     * 
+     * @return string 
+     */
+    protected function getDataTableHeaderTitle(): string
+    {
+        return 'Danh sách dữ liệu';
+    }
+
+    /**
      * Kết xuất bảng dữ liệu đầu ra
      * 
      * @return void 
@@ -161,7 +171,7 @@ abstract class AbstractLunarCommandListOutput extends Command
             $table->setHeaders($header);
         }
 
-        $table->setHeaderTitle("Danh sách dữ liệu");
+        $table->setHeaderTitle($this->getDataTableHeaderTitle());
         $table->setRows($data);
         $table->render();
     }
