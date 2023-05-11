@@ -70,7 +70,7 @@ class CreateNewMoonPhaseList extends AbstractLunarCommandListOutput
     protected function getDataTableHeader(): array 
     { 
         return [
-            'Số ngày MJD',
+            'Số ngày Julian',
             'Tổng chu kỳ Trăng',
             'Thời gian bắt đầu'
         ];

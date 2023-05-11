@@ -13,7 +13,7 @@ class BaseSunlongitudeConverter extends BaseJDN implements SunlongitudeInterface
     /**
      * Tạo đối tượng mới
      * 
-     * @param float $jd Số ngày MJD
+     * @param float $jd Số ngày Julian
      * @param int $offset Bù UTC, tính bằng giây
      * @return void 
      */
@@ -63,7 +63,7 @@ class BaseSunlongitudeConverter extends BaseJDN implements SunlongitudeInterface
     }
     
     /**
-     * Trả về góc KDMT tương ứng với số ngày MJD cho trước
+     * Trả về góc KDMT tương ứng với số ngày Julian cho trước
      * 
      * @param float $jd 
      * @return float 

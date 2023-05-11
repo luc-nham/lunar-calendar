@@ -72,7 +72,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
         // Khởi tạo số ngày của tháng
         $this->initDayOfMonth();
 
-        // Khởi tạo mốc ngày MJD tương ứng với điểm Âm lịch đầu vào
+        // Khởi tạo mốc ngày Julian tương ứng với điểm Âm lịch đầu vào
         $this->initJd();
     }
     
@@ -221,7 +221,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * Tính toán và khởi tạo số ngày MJD tương ứng với mốc Âm lịch đầu vào
+     * Tính toán và khởi tạo số ngày Julian tương ứng với mốc Âm lịch đầu vào
      * @return void 
      */
     protected function initJd(): void

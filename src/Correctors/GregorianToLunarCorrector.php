@@ -19,7 +19,7 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
 
     protected function init(): void
     {
-        // Khởi tạo MJD
+        // Khởi tạo số ngày Julian
         $this->initJd();
 
         // Khởi tạo điểm sóc từ dương lịch đầu vào
@@ -99,7 +99,7 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
     }
 
     /**
-     * khởi tạo mốc ngày MJD từ dương lịch đầu vào
+     * khởi tạo mốc ngày Julian từ dương lịch đầu vào
      * @return void 
      */
     protected function initJd(): void

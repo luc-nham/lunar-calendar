@@ -51,7 +51,7 @@ abstract class AbstractMoonPhaseConverter extends BaseJDN implements MoonPhaseIn
     /**
      * Tính toán và trả về tổng số chu kỳ mặt trăng kể từ 1900-01-01T00:00+0000
      * 
-     * @param float $jdn Mốc ngày MJD của thời điểm cần tính
+     * @param float $jdn Số ngày Julian tại thời điểm cần tính
      * @return int 
      */
     protected function getTotalCyclesFromJdn(float $jdn): int
@@ -86,7 +86,7 @@ abstract class AbstractMoonPhaseConverter extends BaseJDN implements MoonPhaseIn
     }
 
     /**
-     * Tính toán thời gian của điểm Sóc từ một mốc ngày MJD
+     * Tính toán thời gian của điểm Sóc từ một mốc ngày Julian
      * 
      * @param int   $jdn
      * @param float $k Tham số này chỉ số tháng đồng bộ được tính toán trước, theo công thức
