@@ -1,12 +1,17 @@
 <?php namespace VanTran\LunarCalendar;
 
+use Exception;
 use VanTran\LunarCalendar\Converters\LunarToSexagenaryConverter;
 use VanTran\LunarCalendar\Formatters\SexagenaryFormatter;
 use VanTran\LunarCalendar\Interfaces\FormatterInterface;
 use VanTran\LunarCalendar\Interfaces\LunarDateTimeInteface;
+use VanTran\LunarCalendar\Interfaces\LunarSexagenaryInterface;
 use VanTran\LunarCalendar\Interfaces\SexagenariesHandlerInterface;
+use VanTran\LunarCalendar\Interfaces\SexagenaryTermInterface;
+use VanTran\LunarCalendar\Terms\BranchTerm;
+use VanTran\LunarCalendar\Terms\StemTerm;
 
-class LunarSexagenary implements FormatterInterface
+class LunarSexagenary implements LunarSexagenaryInterface
 {
     /**
      * @var SexagenariesHandlerInterface
@@ -84,5 +89,24 @@ class LunarSexagenary implements FormatterInterface
     public function format(string $format): string
     {
         return $this->getFormatter()->format($format);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTerm(string $key): SexagenaryTermInterface 
+    { 
+        $handler = $this->getHandler();
+        $index = $handler->getIndex($key);
+
+        if ($index === $key) {
+            throw new Exception("Error. Invalid term key");
+        }
+
+        $term = (ctype_upper($key))
+            ? new StemTerm($index, $handler->getCharacter($key))
+            : new BranchTerm($index, $handler->getCharacter($key));
+
+        return $term;
     }
 }
