@@ -1,6 +1,5 @@
 <?php namespace VanTran\LunarCalendar\Tests;
 
-use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use VanTran\LunarCalendar\LunarDateTime;
 use VanTran\LunarCalendar\LunarSexagenary;
@@ -9,8 +8,6 @@ class LunarSexagenaryTest extends TestCase
 {
     public function testFormat(): void
     {
-        $this->assertTrue(true);
-
         $lunar = LunarDateTime::createFromGregorian('2023-04-30 13:00 +07:00');
         $sexagenary = new LunarSexagenary($lunar);
 
