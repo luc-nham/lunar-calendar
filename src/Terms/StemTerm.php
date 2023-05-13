@@ -6,7 +6,7 @@
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\Terms
  */
-class StemTerm extends AbstractSexagenaryTerm
+class StemTerm extends AbstractTerm
 {
     /**
      * @var string Phân loại thiên Can
