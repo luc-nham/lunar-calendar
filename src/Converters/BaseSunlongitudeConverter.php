@@ -76,7 +76,8 @@ class BaseSunlongitudeConverter extends BaseJDN implements SunlongitudeInterface
         $G = 357.528 + 35999.050 * $T;
         $ec = 1.915 * sin($dr * $G) + 0.020 * sin($dr * 2 * $G);
         $lambda = $L + $ec ;
-        
-        return $L =  $lambda - 360 * floor($lambda / (360));
+        $L =  $lambda - 360 * floor($lambda / 360);
+
+        return round($L, 3);
     }
 }
