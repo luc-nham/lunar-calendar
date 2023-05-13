@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use VanTran\LunarCalendar\Converters\DateTimeToJdnConverter;
 use VanTran\LunarCalendar\Converters\JdnToSunlongitudeMutableConverter;
 
-class JdnToSunlongitudeConverterTest extends TestCase
+class JdnToSunlongitudeMutableConverterTest extends TestCase
 {
     /**
      * @var DateTimeToJdnConverter
