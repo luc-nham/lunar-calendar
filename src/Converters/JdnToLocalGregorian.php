@@ -40,7 +40,7 @@ class JdnToLocalGregorian extends JdnToUtcGregorian
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getOffset(): int
     {
@@ -48,7 +48,7 @@ class JdnToLocalGregorian extends JdnToUtcGregorian
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getTimezone(): ?DateTimeZone
     {

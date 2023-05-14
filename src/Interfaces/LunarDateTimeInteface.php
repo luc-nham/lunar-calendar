@@ -4,6 +4,12 @@ use DateTimeZone;
 use VanTran\LunarCalendar\Interfaces\FormatterInterface;
 use VanTran\LunarCalendar\Interfaces\JulianDayNumberInterface;
 
+/**
+ * Giao diện xác định một mốc thời gian Âm lịch
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Interfaces
+ */
 interface LunarDateTimeInteface extends JulianDayNumberInterface, FormatterInterface
 {
     /**

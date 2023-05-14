@@ -14,7 +14,7 @@ use VanTran\LunarCalendar\Interfaces\DateTimeStorageMutableInterface;
 class DateTimeStorageMutable extends AbstractDateTimeStorage implements DateTimeStorageMutableInterface
 {
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setYear(int $year): void
     {
@@ -26,7 +26,7 @@ class DateTimeStorageMutable extends AbstractDateTimeStorage implements DateTime
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setMonth(int $month): void
     {
@@ -38,7 +38,7 @@ class DateTimeStorageMutable extends AbstractDateTimeStorage implements DateTime
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setDay(int $day): void
     {
@@ -66,7 +66,7 @@ class DateTimeStorageMutable extends AbstractDateTimeStorage implements DateTime
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setMinute(int $minute): void
     {
@@ -78,7 +78,7 @@ class DateTimeStorageMutable extends AbstractDateTimeStorage implements DateTime
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setSecond(int $second): void
     {
@@ -90,7 +90,7 @@ class DateTimeStorageMutable extends AbstractDateTimeStorage implements DateTime
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setOffset(int $offset): void
     {
@@ -102,7 +102,7 @@ class DateTimeStorageMutable extends AbstractDateTimeStorage implements DateTime
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setTimeZone(DateTimeZone $timezone): void
     {
