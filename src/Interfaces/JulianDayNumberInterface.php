@@ -1,5 +1,11 @@
 <?php namespace VanTran\LunarCalendar\Interfaces;
 
+/**
+ * Giao diện xác định một mốc ngày Julian hỗ trợ độ lệch giờ địa phương
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Interfaces
+ */
 interface JulianDayNumberInterface
 {
     /**

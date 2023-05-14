@@ -220,7 +220,7 @@ class GregorianToJDNConverter extends BaseJDN
         $this->setJd(0);
     }
 
-    # @inheritdoc
+    #{@inheritdoc}
     public function getJd(): float
     {
         if ($this->jd <= 0) {

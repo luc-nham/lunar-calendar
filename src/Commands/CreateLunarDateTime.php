@@ -18,7 +18,7 @@ use VanTran\LunarCalendar\LunarSexagenary;
 class CreateLunarDateTime extends AbstractLunarCommandListOutput
 {
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInfoTableHeader(): array 
     { 
@@ -26,7 +26,7 @@ class CreateLunarDateTime extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInformationData(): array 
     { 
@@ -34,7 +34,7 @@ class CreateLunarDateTime extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getDataTableHeader(): array 
     { 
@@ -45,7 +45,7 @@ class CreateLunarDateTime extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getListData(): array 
     { 
@@ -84,7 +84,7 @@ class CreateLunarDateTime extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getOuputType(): int 
     { 
@@ -93,7 +93,7 @@ class CreateLunarDateTime extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function configure()
     {

@@ -18,7 +18,7 @@ class LunarDateTimeStorageMutable extends DateTimeStorageMutable implements Luna
     protected bool $leap = false;
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function setIsLeapMonth(bool $isLeap): void 
     { 
@@ -26,7 +26,7 @@ class LunarDateTimeStorageMutable extends DateTimeStorageMutable implements Luna
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function isLeapMonth(): bool 
     { 

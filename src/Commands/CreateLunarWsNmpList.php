@@ -16,7 +16,7 @@ use VanTran\LunarCalendar\LunarDateTime;
 class CreateLunarWsNmpList extends AbstractLunarCommandListOutput
 {
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInfoTableHeader(): array 
     { 
@@ -27,7 +27,7 @@ class CreateLunarWsNmpList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInformationData(): array 
     { 
@@ -60,7 +60,7 @@ class CreateLunarWsNmpList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getDataTableHeader(): array 
     { 
@@ -72,7 +72,7 @@ class CreateLunarWsNmpList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getListData(): array 
     { 
@@ -100,7 +100,7 @@ class CreateLunarWsNmpList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getOuputType(): int 
     { 
@@ -108,7 +108,7 @@ class CreateLunarWsNmpList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function configure()
     {

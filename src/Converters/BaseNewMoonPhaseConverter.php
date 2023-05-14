@@ -1,5 +1,11 @@
 <?php namespace VanTran\LunarCalendar\Converters;
 
+/**
+ * Bộ chuyển đổi nền tảng hỗ trợ tính toán pha Trăng mới (Sóc) tương ứng với thời điểm đầu vào
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Converters
+ */
 class BaseNewMoonPhaseConverter extends AbstractMoonPhaseConverter
 {
     /**

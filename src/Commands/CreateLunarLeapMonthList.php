@@ -19,7 +19,7 @@ use VanTran\LunarCalendar\Parsers\LunarDateTimeParser;
 class CreateLunarLeapMonthList extends AbstractLunarCommandListOutput
 {
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInfoTableHeader(): array 
     { 
@@ -30,7 +30,7 @@ class CreateLunarLeapMonthList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInformationData(): array 
     { 
@@ -67,7 +67,7 @@ class CreateLunarLeapMonthList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getDataTableHeader(): array 
     { 
@@ -79,7 +79,7 @@ class CreateLunarLeapMonthList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getListData(): array 
     { 
@@ -119,7 +119,7 @@ class CreateLunarLeapMonthList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getOuputType(): int 
     { 
@@ -127,7 +127,7 @@ class CreateLunarLeapMonthList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function configure()
     {

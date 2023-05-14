@@ -95,7 +95,7 @@ class JdnToUtcGregorian extends DateTimeStorageMutable
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getOffset(): int
     {
@@ -103,7 +103,7 @@ class JdnToUtcGregorian extends DateTimeStorageMutable
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getTimezone(): ?DateTimeZone
     {

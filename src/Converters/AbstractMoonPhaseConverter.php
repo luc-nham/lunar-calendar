@@ -3,6 +3,12 @@
 use Exception;
 use VanTran\LunarCalendar\Interfaces\MoonPhaseInterface;
 
+/**
+ * Bộ chuyển đổi nền tảng cho việc tính toán các pha của Mặt trăng trong 1 chu kỳ
+ * 
+ * @author Văn Trần <caovan.info@gmail.com>
+ * @package VanTran\LunarCalendar\Converters
+ */
 abstract class AbstractMoonPhaseConverter extends BaseJDN implements MoonPhaseInterface
 {
     /**
@@ -199,7 +205,7 @@ abstract class AbstractMoonPhaseConverter extends BaseJDN implements MoonPhaseIn
         return $this->totalCysles;
     }
 
-    # @inheritdoc
+    #{@inheritdoc}
     public function add(int $phaseNumber): MoonPhaseInterface 
     { 
         $selector = $this->getPhaseSelector();
@@ -214,7 +220,7 @@ abstract class AbstractMoonPhaseConverter extends BaseJDN implements MoonPhaseIn
         return $newPhase;
     }
    
-    # @inheritdoc
+    #{@inheritdoc}
     public function subtract(int $phaseNumber): MoonPhaseInterface 
     { 
         return $this->add($phaseNumber * -1);

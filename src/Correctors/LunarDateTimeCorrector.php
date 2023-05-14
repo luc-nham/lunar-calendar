@@ -240,7 +240,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getNewMoon(): MoonPhaseInterface 
     { 
@@ -248,7 +248,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getWsNewMoon(): WinterSolsticeNewMoonInterface 
     { 
@@ -256,7 +256,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getLeapMonth(): LunarLeapMonthInterface 
     { 
@@ -264,7 +264,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getDateTimeStorage(): LunarDateTimeStorageInterface 
     { 
@@ -272,7 +272,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getDayOfMonth(): int 
     { 
@@ -280,7 +280,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getDayOfYear(): int 
     { 
@@ -307,7 +307,7 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     public function getOffset(): int
     {

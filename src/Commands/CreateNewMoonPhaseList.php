@@ -21,7 +21,7 @@ class CreateNewMoonPhaseList extends AbstractLunarCommandListOutput
     use HasDateTimeOption;
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInfoTableHeader(): array 
     { 
@@ -32,7 +32,7 @@ class CreateNewMoonPhaseList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getInformationData(): array 
     { 
@@ -65,7 +65,7 @@ class CreateNewMoonPhaseList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getDataTableHeader(): array 
     { 
@@ -77,7 +77,7 @@ class CreateNewMoonPhaseList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getListData(): array 
     { 
@@ -108,7 +108,7 @@ class CreateNewMoonPhaseList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function getOuputType(): int 
     { 
@@ -116,7 +116,7 @@ class CreateNewMoonPhaseList extends AbstractLunarCommandListOutput
     }
 
     /**
-     * @inheritdoc
+     *{@inheritdoc}
      */
     protected function configure()
     {
