@@ -47,3 +47,87 @@ Kể từ phiên bản `2.1.0`, lớp `SolarTerm` có sẵn để khởi tạo h
 | `begin()`                 | Trả về một đối tượng mới với thông tin là vị trí bắt đầu của Tiết khí             |
 | `next() `                 | Tìm các tiết khí tiếp theo (chưa đến), trả về đối tượng mới                       |
 | `previous() `             | Tìm các tiết khí trước đó (đã qua), trả về đối tượng mới                          |
+
+## 3. Khởi tạo đối tượng
+
+```php
+<?php
+
+// Cấu hình 1 múi giờ bắt đầu (tùy chọn)
+
+use VanTran\LunarCalendar\LunarDateTime;
+use VanTran\LunarCalendar\SolarTerm;
+
+$timezone = new DateTimeZone('UTC');
+
+// Khởi tạo từ thời điểm 'hiện tại' từ phương thức tĩnh
+$solarTermNow = SolarTerm::now($timezone);
+
+// Khởi tạo từ một mốc Âm lịch, hoặc một triển khai của JulianDayNumberInterface bất kỳ
+$lunar = new LunarDateTime('20-10-2023', $timezone);
+$solarTermFromLunar = new SolarTerm($lunar);
+
+// Khởi tạo từ một mốc Dương lịch
+$solarTermFromGregorian = SolarTerm::createFromGregorian('01-09-1994', $timezone);
+
+echo $solarTermNow->getIndex() . "\r\n";
+echo $solarTermNow->getDegrees() . "\r\n";
+echo $solarTermNow->getCharacter() . "\r\n";
+echo $solarTermNow->getLabel() . "\r\n";
+echo $solarTermNow->getJd() . "\r\n";
+```
+
+## 4. Tìm điểm bắt đầu Tiết Khí
+
+```php
+<?php
+
+use VanTran\LunarCalendar\SolarTerm;
+
+// Tìm điểm bắt đầu
+$solarTerm = SolarTerm::now();
+$begin = $solarTerm->begin();
+
+echo $begin->getDegrees() . "\r\n";
+echo $begin->getLabel() . "\r\n";
+```
+
+## 5. Tìm tiết khí tiếp theo (chưa đến)
+
+```php
+<?php
+
+use VanTran\LunarCalendar\SolarTerm;
+
+// Tìm tiết khí kế tiếp
+$solarTerm = SolarTerm::now();
+$next1Term = $solarTerm->next();
+
+echo $next1Term->getDegrees() . "\r\n";
+echo $next1Term->getLabel() . "\r\n";
+
+// Tìm tiết khí thứ 2, 3, 4, 5,.., n) tiếp theo
+$next3Term = $solarTerm->next(3);
+echo $next3Term->getDegrees() . "\r\n";
+echo $next3Term->getLabel() . "\r\n";
+```
+
+## 6. Tìm tiết khí trước đó (đã qua)
+
+```php
+<?php
+
+use VanTran\LunarCalendar\SolarTerm;
+
+// Tìm tiết khí kế tiếp
+$solarTerm = SolarTerm::now();
+$prev1Term = $solarTerm->previuos();
+
+echo $prev1Term->getDegrees() . "\r\n";
+echo $prev1Term->getLabel() . "\r\n";
+
+// Tìm tiết khí thứ 2, 3, 4, 5,.., n) trước đó
+$prev3Term = $solarTerm->previuos(3);
+echo $prev3Term->getDegrees() . "\r\n";
+echo $prev3Term->getLabel() . "\r\n";
+```
