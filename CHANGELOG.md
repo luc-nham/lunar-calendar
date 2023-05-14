@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0.0
+## v2.1.0
 
 ### Các bổ sung hoặc sửa đổi
 - Tối ưu mã
