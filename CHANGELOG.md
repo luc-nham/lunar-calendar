@@ -3,6 +3,12 @@
 ## v2.0.0
 
 ### Các bổ sung hoặc sửa đổi
+- Tối ưu mã
+- Thêm các lớp tính năng làm việc với hệ thống Tiết Khí
+
+## v2.0.0
+
+### Các bổ sung hoặc sửa đổi
 - Tái cấu trúc mã
 - Sửa một số lỗi quan trọng
 - Bổ sung hệ thống Can Chi
