@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.1
+
+### Các bổ sung hoặc sửa đổi
+- Cập nhật, sửa chửa các comment bị thiếu hoặc lỗi
+
+
 ## v2.1.0
 
 ### Các bổ sung hoặc sửa đổi
