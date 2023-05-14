@@ -119,7 +119,7 @@ echo $next3Term->getLabel() . "\r\n";
 
 use VanTran\LunarCalendar\SolarTerm;
 
-// Tìm tiết khí kế tiếp
+// Tìm tiết khí trước đó
 $solarTerm = SolarTerm::now();
 $prev1Term = $solarTerm->previuos();
 
