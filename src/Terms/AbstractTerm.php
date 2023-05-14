@@ -1,16 +1,16 @@
 <?php namespace VanTran\LunarCalendar\Terms;
 
-use VanTran\LunarCalendar\Interfaces\SexagenaryTermInterface;
+use VanTran\LunarCalendar\Interfaces\TermInterface;
 
 /**
- * Lớp trừu tượng cho 2 loại đối tượng Can và Chi
+ * Lớp trừu tượng cho các loại đối tượng Can, Chi và Tiết khí
  * 
  * @author Văn Trần <caovan.info@gmail.com>
  * @package VanTran\LunarCalendar\Terms
  */
-abstract class AbstractSexagenaryTerm implements SexagenaryTermInterface
+abstract class AbstractTerm implements TermInterface
 {
-    public function __construct(private int $index, private string $char)
+    public function __construct(private int $index, private string $char, private string $label)
     {
         
     }
@@ -29,5 +29,13 @@ abstract class AbstractSexagenaryTerm implements SexagenaryTermInterface
     public function getCharacter(): string
     {
         return $this->char;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLabel(): string
+    {
+        return $this->label;
     }
 }

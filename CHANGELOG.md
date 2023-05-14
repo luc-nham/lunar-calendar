@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.0
+
+### Các bổ sung hoặc sửa đổi
+- Tối ưu mã
+- Thêm các lớp tính năng làm việc với hệ thống Tiết Khí
+
 ## v2.0.0
 
 ### Các bổ sung hoặc sửa đổi
