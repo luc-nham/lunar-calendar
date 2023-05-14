@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.1.2
+
+### Các bổ sung hoặc sửa đổi
+- Cập nhật phiên bản PHP tối thiểu
+
 ## v2.1.1
 
 ### Các bổ sung hoặc sửa đổi
