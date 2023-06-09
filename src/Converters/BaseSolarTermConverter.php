@@ -14,6 +14,41 @@ class BaseSolarTermConverter extends BaseSunlongitudeConverter implements SolarT
     use SunlongitudeMutable;
 
     /**
+     * {@inheritdoc}
+     */
+    public function getKey(): string 
+    { 
+        $map = [
+            'xuan_phan',
+            'coc_vu',
+            'thanh_minh',
+            'lap_ha',
+            'tieu_man',
+            'mang_chung',
+            'ha_chi',
+            'tieu_thu',
+            'dai_thu',
+            'lap_thu',
+            'xu_thu',
+            'bach_lo',
+            'thu_phan',
+            'han_lo',
+            'suong_giang',
+            'lap_dong',
+            'tieu_tuyet',
+            'dai_tuyet',
+            'dong_chi',
+            'tieu_han',
+            'dai_han',
+            'lap_xuan',
+            'vu_thuy',
+            'kinh_trap'
+        ];
+
+        return $map[$this->getIndex()];
+    }
+
+    /**
      * Nhãn hệ thống Tiết khí mặc định
      * @return array 
      */

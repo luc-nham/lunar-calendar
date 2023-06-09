@@ -31,10 +31,12 @@ class LunarSexagenaryTest extends TestCase
         $this->assertEquals(4, $dayStem->getIndex());
         $this->assertEquals('e', $dayStem->getCharacter());
         $this->assertEquals('stem', $dayStem->getType());
+        $this->assertEquals('mau', $dayStem->getKey());
 
         $dayBranch = $this->sexagenary->getTerm('d');
         $this->assertEquals(6, $dayBranch->getIndex());
         $this->assertEquals('g', $dayBranch->getCharacter());
         $this->assertEquals('branch', $dayBranch->getType());
+        $this->assertEquals('ngo', $dayBranch->getKey());
     }
 }

@@ -13,6 +13,18 @@ class StemTerm extends AbstractTerm
      */
     private $type = 'stem';
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getKey(): string 
+    { 
+        $map = ['giap', 'at', 'binh', 'dinh', 'mau', 'ky', 'canh', 'tan', 'nham', 'quy'];
+        return $map[$this->getIndex()];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getType(): int|string 
     { 
         return $this->type;

@@ -16,6 +16,13 @@ interface TermInterface
     public function getIndex(): int;
 
     /**
+     * Trả về chuỗi định danh đại diện cho đối tượng
+     * 
+     * @return string 
+     */
+    public function getKey(): string;
+
+    /**
      * Trả về ký tự đại diện xác định đối tượng
      * 
      * @return string 
