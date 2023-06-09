@@ -13,6 +13,18 @@ class BranchTerm extends AbstractTerm
      */
     private $type = 'branch';
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getKey(): string 
+    { 
+        $map = ['ty', 'suu', 'dan', 'mao', 'thin', 'ti', 'ngo', 'mui', 'than', 'dau', 'tuat', 'hoi'];
+        return $map[$this->getIndex()];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getType(): int|string 
     { 
         return $this->type;
