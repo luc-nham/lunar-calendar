@@ -1,44 +1,48 @@
 # Xử lý ngày tháng Âm lịch
+
 Lớp `VanTran\LunarCalendar\LunarDateTime` cung cấp khả năng xử lý ngày tháng Âm lịch đầu vào và hỗ trợ định dạng đầu ra. Hình thức hoạt động tương đối giống với lớp cơ sở `DateTime` của PHP.
 
 ## Định dạng hỗ trợ
+
 Trước khi đi vào xử lý ngày tháng, hãy tìm hiểu về các định dạng thời gian được hỗ trợ. Bảng sau đây liệt kê các ký tự trong bảng chữ cái tương ứng với thời gian Âm lịch:
 
-| Ký tự| Âm lịch tương ứng |
-| -----| ------------- |
-| d    | Ngày trong tháng, có số 0 đứng trước. vd: 01, 09, 15|
-| j    | Ngày trong tháng, không có số 0 đứng trước. vd: 1, 9, 15|
-| L    | Biểu thị số của tháng, có số 0 đứng trước, không có hiệu ứng nào đối với tháng nhuận, vd: 02, 05, 12|
-| l    | Biểu thị số của tháng, không có số 0 đứng trước, không có hiệu ứng nào đối với tháng nhuận, vd: 2, 5, 12|
-| n    | Biểu thị số của tháng, không có số 0 đứng trước, khi tháng nhuận sẽ có thêm hậu tố `+`, vd 3, 5+ 11+|
-| m    | Biểu thị số của tháng, có số 0 đứng trước, khi tháng nhuận sẽ có thêm hậu tố `+`, vd 03, 05+ 11+|
-| Y    | Biểu thị số năm gồm 4 chữ số, vd 1999, 2023...|
-| t    | Biểu thị tổng số ngày trong tháng, đối với tháng đủ là 30, tháng thiếu là 29 ngày|
-| G    | Định dạng 24 giờ không có số 0 đứng đầu. Vd: 1, 8, 10, 19, 23 |
-| g    | Định dạng 12 giờ không có số 0 đứng đầu. Vd: 1, 8, 10, 7, 11 |
-| H    | Định dạng 24 giờ có số 0 đứng đầu. Vd: 01, 08, 10, 19, 23 |
-| h    | Định dạng 12 giờ có số 0 đứng đầu. Vd: 01, 08, 10, 07, 11 |
-| i    | Định dạng phút có số 0 đứng đầu |
-| s    | Định dạng giây có số 0 đứng đầu |
-| a    | Chữ in thường trong tiếng Anh phân biệt buổi sáng và buổi chiều: am - pm |
-| A    | Chữ in HOA trong tiếng Anh phân biệt buổi sáng và buổi chiều: AM - PM |
-| P    | Chênh lệch giờ địa phương với giờ Greenwich (GMT) với dấu hai chấm giữa giờ và phút (+07:00) |
-| U    | Số giây kể từ Unix Epoch (ngày 1 tháng 1 năm 1970 00:00:00 GMT) |
-| Z    | Độ lệch múi giờ, tính bằng giây |
-| C    | Chuỗi `(+)` xác định tháng nhuận - kết hợp khi sử dụng 'l' hoặc 'L' thay vì 'm' hoặc 'n' |
+| Ký tự | Âm lịch tương ứng                                                                                        |
+| ----- | -------------------------------------------------------------------------------------------------------- |
+| d     | Ngày trong tháng, có số 0 đứng trước. vd: 01, 09, 15                                                     |
+| j     | Ngày trong tháng, không có số 0 đứng trước. vd: 1, 9, 15                                                 |
+| L     | Biểu thị số của tháng, có số 0 đứng trước, không có hiệu ứng nào đối với tháng nhuận, vd: 02, 05, 12     |
+| l     | Biểu thị số của tháng, không có số 0 đứng trước, không có hiệu ứng nào đối với tháng nhuận, vd: 2, 5, 12 |
+| n     | Biểu thị số của tháng, không có số 0 đứng trước, khi tháng nhuận sẽ có thêm hậu tố `+`, vd 3, 5+ 11+     |
+| m     | Biểu thị số của tháng, có số 0 đứng trước, khi tháng nhuận sẽ có thêm hậu tố `+`, vd 03, 05+ 11+         |
+| Y     | Biểu thị số năm gồm 4 chữ số, vd 1999, 2023...                                                           |
+| t     | Biểu thị tổng số ngày trong tháng, đối với tháng đủ là 30, tháng thiếu là 29 ngày                        |
+| G     | Định dạng 24 giờ không có số 0 đứng đầu. Vd: 1, 8, 10, 19, 23                                            |
+| g     | Định dạng 12 giờ không có số 0 đứng đầu. Vd: 1, 8, 10, 7, 11                                             |
+| H     | Định dạng 24 giờ có số 0 đứng đầu. Vd: 01, 08, 10, 19, 23                                                |
+| h     | Định dạng 12 giờ có số 0 đứng đầu. Vd: 01, 08, 10, 07, 11                                                |
+| i     | Định dạng phút có số 0 đứng đầu                                                                          |
+| s     | Định dạng giây có số 0 đứng đầu                                                                          |
+| a     | Chữ in thường trong tiếng Anh phân biệt buổi sáng và buổi chiều: am - pm                                 |
+| A     | Chữ in HOA trong tiếng Anh phân biệt buổi sáng và buổi chiều: AM - PM                                    |
+| P     | Chênh lệch giờ địa phương với giờ Greenwich (GMT) với dấu hai chấm giữa giờ và phút (+07:00)             |
+| U     | Số giây kể từ Unix Epoch (ngày 1 tháng 1 năm 1970 00:00:00 GMT)                                          |
+| Z     | Độ lệch múi giờ, tính bằng giây                                                                          |
+| C     | Chuỗi `(+)` xác định tháng nhuận - kết hợp khi sử dụng 'l' hoặc 'L' thay vì 'm' hoặc 'n'                 |
+| c     | Trả về số tháng nhuận trong năm nếu có, hoặc 0 nếu năm không nhuận                                       |
 
 ## Khởi tạo thời gian Âm lịch
+
 Hàm tạo của lớp `VanTran\LunarCalendar\LunarDateTime` có thể phân tích cú pháp 1 chuỗi thời gian Âm lịch đầu vào và chuyển đổi nó thành thời gian chính xác. Danh sách một số định dạng phổ biến nhất được hỗ trợ:
 
-| Thời gian đầu vào         | Định dạng được hỗ trợ    |
-| ------------------------- | ------------------------ |
-|20/10/2020                 | d/m/Y                    |
-|20-10-2020                 | d/m/Y                    |
-|2020-10-20                 | Y-m-d                    |
-|20/10+/2020                | d/m/Y                    |
-|20/10/2020 (+)             | d/m/Y C                  |
-|20/10/2020 00:00           | d/m/Y H:i                |
-|20/10/2020 00:00 +07:00    | d/m/Y H:i P              |
+| Thời gian đầu vào       | Định dạng được hỗ trợ |
+| ----------------------- | --------------------- |
+| 20/10/2020              | d/m/Y                 |
+| 20-10-2020              | d/m/Y                 |
+| 2020-10-20              | Y-m-d                 |
+| 20/10+/2020             | d/m/Y                 |
+| 20/10/2020 (+)          | d/m/Y C               |
+| 20/10/2020 00:00        | d/m/Y H:i             |
+| 20/10/2020 00:00 +07:00 | d/m/Y H:i P           |
 
 ```php
 <?php
@@ -56,10 +60,11 @@ echo $lunar->format('h:ia');    // Đầu ra: 08:30pm
 ```
 
 ## Xử lý tháng nhuận
+
 Không giống như Dương lịch chỉ nhuận vào tháng 02, tháng Nhuận trong Âm lịch khá phức tạp và không cố định. Để xử lý thời gian Âm lịch trong tháng nhuận, có 2 giải pháp như sau:
+
 - Đặt dấu '+' phía sau tháng nhuận, thích hợp khi sử dụng định dạng phân tách ngày tháng bằng dấu gạch chéo, vd 20/02+/2023. Nếu bạn ưa thích các loại dấu phân tách khác, hãy cân nhắc sử dụng giải pháp thứ 2.
 - Đặt '(+)' ở phía sau chuỗi thời gian. Chẳng hạn: 20-02-2023 (+) sẽ dễ đọc hơn 20-02+-2023
-
 
 ```php
 <?php
@@ -83,7 +88,9 @@ echo $output; // Đầu ra: 20-02-2023 nhuận
 ```
 
 ## Khớp dữ liệu bị sai
+
 Tất nhiên, nếu lớp `VanTran\LunarCalendar\LunarDateTime` chỉ nhận 1 đầu vào và định dạng lại đầu ra tùy chỉnh thì nó không mang nhiều ý nghĩa lắm. Điểm thú vị là nó có thể nhận biết được thời gian đầu vào bị sai và tự động sửa chữa lại cho đúng. Một số trường hợp thường xảy ra:
+
 - Bạn đang ở ngày 29 của một tháng, nhưng bạn không biết chính xác ngày mai là ngày 30 hay mùng 01 của tháng kế tiếp.
 - Năm nay nhuận tháng 8, nhưng bạn nhớ lầm là tháng 5
 
@@ -100,6 +107,7 @@ echo $lunar->format('d/m/Y'); // 01/01/2026
 ```
 
 ## Tính ngày tháng Âm lịch từ Dương lịch
+
 Thông thường, Dương lịch được sử dụng phổ biến và rộng rãi hơn trong mọi trường hợp. Lớp `LunarDateTime` cũng cung cấp các phương pháp để tính toán ngày tháng Âm lịch từ một mốc Dương lịch.
 
 ```php
@@ -119,9 +127,11 @@ echo $lunar->format('d/m/Y'); // 22/03/2023
 ```
 
 ## Xử lý múi giờ địa phương
-Để lập lịch chính xác, múi giờ địa phương là một tham số trọng yếu. Đối với Âm lịch Việt Nam, múi giờ tiêu chuẩn là `UTC+07:00`. Đồng thời cũng có 1 múi giờ khác là `Asia/Ho_Chi_Minh`. Tuy nhiên, hãy lưu ý nếu bạn sử dụng múi giờ này vì nó bị ảnh hưởng bởi một số yếu tố địa chính trị. Chẳng hạn từ 15 tháng 3 năm 1945 – tháng 9 năm 1945, trong giai đoạn Nhật đô hộ Việt Nam, múi giờ khi đó bị áp đặt là `UTC+09:00`. 
+
+Để lập lịch chính xác, múi giờ địa phương là một tham số trọng yếu. Đối với Âm lịch Việt Nam, múi giờ tiêu chuẩn là `UTC+07:00`. Đồng thời cũng có 1 múi giờ khác là `Asia/Ho_Chi_Minh`. Tuy nhiên, hãy lưu ý nếu bạn sử dụng múi giờ này vì nó bị ảnh hưởng bởi một số yếu tố địa chính trị. Chẳng hạn từ 15 tháng 3 năm 1945 – tháng 9 năm 1945, trong giai đoạn Nhật đô hộ Việt Nam, múi giờ khi đó bị áp đặt là `UTC+09:00`.
 
 Có 2 phương pháp để bổ sung múi giờ địa phương khi khởi tạo thời gian Âm lịch:
+
 - Truyền trực tiếp tham số múi giờ được hỗ trợ vào chuỗi thời gian
 - Khởi tạo và sử dụng đối tượng `DateTimeZone`
 
@@ -142,7 +152,9 @@ $timezone = new DateTimeZone('+0700');
 $lunar = new LunarDateTime('25/02/2023', $timezone);
 echo $lunar->format('d/m/Y P'); // 25/02/2023 +07:00
 ```
+
 ## Chuyển đổi Âm lịch sang Dương lịch
+
 Lớp `LunarDateTime` cũng cung cấp một phương thức `toDateTime` để hỗ trợ chuyển đổi một thời điểm Âm lịch sang Dương lịch tương ứng. Khi thực hiện, múi giờ địa phương sẽ được đồng bộ.
 
 ```php
@@ -158,14 +170,15 @@ echo $gregorian->format('d/m/Y H:i:s P'); // 16/03/2023 00:00:00 +07:00
 ```
 
 ## Phương thức khác
+
 Lớp `LunarDateTime` cũng cung cấp một số phương thức `public`, giúp truy xuất các giá trị cần thiết.
 
-| Tên phương thức   |                                       Mô tả                               |
-| ----------------- | ------------------------------------------------------------------------- |
-|`getJd()`          | Trả về số ngày Julian (JDN) tương ứng với thời điểm Âm lịch.              |
-|`getMidnightJd()`  | Trả về số ngày Julian (JDN) của thời điểm nửa đêm (00:00)                 |
-|`getOffset()`      | Trả về chênh lệch giờ địa phương với giờ Greenwich (GMT), tính bằng giây  |
-|`getTimestamp()`   | Trả về số giây kể từ Unix Epoch (ngày 1 tháng 1 năm 1970 00:00:00 GMT)    |
-|`getTimezone()`    | Trả về đối tượng `DateTimeZone` tương ứng với thời điểm tạo Âm lịch       |
+| Tên phương thức   | Mô tả                                                                    |
+| ----------------- | ------------------------------------------------------------------------ |
+| `getJd()`         | Trả về số ngày Julian (JDN) tương ứng với thời điểm Âm lịch.             |
+| `getMidnightJd()` | Trả về số ngày Julian (JDN) của thời điểm nửa đêm (00:00)                |
+| `getOffset()`     | Trả về chênh lệch giờ địa phương với giờ Greenwich (GMT), tính bằng giây |
+| `getTimestamp()`  | Trả về số giây kể từ Unix Epoch (ngày 1 tháng 1 năm 1970 00:00:00 GMT)   |
+| `getTimezone()`   | Trả về đối tượng `DateTimeZone` tương ứng với thời điểm tạo Âm lịch      |
 
 Lưu ý, số ngày Julian (JDN) đầu ra tuân theo tiêu chuẩn quốc tế, nghĩa là ngày Julius mới sẽ bắt đầu vào lúc 12:00 buổi trưa, và theo giờ UTC.
