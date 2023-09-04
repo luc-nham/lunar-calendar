@@ -95,10 +95,13 @@ class SexagenaryFormatter implements FormatterInterface
             '/%H/',
             '/%N/',
             '/%h/',
+            '/%W/',
+            '/%w/',
             '/D\+/',
             '/M\+/',
             '/Y\+/',
             '/H\+/',
+            '/W\+/',
         ];
 
         foreach ($pattern as $item) {
