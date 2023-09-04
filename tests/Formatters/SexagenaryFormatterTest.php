@@ -32,5 +32,8 @@ class SexagenaryFormatterTest extends TestCase
 
         $this->assertEquals($fullDate, $formatter->format($formatStr));
         $this->assertEquals($fullDate, $formatter->format($formatStrType2));
+
+        // Test week
+        $this->assertEquals('Giáp Tý', $formatter->format('W+'));
     }
 }

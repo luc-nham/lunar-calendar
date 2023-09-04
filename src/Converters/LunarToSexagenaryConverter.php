@@ -156,7 +156,19 @@ class LunarToSexagenaryConverter implements SexagenariesHandlerInterface
                 })();
 
                 break;
-            
+
+            case 'W':
+                return 0;
+
+            case 'w': 
+                $val = $this->getIndex('d') - $this->getIndex('D');
+
+                if ($val < 0) {
+                    $val += 12;
+                }
+
+                break;
+
             default:
                 return $key;
         }
