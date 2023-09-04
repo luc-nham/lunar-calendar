@@ -41,6 +41,7 @@ class LunarDateTimeFormatter implements FormatterInterface
         'U', // Số giây kể từ Unix Epoch (ngày 1 tháng 1 năm 1970 00:00:00 GMT)
         'Z', // Độ lệch múi giờ tính bằng giây
         'C', // Chuỗi (+) xác định tháng nhuận - kết hợp khi sử dụng 'l' hoặc 'L' thay vì 'm' hoặc 'n'
+        'c', // Trả về số tháng nhuận trong năm nếu có, hoặc trả về 0 nếu năm không nhuận
     ];
 
     /**
@@ -206,6 +207,10 @@ class LunarDateTimeFormatter implements FormatterInterface
                     $val = '(+)';
                 }
 
+                break;
+
+            case 'c': 
+                $val = $comp->getLeapMonth()->isLeap() ? $comp->getLeapMonth()->getMonth() : 0;
                 break;
             
             default:
