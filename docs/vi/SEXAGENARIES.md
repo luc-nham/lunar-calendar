@@ -106,22 +106,23 @@ Nếu lớp `LunarSexagenary` chỉ có khả năng định dạng các nhãn / 
 
 Để lấy các giá trị số và ký tự đại diện, lớp `LunarSexagenary` cung cấp một phương thức `getTerm`. Với tham số duy nhất là ký tự định dạng đại diện (xem bảng 2.1), lưu ý, hàm chỉ hỗ trợ danh sách các ký tự đơn: D, d, m, m, Y, y, H, h, N.
 
-Bảng dưới đây liệt kê các số và ký tự đại diện tương ứng với 10 Can và 12 Chi.
+Bảng dưới đây liệt kê các số và ký tự đại diện, và khóa tương ứng với 10 Can và 12 Chi.
+(Khóa hỗ trợ định dạng không dấu bằng Tiếng Việt)
 
-| Số  | Ký tự | Can  | Chi  |
-| --- | ----- | ---- | ---- |
-| 0   | a     | Giáp | Tý   |
-| 1   | b     | Ất   | Sửủ  |
-| 2   | c     | Bính | Dần  |
-| 3   | d     | Đinh | Mão  |
-| 4   | e     | Mậu  | Thìn |
-| 5   | f     | Kỷ   | Tị   |
-| 6   | g     | Canh | Ngọ  |
-| 7   | h     | Tân  | Mùi  |
-| 8   | i     | Nhâm | Thân |
-| 9   | j     | Quý  | Dậu  |
-| 10  | k     |      | Tuất |
-| 11  | l     |      | Hợi  |
+| Số  | Ký tự | Can (Nhãn / Khóa) | Chi (Nhãn / Khóa) |
+| --- | ----- | ----------------- | ----------------- |
+| 0   | a     | Giáp / giap       | Tý / ty           |
+| 1   | b     | Ất / at           | Sửủ /suu          |
+| 2   | c     | Bính / binh       | Dần /dan          |
+| 3   | d     | Đinh / dinh       | Mão / mao         |
+| 4   | e     | Mậu / mau         | Thìn / thin       |
+| 5   | f     | Kỷ / ky           | Tị / ti           |
+| 6   | g     | Canh / canh       | Ngọ / ngo         |
+| 7   | h     | Tân / tan         | Mùi / mui         |
+| 8   | i     | Nhâm / nham       | Thân / than       |
+| 9   | j     | Quý / quy         | Dậu / dau         |
+| 10  | k     |                   | Tuất / tuat       |
+| 11  | l     |                   | Hợi / hoi         |
 
 _Bảng 3.1_
 
