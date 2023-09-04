@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.1.6
+
+### Các bổ sung hoặc sửa đổi
+
+- Sửa lỗi ánh xạ sai khóa và nhãn tiết khí
+- Cập nhật tài liệu
+
 ## v2.1.5
 
 ### Các bổ sung hoặc sửa đổi

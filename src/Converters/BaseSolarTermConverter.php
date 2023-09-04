@@ -20,8 +20,8 @@ class BaseSolarTermConverter extends BaseSunlongitudeConverter implements SolarT
     { 
         $map = [
             'xuan_phan',
-            'coc_vu',
             'thanh_minh',
+            'coc_vu',
             'lap_ha',
             'tieu_man',
             'mang_chung',
@@ -56,8 +56,8 @@ class BaseSolarTermConverter extends BaseSunlongitudeConverter implements SolarT
     {
         return [
             'Xuân Phân',
-            'Cốc Vũ',
             'Thanh Minh',
+            'Cốc Vũ',
             'Lập Hạ',
             'Tiểu Mãn',
             'Mang Chủng',
