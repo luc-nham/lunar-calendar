@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.7
+
+### Các bổ sung hoặc sửa đổi
+
+- Cập nhật tài liệu
+
 ## v2.1.6
 
 ### Các bổ sung hoặc sửa đổi
