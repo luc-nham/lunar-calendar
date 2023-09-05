@@ -121,9 +121,14 @@ $lunar = new LunarDateTime('2023-05-11', $timezone, LunarDateTime::GREGORIAN_INP
 
 echo $lunar->format('d/m/Y'); // 22/03/2023
 
-// Phương thức tĩnh
+// Phương thức tĩnh với tham số là chuỗi dương lịch
 $lunar = LunarDateTime::createFromGregorian('2023-05-11', $timezone);
 echo $lunar->format('d/m/Y'); // 22/03/2023
+
+// Phương thức tĩnh với tham số là đối tượng triển khai từ DateTimeInterface
+$lunar = LunarDateTime::createFromGregorian(new DateTime('2023-05-11'), $timezone);
+echo $lunar->format('d/m/Y'); // 22/03/2023
+
 ```
 
 ## Xử lý múi giờ địa phương
