@@ -1,5 +1,6 @@
 <?php namespace VanTran\LunarCalendar\Tests;
 
+use DateTime;
 use DateTimeZone;
 use Exception;
 use PHPUnit\Framework\ExpectationFailedException;
@@ -55,5 +56,22 @@ class LunaDateTimeTest extends TestCase
     {
         $lunar = new LunarDateTime('01/10/2023 +0700');
         $this->assertNotNull($lunar->getTimezone());
+    }
+
+    /**
+     * Kiểm tra khởi tạo Âm lịch từ một đối tượng triển khai DateTimeInterface
+     * 
+     * @return void 
+     * @throws Exception 
+     * @throws Throwable 
+     * @throws ExpectationFailedException 
+     */
+    public function testCreateFromDateTimeInterface(): void
+    {
+        $datetime = new DateTime('2023-04-28', new DateTimeZone('UTC'));
+        $lunar = LunarDateTime::createFromGregorian($datetime);
+
+        $this->assertEquals('09/03/2023', $lunar->format('d/m/Y'));
+        $this->assertEquals('UTC', $lunar->getTimezone()->getName());
     }
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.8
+
+### Các bổ sung hoặc sửa đổi
+
+- Hỗ trợ khởi tạo Âm lịch từ một đối tượng triển khai `DateTimeInterface`
+
 ## v2.1.7
 
 ### Các bổ sung hoặc sửa đổi

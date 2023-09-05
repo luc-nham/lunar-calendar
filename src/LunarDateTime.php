@@ -1,6 +1,7 @@
 <?php namespace VanTran\LunarCalendar;
 
 use DateTime;
+use DateTimeInterface;
 use DateTimeZone;
 use Exception;
 use Throwable;
@@ -48,13 +49,13 @@ class LunarDateTime implements LunarDateTimeInteface
     /**
      * Tạo đối tượng mới
      * 
-     * @param string $datetime Chuỗi thòi gian âm lịch, để trống hoặc đặt 'now' để lấy thời điểm hiện tại
+     * @param string|DateTimeInterface $datetime Chuỗi thòi gian âm lịch, để trống hoặc đặt 'now' để lấy thời điểm hiện tại
      * @param null|DateTimeZone $timezone Múi giờ địa phương
      * @param int $type Xác định kiểu dữ liệu thời gian đầu vào là Âm lịch (1) hay Dương lịch (2)
      * @return void 
      */
     public function __construct(
-        private $datetime = 'now', 
+        private string|DateTimeInterface $datetime = 'now', 
         private ?DateTimeZone $timezone = null, 
         private int $type = self::LUNAR_INPUT)
     {
@@ -75,11 +76,11 @@ class LunarDateTime implements LunarDateTimeInteface
     /**
      * Khởi tạo / chuyển đổi một mốc thời gian Dương lịch sang Âm lịch
      * 
-     * @param string $datetime 
+     * @param string|DateTimeInterface $datetime 
      * @param null|DateTimeZone $timezone 
      * @return LunarDateTime 
      */
-    public static function createFromGregorian(string $datetime, ?DateTimeZone $timezone = null): self
+    public static function createFromGregorian(string | DateTimeInterface $datetime, ?DateTimeZone $timezone = null): self
     {
         return new self($datetime, $timezone, self::GREGORIAN_INPUT);
     }
@@ -93,11 +94,18 @@ class LunarDateTime implements LunarDateTimeInteface
     {
         $datetime = $this->datetime;
 
-        if ($datetime === 'now' || $datetime === '' || $this->type === self::GREGORIAN_INPUT) {
-            $date = new DateTime($datetime);
+        if (
+            $datetime === 'now' || 
+            $datetime === ''  || 
+            $datetime instanceof DateTimeInterface ||
+            $this->type === self::GREGORIAN_INPUT
+            ) {
+            $date = $datetime instanceof DateTimeInterface ? $datetime : new DateTime($datetime);
 
             if ($this->getTimezone()) {
-                $date->setTimezone($this->getTimezone());
+                if (method_exists($date, 'setTimezone')) {
+                    $date->{'setTimezone'}($this->getTimezone());
+                }
             }
             else {
                 $this->timezone = $date->getTimezone();
