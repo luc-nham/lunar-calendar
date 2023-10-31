@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.9
+
+### Các bổ sung hoặc sửa đổi
+
+- Sửa lỗi chuyển đổi Dương lịch sang Âm lịch ở mốc ngày 14 tháng 10 năm 2023, lúc 21 giờ, múi giờ GMT+7.
+
 ## v2.1.8
 
 ### Các bổ sung hoặc sửa đổi
