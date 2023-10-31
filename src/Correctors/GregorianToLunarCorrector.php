@@ -3,6 +3,7 @@
 use VanTran\LunarCalendar\Converters\GregorianToJDNConverter;
 use VanTran\LunarCalendar\Converters\JdnToNewMoonPhaseConverter;
 use VanTran\LunarCalendar\Converters\WinterSolsticeNewMoonConverter;
+use VanTran\LunarCalendar\Interfaces\MoonPhaseInterface;
 
 /**
  * Bộ chuyển đổi - khớp ngày tháng Âm lịch từ một mốc Dương lịch
@@ -39,6 +40,21 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
     }
 
     /**
+     * {@inheritdoc}
+     * @return MoonPhaseInterface 
+     */
+    public function getNewMoon(): MoonPhaseInterface
+    {
+        $nm = parent::getNewMoon();
+
+        if ($nm->getMidnightJd() > $this->getMidnightJd()) {
+            $nm = $nm->subtract(1);
+        }
+
+        return $nm;
+    }
+
+    /**
      * Biến đổi lớp đầu vào từ lưu trữ ngày tháng Dương lịch thành ngày tháng Âm lịch
      * 
      * @return void 
@@ -51,6 +67,7 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
 
         $year = ($this->sameYear) ? $this->storage->getYear() : $this->storage->getYear() - 1;
         $day = $this->getMidnightJd() - $nm->getMidnightJd() + 1;
+
         $month = (function () use ($leap, $nm, $wsnm): int 
         {
             $phases = $wsnm->getTotalCycles() - $nm->getTotalCycles();
