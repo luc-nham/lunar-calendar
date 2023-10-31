@@ -1,6 +1,6 @@
 ---
 name: Báo cáo lỗi
-about: Create a report to help us improve
+about: Tạo báo cáo để giúp chúng tôi cải thiện
 title: ''
 labels: ''
 assignees: ''
