@@ -74,4 +74,18 @@ class LunaDateTimeTest extends TestCase
         $this->assertEquals('09/03/2023', $lunar->format('d/m/Y'));
         $this->assertEquals('UTC', $lunar->getTimezone()->getName());
     }
+
+    /**
+     * Kiểm tra sửa lỗi (được báo cáo) khi chuyển đổi từ Dương lịch sang Âm lịch vào
+     * ngày 14 tháng 10 năm 2023, thời gian từ 21 giờ, múi giờ GMT+7
+     * 
+     * @return void 
+     */
+    public function testFixErrorOnSpecifiedDate(): void
+    {
+        $datetime = new DateTime('2023-10-14 21:04:06', new DateTimeZone('+0700'));
+        $lunar = LunarDateTime::createFromGregorian($datetime);
+
+        $this->assertEquals('30-08-2023', $lunar->format('d-m-Y'));
+    }
 }
