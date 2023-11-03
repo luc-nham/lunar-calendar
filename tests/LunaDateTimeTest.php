@@ -88,4 +88,40 @@ class LunaDateTimeTest extends TestCase
 
         $this->assertEquals('30-08-2023', $lunar->format('d-m-Y'));
     }
+
+    /**
+     * Kiểm tra sửa lỗi lấy sai số tháng âm lịch trong các năm nhuận khi tháng cần
+     * tính chưa đến tháng nhuận
+     * 
+     * @return void
+     */
+    public function testFixErrorMonthMumberOnLeapYears(): void
+    {
+        $lunar = new LunarDateTime('2023-03-17', new DateTimeZone('+0700'), 2);
+        $this->assertEquals('26/02/2023', $lunar->format('d/m/Y'));
+
+        $lunar = new LunarDateTime('1990-03-19', new DateTimeZone('+0700'), 2);
+        $this->assertEquals('23/02/1990', $lunar->format('d/m/Y'));
+
+        $lunar = new LunarDateTime('1990-07-24', new DateTimeZone('UTC'), 2);
+        $this->assertEquals('03/06/1990', $lunar->format('d/m/Y'));
+    }
+
+    /**
+     * Kiểm tra sửa lỗi tính sai số năm ở các năm nhuận khi thời gian chuyển đổi
+     * rơi vào khoảng tháng Giêng âm lịch
+     * 
+     * @return void
+     */
+    public function testFixErrorYearNumberOnLeapYears(): void
+    {
+        $lunar = new LunarDateTime('1990-01-28', new DateTimeZone('+0700'), 2);
+        $this->assertEquals('02/01/1990', $lunar->format('d/m/Y'));
+
+        $lunar = new LunarDateTime('1990-02-25', new DateTimeZone('+0700'), 2);
+        $this->assertEquals('01/02/1990', $lunar->format('d/m/Y'));
+
+        $lunar = new LunarDateTime('1990-01-19', new DateTimeZone('+0700'), 2);
+        $this->assertEquals('23/12/1989', $lunar->format('d/m/Y'));
+    }
 }
