@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.2.0
+
+### Các bổ sung hoặc sửa đổi
+
+- Sửa lỗi tính toán sai tháng và năm khi chuyển đổi các năm Dương lịch sang Âm lịch có nhuận.
+
 ## v2.1.9
 
 ### Các bổ sung hoặc sửa đổi
