@@ -1,5 +1,6 @@
 <?php namespace VanTran\LunarCalendar\Correctors;
 
+use Exception;
 use VanTran\LunarCalendar\Converters\GregorianToJDNConverter;
 use VanTran\LunarCalendar\Converters\JdnToNewMoonPhaseConverter;
 use VanTran\LunarCalendar\Converters\WinterSolsticeNewMoonConverter;
@@ -29,9 +30,12 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
         // Khởi tạo điểm Sóc tháng 11 Âm lịch
         $this->initWsNewMoon();
 
-        // Khởi tạo tháng nhuận
-        $this->initLeapMonth();
-
+        // Khởi tạo tháng nhuận, chỉ cần thiết khi số năm Dương lịch và Âm lịch
+        // Không bằng nhau.
+        if (!$this->sameYear) {
+            $this->initLeapMonth();
+        }
+        
         // Khởi tạo số ngày của tháng
         $this->initDayOfMonth();
 
@@ -70,31 +74,53 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
 
         $month = (function () use ($leap, $nm, $wsnm): int 
         {
+            /**
+             * Trường hợp điểm sóc đang tính bằng với điểm sóc của tháng nhuận 
+             * (nếu có), thì tháng cần tính chính là tháng nhuận.
+             */
+            if ($leap->isLeap() && $leap->getMidnightJd() == $nm->getMidnightJd()) {
+                return $leap->getMonth();
+            }
+
+            /**
+             * Trường hợp điểm sóc đang tính bằng với điểm sóc tháng 11 âm lịch,
+             * thì tháng cần tính chính là tháng 11 của năm âm lịch đó.
+             */
+            if ($wsnm->getMidnightJd() === $nm->getMidnightJd()) {
+                return 11;
+            }
+
+            /**
+             * Tổng số chu kỳ trăng từ điểm sóc tháng 11 âm lịch cho đến điểm sóc
+             * tháng đang tính.
+             */
             $phases = $wsnm->getTotalCycles() - $nm->getTotalCycles();
 
-            if ($phases === 0) {
-                $val = 11;
-            } elseif ($phases < 0) {
-                $val = 12;
-
-                if ($phases === -1 && $leap->getMonth() === 11) {
-                    $val = 11;
+            /**
+             * Trường hợp hiệu số tổng pha nhỏ hơn 0, thì tháng cần tính rơi vào
+             * tháng 11 nhuận (nếu có), hoặc tháng 12 âm lịch cùng năm.
+             */
+            if ($phases < 0 && $phases >= - 2) {
+                if ($phases === -2 && !$leap->getMonth() === 11) {
+                    throw new Exception("Lỗi. Không xác định được tháng Âm lịch.");
                 }
-            } else {
-                $val = 11 - $phases;
 
-                if ($leap->isLeap()) {
-                    if (
-                        $leap->getMidnightJd() !== $nm->getMidnightJd() &&
-                        $val < $leap->getMonth() &&
-                        $leap->getMonth() != 11
-                    ) {
-                        $val --;
-                    }
+                if ($leap->getMonth() === 11) {
+                    return $phases === -1 ? 11 : 12;
+                } else {
+                    return 12;
                 }
             }
 
-            return $val;
+            $m = 11 - $phases;
+
+            if ($leap->isLeap()) {
+                if ($leap->getMidnightJd() > $nm->getMidnightJd()) {
+                    $m ++;
+                }
+            }
+
+            return $m;
         })();
 
         // Biến đổi kho lưu trữ
@@ -103,7 +129,7 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
         $this->storage->setYear($year);
 
         if ($leap->isLeap() && $leap->getMidnightJd() == $nm->getMidnightJd()) {
-             $this->storage->setIsLeapMonth(true);
+            $this->storage->setIsLeapMonth(true);
         }
     }
 
@@ -142,6 +168,7 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
     protected function initWsNewMoon(): void
     {
         parent::initWsNewMoon();
+        parent::initLeapMonth();
 
         /**
          * Trường hợp năm mới Dương lịch đến trước năm mới Âm lịch (thường rơi vào các tháng 1 và 2 dương lịch, tương
@@ -151,8 +178,14 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
          */
         $totalPhase11th = $this->getWsNewMoon()->getTotalCycles();
         $totalPhaseCurrent = $this->getNewMoon()->getTotalCycles();
+        $leap = $this->getLeapMonth();
 
-        if (11 - ($totalPhase11th - $totalPhaseCurrent) <= 0) {
+        $phasese = 11 - ($totalPhase11th - $totalPhaseCurrent);
+
+        if (
+            ($leap->isLeap() && $phasese == -1) ||
+            (!$leap->isLeap() && $phasese == 0)) 
+        {
             $this->sameYear = false;
 
             $this->wsNewMoon = new WinterSolsticeNewMoonConverter(
