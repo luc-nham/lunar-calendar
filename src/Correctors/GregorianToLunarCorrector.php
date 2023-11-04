@@ -179,11 +179,10 @@ class GregorianToLunarCorrector extends LunarDateTimeCorrector
         $totalPhase11th = $this->getWsNewMoon()->getTotalCycles();
         $totalPhaseCurrent = $this->getNewMoon()->getTotalCycles();
         $leap = $this->getLeapMonth();
-
         $phasese = 11 - ($totalPhase11th - $totalPhaseCurrent);
 
         if (
-            ($leap->isLeap() && $phasese == -1) ||
+            $phasese < 0 ||
             (!$leap->isLeap() && $phasese == 0)) 
         {
             $this->sameYear = false;
