@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.2.1
+
+### Các bổ sung hoặc sửa đổi
+
+- Sửa lỗi tính toán sai tổng số ngày trong tháng Âm lịch từ một mốc Âm lịch đầu vào
+- Bổ sung comment giải thích cho mã.
+
 ## v2.2.0
 
 ### Các bổ sung hoặc sửa đổi
