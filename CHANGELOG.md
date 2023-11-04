@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.2.2
+
+### Các bổ sung hoặc sửa đổi
+
+- Sửa lỗi chuyển đổi dương lịch sang âm lịch vào các thời điểm mà dương lịch đã qua năm mới, nhưng âm lịch đang ở tháng 11 năm trước.
+
 ## v2.2.1
 
 ### Các bổ sung hoặc sửa đổi
