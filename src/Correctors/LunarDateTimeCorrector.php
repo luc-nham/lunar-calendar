@@ -176,17 +176,25 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
     }
 
     /**
-     * Khởi tạo tổng số ngày của tháng
+     * Khởi tạo tổng số ngày của tháng và khớp các số liệu khác khi đầu vào là
+     * một mốc ngày Âm lịch không chính xác.
+     * 
      * @return void 
      */
     protected function initDayOfMonth(): void
     {
+        /**
+         * Sử dụng số ngày JDN của điểm Sóc của kỳ trăng mới tiếp theo trừ đi số
+         * ngày JDN của điểm Sóc hiện tại, sẽ được tổng số ngày trong tháng AL.
+         */
         $nextNm = $this->getNewMoon()->add(1);
         $this->dayOfMonth = $nextNm->getMidnightJd() - $this->getNewMoon()->getMidnightJd();
 
-        # Trường hợp số ngày đầu vào lớn hơn số ngày thực tế của tháng, cần làm chính xác lại dữ liệu
-        $day = $this->storage->getDay();
-
+        /**
+         * Trường hợp số ngày đầu vào lớn hơn tổng số ngày trong tháng (ví dụ,
+         * đầu vào là ngày 30/09/2023 AL, trong khi tháng 9 này chỉ có 29 ngày),
+         * tức phải là ngày 01/10/2023, cần phải cập nhật lại số liệu.
+         */
         if ($this->storage->getDay() > $this->dayOfMonth) {
             $day = $this->storage->getDay() - $this->dayOfMonth;
             $month = $this->storage->getMonth() + 1;
@@ -196,7 +204,11 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
                 ($month > 12) ? 1 : $month
             );
             
-            # Trường hợp tháng tháng trở thành tháng 1 năm sau, cần khởi tạo lại toàn bộ dữ liệu
+            /**
+             * Trường hợp tháng tiếp theo trở thành tháng Giêng của năm kế tiếp,
+             * ví dụ đầu vào là 30/12/2021 (sai - dư), toàn bộ dữ liệu cần được
+             * tính toán lại.
+             */
             if ($month == 13) {
                 $this->storage->setYear(
                     $this->storage->getYear() + 1
@@ -206,7 +218,11 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
                 return;
             }
 
-            # Trường hợp tháng trở thành tháng nhuận, khởi tạo lại 1 số bước
+            /**
+             * Trường hợp tháng trở thành tháng nhuận (ví dụ, đầu vào Âm lịch là
+             * ngày 30/06/2017 - tương ứng 01/06+/2017), cần đặt lại các giá trị
+             * của số tháng và đánh dấu nó là tháng nhuận.
+             */
             if (
                 $this->getLeapMonth()->isLeap() &&
                 $month - $this->getLeapMonth()->getMonth() === 1
@@ -215,8 +231,12 @@ class LunarDateTimeCorrector extends BaseJDN implements LunarDateTimeComponentIn
                 $this->storage->setIsLeapMonth(true);
             }
 
-            # Điểm sóc cần được cập nhật lại
+            /**
+             * Điểm sóc thực tế sẽ là điểm sóc của chu kỳ kế tiếp. Tổng số ngày
+             * trong tháng cũng phải được cập nhật lại.
+             */
             $this->newMoon = $nextNm;
+            $this->dayOfMonth = $nextNm->add(1)->getMidnightJd() - $nextNm->getMidnightJd();
         }
     }
 

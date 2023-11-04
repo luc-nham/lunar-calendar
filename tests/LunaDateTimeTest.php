@@ -124,4 +124,23 @@ class LunaDateTimeTest extends TestCase
         $lunar = new LunarDateTime('1990-01-19', new DateTimeZone('+0700'), 2);
         $this->assertEquals('23/12/1989', $lunar->format('d/m/Y'));
     }
+
+    /**
+     * Kiểm tra sửa lỗi tính toán sai tổng số ngày trong tháng trong trường hợp
+     * đầu vào là một chuỗi Âm lịch sai.
+     * @return void
+     */
+    public function testFixErrorTotalDayOfMonth(): void
+    {
+        // Âm lịch đầu vào sai, tháng 09/2023 chỉ có 29 ngày (múi giờ GMT+7).
+        $lunar = new LunarDateTime('30/09/2023 +0700');
+        
+        $this->assertEquals('01/10', $lunar->format('d/m'));
+        $this->assertEquals('30', $lunar->format('t'));
+
+        // Dương lịch tương ứng với ngày 01/10/2023 âm lịch
+        $lunar = new LunarDateTime('2023/11/13 +0700', null, 2);
+        $this->assertEquals('01/10', $lunar->format('d/m'));
+        $this->assertEquals('30', $lunar->format('t'));
+    }
 }
