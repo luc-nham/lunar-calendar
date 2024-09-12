@@ -4,6 +4,7 @@
 
 use Symfony\Component\Console\Application;
 use VanTran\LunarCalendar\Commands\CreateLunarDateTime;
+use VanTran\LunarCalendar\Commands\CreateLunarFistNewMoonList;
 use VanTran\LunarCalendar\Commands\CreateLunarLeapMonthList;
 use VanTran\LunarCalendar\Commands\CreateLunarWsNmpList;
 use VanTran\LunarCalendar\Commands\CreateNewMoonPhaseList;
@@ -22,5 +23,6 @@ $application->add(new CreateNewMoonPhaseList());
 $application->add(new CreateLunarWsNmpList());
 $application->add(new CreateLunarLeapMonthList());
 $application->add(new CreateLunarDateTime());
+$application->add(new CreateLunarFistNewMoonList());
 
 $application->run();
