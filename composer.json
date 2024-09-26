@@ -22,6 +22,11 @@
             "email": "admin@lucnham.com"
         }
     ],
+    "scripts": {
+        "test": "php ./vendor/bin/phpunit",
+        "test:coverage": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-html coverage"
+
+    },
     "require-dev": {
         "phpunit/phpunit": "^11.3"
     }
