@@ -2,12 +2,16 @@
 
 namespace LucNham\LunarCalendar\Tests\Converters;
 
+use LucNham\LunarCalendar\Converters\GregorianToJd;
 use LucNham\LunarCalendar\Converters\JdToMidnightJd;
+use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(JdToMidnightJd::class)]
+#[CoversClass(DateTimeInterval::class)]
+#[CoversClass(GregorianToJd::class)]
 class JdToMidnightJdTest extends TestCase
 {
     public function testDefault()
@@ -37,5 +41,23 @@ class JdToMidnightJdTest extends TestCase
 
         // Change offset to 1970-01-01T12:00-0700
         $c->setOffset(-25200)->forward(fn($j) => $this->assertEquals(2440587.7916667, $j));
+    }
+
+    public function testInputIsLocalMidnight()
+    {
+        (new JdToMidnightJd(2440587.2083333, 25200))
+            ->forward(fn($j) => $this->assertEquals(2440587.2083333, $j));
+
+        (new JdToMidnightJd(2440587.7916667, -25200))
+            ->forward(fn($j) => $this->assertEquals(2440587.7916667, $j));
+    }
+
+    public function testToCoverage()
+    {
+        (new GregorianToJd(new DateTimeInterval(1, 1, 1970, 1), 25200))
+            ->forward(function (float $j) {
+                (new JdToMidnightJd($j, 25200))
+                    ->forward(fn(float $j) => $this->assertEquals(2440587.2083333, $j));
+            });
     }
 }
