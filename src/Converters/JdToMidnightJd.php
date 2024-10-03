@@ -29,28 +29,14 @@ class JdToMidnightJd extends Converter
      */
     public function getOuput(): float
     {
-        $jd = $this->jd;
-        $diff = $this->toFixed(($jd - floor($jd)));
-        $utcMidnight =
-            $diff >= 0.5 ? floor($jd) + 0.5 : floor($jd) - 0.5;
+        $diff = $this->offset() >= 43200 ? 1.5 : 0.5;
+        $decimal = $diff - $this->offset() / 3600 / 24;
+        $midnight = $this->toFixed(floor($this->jd) + $decimal);
 
-        if ($this->offset() === 0) {
-            return $utcMidnight;
+        if ($midnight > $this->jd) {
+            $midnight -= 1;
         }
 
-        $diff2 = $this->toFixed($this->offset() / 86400);
-
-        if ($diff === 0.5 - $diff2) {
-            return $jd;
-        }
-
-        $decimal = 1 - $diff2;
-
-        $midnight =
-            $jd >= $utcMidnight + $decimal
-            ? $utcMidnight + $decimal
-            : $utcMidnight + $decimal - 1;
-
-        return $this->toFixed($midnight);
+        return $midnight;
     }
 }
