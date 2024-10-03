@@ -1,34 +1,33 @@
 {
-    "name": "vantran/lunar-calendar",
+    "name": "luc-nham/lunar-calendar",
     "description": "Thư viện PHP Âm lịch Việt Nam",
     "type": "library",
     "require": {
-        "php": ">=8.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.0",
-        "symfony/console": "^6.2",
-        "brick/varexporter": "^0.3.8"
+        "php": ">=8.2"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "VanTran\\LunarCalendar\\": "src/"
+            "LucNham\\LunarCalendar\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VanTran\\LunarCalendar\\Tests\\": "tests/"
+            "LucNham\\LunarCalendar\\Tests\\": "tests/"
         }
     },
     "authors": [
         {
-            "name": "vantran445",
-            "email": "CaoVan.Info@gmail.com"
+            "name": "luc-nham",
+            "email": "admin@lucnham.com"
         }
     ],
-    "bin": [
-        "bin/lunar-calendar",
-        "bin/lunar"
-    ]
+    "scripts": {
+        "test": "php ./vendor/bin/phpunit",
+        "test:coverage": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.3"
+    }
 }
