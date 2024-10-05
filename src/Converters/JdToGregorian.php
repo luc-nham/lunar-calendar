@@ -37,7 +37,7 @@ class JdToGregorian extends Converter
      */
     public function getOuput(): DateTimeInterval
     {
-        $j1 = $this->jd + $this->offset() / 86400;
+        $j1 = $this->toFixed($this->jd + $this->offset() / 86400);
         $j = floor($j1);
 
         if ($j1 - $j >= 0.5) {
