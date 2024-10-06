@@ -73,6 +73,6 @@ abstract class Converter implements ContractsConverter
      */
     public function forward(Closure $cb)
     {
-        return $cb($this->getOuput());
+        return $cb($this->getOutput());
     }
 }

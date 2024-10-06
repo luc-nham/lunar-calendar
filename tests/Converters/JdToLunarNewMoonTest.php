@@ -84,7 +84,7 @@ class JdToLunarNewMoonTest extends TestCase
         // The input jd at 2024-02-09T10:00:00+0000 equal 2024-02-10T00:00+1400
         // GMT+14, offset 50400
         $offset = 50400;
-        $jd = (new GregorianToJd(new DateTimeInterval(9, 2, 2024, 10, 0, 0)))->getOuput();
+        $jd = (new GregorianToJd(new DateTimeInterval(9, 2, 2024, 10, 0, 0)))->getOutput();
 
         (new JdToLunarNewMoon($jd, $offset))
             ->forward(function (NewMoonPhase $nm) {
@@ -140,7 +140,7 @@ class JdToLunarNewMoonTest extends TestCase
         $jd = 2415050.2083333;   // 1900-01-30T17:00+0000 | 1900-01-31T00:00+0700
 
         $converter = new JdToLunarNewMoon($jd, $offset);
-        $newmoon = $converter->getOuput();
+        $newmoon = $converter->getOutput();
 
         $this->assertEquals(1, $newmoon->total);
         $this->assertEquals(2415050.2083333, $newmoon->jd);
@@ -160,8 +160,8 @@ class JdToLunarNewMoonTest extends TestCase
             (int)$date[0]
         );
 
-        $inputJd = (new GregorianToJd($interval, $offset))->getOuput();
-        $newMoon = (new JdToLunarNewMoon($inputJd, $offset))->getOuput();
+        $inputJd = (new GregorianToJd($interval, $offset))->getOutput();
+        $newMoon = (new JdToLunarNewMoon($inputJd, $offset))->getOutput();
 
         $this->assertEquals($inputJd, $newMoon->jd);
         $this->assertEquals($total, $newMoon->total);

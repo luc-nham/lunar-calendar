@@ -14,7 +14,7 @@ class JdToGregorianTest extends TestCase
     public function testUTC()
     {
         $c = new JdToGregorian(); // Default input
-        $o = $c->getOuput();
+        $o = $c->getOutput();
 
         $this->assertEquals(1, $o->d);
         $this->assertEquals(1, $o->m);
@@ -73,7 +73,7 @@ class JdToGregorianTest extends TestCase
         $offset = 25200;        // GMT+7 
         $jd = 2415050.2083333;  // 1900-01-30T17:00+0000
         $converter = new JdToGregorian($jd, $offset);
-        $gregorian = $converter->getOuput();
+        $gregorian = $converter->getOutput();
 
         // Expect local time 1900-01-31T00:00+0700
         $this->assertEquals(31, $gregorian->d);
@@ -86,7 +86,7 @@ class JdToGregorianTest extends TestCase
         // Expect local time 1900-01-30T23:59:59+0700
         // Decrement the input value by 1 second
         $jd2 = $jd - 0.00001157407;
-        $gregorian = $converter->setInput($jd2)->getOuput();
+        $gregorian = $converter->setInput($jd2)->getOutput();
         $this->assertEquals(30, $gregorian->d);
         $this->assertEquals(1, $gregorian->m);
         $this->assertEquals(1900, $gregorian->y);

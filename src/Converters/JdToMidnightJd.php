@@ -27,7 +27,7 @@ class JdToMidnightJd extends Converter
      *
      * @return float
      */
-    public function getOuput(): float
+    public function getOutput(): float
     {
         $diff = $this->offset() >= 43200 ? 1.5 : 0.5;
         $decimal = $diff - $this->offset() / 3600 / 24;
