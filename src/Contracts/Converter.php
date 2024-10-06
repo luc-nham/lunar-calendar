@@ -12,7 +12,7 @@ interface Converter
     /**
      * Return the ouput value
      */
-    public function getOuput();
+    public function getOutput();
 
     /**
      * Forward the output to a callback function

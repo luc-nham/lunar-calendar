@@ -37,7 +37,7 @@ class GregorianToJd extends Converter
      *
      * @return float
      */
-    public function getOuput(): float
+    public function getOutput(): float
     {
         $a = floor((14 - $this->g->m) / 12);
         $y = $this->g->y + 4800 - $a;

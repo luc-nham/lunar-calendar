@@ -19,7 +19,7 @@ class JdToLs extends Converter
      *
      * @return float
      */
-    public function getOuput(): float
+    public function getOutput(): float
     {
         $T = ($this->jd - 2451545) / 36525;
         $dr = M_PI / 180;

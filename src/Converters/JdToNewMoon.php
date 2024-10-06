@@ -25,7 +25,7 @@ class JdToNewMoon extends ToNewMoon
      *
      * @return NewMoonPhase
      */
-    public function getOuput(): NewMoonPhase
+    public function getOutput(): NewMoonPhase
     {
         $total = $this->total($this->jd);
         $jd = $this->truephase($total);

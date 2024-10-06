@@ -88,7 +88,7 @@ abstract class ToNewMoon extends Converter
     protected function total(int | float $jd)
     {
         $sdate = $jd;
-        $gre = (new JdToGregorian($sdate - 45))->getOuput();
+        $gre = (new JdToGregorian($sdate - 45))->getOutput();
 
         $k1 = floor(($gre->y + ($gre->m - 1) * (1 / 12) - 1900) * 12.3685);
         $nt1 = $this->meanphase(floor($sdate - 45), $k1);

@@ -15,7 +15,7 @@ class ConverterTest extends TestCase
     {
         $c = new class extends Converter
         {
-            public function getOuput(): float
+            public function getOutput(): float
             {
                 return $this->toFixed(1.123456789);
             }
@@ -37,11 +37,11 @@ class ConverterTest extends TestCase
     public function testFixedOption()
     {
         // Default is fixed 7 number of decimal part
-        $this->assertEquals(1.1234568, $this->converter->getOuput());
+        $this->assertEquals(1.1234568, $this->converter->getOutput());
 
         // Set new fixed option
         $this->converter->setFixed(1);
-        $this->assertEquals(1.1, $this->converter->getOuput());
+        $this->assertEquals(1.1, $this->converter->getOutput());
     }
 
     public function testForwartOuput()

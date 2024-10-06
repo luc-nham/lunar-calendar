@@ -35,7 +35,7 @@ class JdToGregorian extends Converter
     /**
      * Return a DateTimeInterval object type that stores Gregorian date time 
      */
-    public function getOuput(): DateTimeInterval
+    public function getOutput(): DateTimeInterval
     {
         $j1 = $this->toFixed($this->jd + $this->offset() / 86400);
         $j = floor($j1);
