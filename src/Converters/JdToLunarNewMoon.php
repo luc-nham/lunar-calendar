@@ -25,6 +25,23 @@ class JdToLunarNewMoon extends ToNewMoon
     }
 
     /**
+     * Get number of addition day to calibrate the output.
+     */
+    protected function getDiffDay(int | float $jd, int $offset): int
+    {
+        $u = (new JdToGregorian($jd))->getOuput();
+        $l = (new JdToGregorian($jd, $offset))->getOuput();
+
+        $diff = $u->d !== $l->d;
+
+        if (!$diff) {
+            return 0;
+        }
+
+        return $offset > 0 ? 1 :  -1;
+    }
+
+    /**
      * Return New moon phase properties
      *
      * @return NewMoonPhase
@@ -32,11 +49,9 @@ class JdToLunarNewMoon extends ToNewMoon
     public function getOuput(): NewMoonPhase
     {
         $offset = $this->offset();
-        $localMjd = (new JdToMidnightJd($this->jd, $offset))->getOuput();
-
-        $diff = $this->toFixed($offset / 3600 / 24);
-
-        $total = $this->total($localMjd + $diff);
+        $lm = (new JdToMidnightJd($this->jd, $offset))->getOuput();
+        $diff = $this->getDiffDay($this->jd, $offset);
+        $total = $this->total($lm + $diff);
         $nmJd = $this->truephase($total);
         $nmMjd = (new JdToMidnightJd($nmJd, $offset))->getOuput();
 

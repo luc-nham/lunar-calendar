@@ -86,4 +86,17 @@ class JdToMidnightJdTest extends TestCase
                     ->forward(fn(float $jd) => $this->assertEquals(2460350.0, $jd));
             });
     }
+
+    /**
+     * @link https://github.com/luc-nham/lunar-calendar/issues/47
+     */
+    public function testFixIssue47()
+    {
+        $offset = 25200;        // GMT+7
+        $jd = 2415050.208333;   // 1900-01-30T17:00+0000 | 1900-01-31T00:00+0700 (fixed 6)
+
+        (new JdToMidnightJd($jd, $offset))
+            ->setFixed(6)
+            ->forward(fn(float $j) => $this->assertEquals($jd, $j));
+    }
 }

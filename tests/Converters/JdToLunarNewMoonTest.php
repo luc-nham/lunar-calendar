@@ -8,7 +8,9 @@ use LucNham\LunarCalendar\Converters\JdToLunarNewMoon;
 use LucNham\LunarCalendar\Converters\JdToMidnightJd;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
+use LucNham\LunarCalendar\Tests\Providers\VnLunarFistNewMoonList;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(JdToLunarNewMoon::class)]
@@ -127,5 +129,41 @@ class JdToLunarNewMoonTest extends TestCase
                         $this->assertEquals(2460320, $nm->jd);
                     });
             });
+    }
+
+    /**
+     * @link https://github.com/luc-nham/lunar-calendar/issues/47
+     */
+    public function testFixIssue47()
+    {
+        $offset = 25200;        // GMT+7
+        $jd = 2415050.2083333;   // 1900-01-30T17:00+0000 | 1900-01-31T00:00+0700
+
+        $converter = new JdToLunarNewMoon($jd, $offset);
+        $newmoon = $converter->getOuput();
+
+        $this->assertEquals(1, $newmoon->total);
+        $this->assertEquals(2415050.2083333, $newmoon->jd);
+    }
+
+    /**
+     * @link https://github.com/luc-nham/lunar-calendar/issues/47
+     */
+    #[DataProviderExternal(VnLunarFistNewMoonList::class, 'list')]
+    public function testVnFirstNewMoon1900To2100(string $jd, int $total, string $lunar, string $gregorian)
+    {
+        $offset = 25200;
+        $date = explode('-', $gregorian);
+        $interval = new DateTimeInterval(
+            (int)$date[2],
+            (int)$date[1],
+            (int)$date[0]
+        );
+
+        $inputJd = (new GregorianToJd($interval, $offset))->getOuput();
+        $newMoon = (new JdToLunarNewMoon($inputJd, $offset))->getOuput();
+
+        $this->assertEquals($inputJd, $newMoon->jd);
+        $this->assertEquals($total, $newMoon->total);
     }
 }
