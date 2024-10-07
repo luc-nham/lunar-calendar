@@ -71,4 +71,13 @@ class NewMoonIteratorTest extends TestCase
     {
         $this->assertTrue($iterator->valid());
     }
+
+    #[Depends("testNavigationToNext")]
+    public function testSetKey(NewMoonPhase $newMoon)
+    {
+        $iterator = new NewMoonIterator($newMoon);
+        $iterator->setKey(12);
+
+        $this->assertTrue($newMoon->total + 12 === $iterator->current()->total);
+    }
 }

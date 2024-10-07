@@ -26,6 +26,17 @@ class NewMoonIterator extends ToNewMoon implements Iterator
     }
 
     /**
+     * Set the key value, allow point to specific New moon phase
+     *
+     * @param integer $key
+     * @return void
+     */
+    public function setKey(int $key): void
+    {
+        $this->key = abs($key);
+    }
+
+    /**
      * Return current new moon phase. Because the class implements Iterator interface, 'current' 
      * method can be used instead, they return same output.
      *
