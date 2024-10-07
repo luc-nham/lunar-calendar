@@ -2,7 +2,10 @@
 
 namespace LucNham\LunarCalendar\Terms;
 
-readonly class LunarFirstNewMoonPhase
+/**
+ * Stores first new moon phase of the lunar year
+ */
+readonly class LunarFirstNewMoonPhase extends NewMoonPhase
 {
     public function __construct(public int $total, public int | float $jd, public int $year, public bool $leap) {}
 }
