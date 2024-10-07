@@ -2,11 +2,15 @@
 
 namespace LucNham\LunarCalendar\Converters;
 
+use LucNham\LunarCalendar\Converters\Traits\JdInputSetable;
+
 /**
  * Converter that converts a Julian day number to Solar longitude degress
  */
 class JdToLs extends Converter
 {
+    use JdInputSetable;
+
     /**
      * Create new converter
      *

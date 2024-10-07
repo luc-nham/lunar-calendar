@@ -10,6 +10,7 @@ use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
 use LucNham\LunarCalendar\Tests\Providers\VnLunarFistNewMoonList;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
@@ -149,6 +150,7 @@ class JdToLunarNewMoonTest extends TestCase
     /**
      * @link https://github.com/luc-nham/lunar-calendar/issues/47
      */
+    #[CoversNothing]
     #[DataProviderExternal(VnLunarFistNewMoonList::class, 'list')]
     public function testVnFirstNewMoon1900To2100(string $jd, int $total, string $lunar, string $gregorian)
     {
