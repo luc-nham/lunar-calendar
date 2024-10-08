@@ -3,7 +3,9 @@
 namespace LucNham\LunarCalendar\Converters;
 
 use Closure;
+use Exception;
 use LucNham\LunarCalendar\Contracts\Converter as ContractsConverter;
+use RuntimeException;
 
 /**
  * Base converter
@@ -74,5 +76,25 @@ abstract class Converter implements ContractsConverter
     public function forward(Closure $cb)
     {
         return $cb($this->getOutput());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function then(string $c, mixed ...$params): ContractsConverter
+    {
+        if (!class_exists($c)) {
+            throw new RuntimeException("The target converter class not found.");
+        }
+        try {
+            /** @var Converter */
+            $converter = new $c($this->getOutput(), ...$params);
+            $converter->setFixed($this->fixed);
+            $converter->setOffset($this->offset());
+
+            return $converter;
+        } catch (\Throwable $th) {
+            throw new Exception("Missing or wrong parameters type.");
+        }
     }
 }
