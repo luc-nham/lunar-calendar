@@ -41,17 +41,11 @@ class LunarFirstNewMoonToLunarLeapNewMoonTest extends TestCase
         $offset = 25200;
 
         /** @var LunarLeapMonthNewMoonPhase */
-        $leap = (new GregorianToJd(new DateTimeInterval(1, 10, $year)))
-            ->forward(function (float $jd) use ($offset) {
-                return (new JdToLunarNewMoon($jd, $offset))
-                    ->forward(function (NewMoonPhase $nm) use ($offset) {
-                        return (new NewMoonToLunarFirstNewMoon($nm, $offset))
-                            ->forward(function (LunarFirstNewMoonPhase $fnm) use ($offset) {
-                                return (new LunarFirstNewMoonToLunarLeapNewMoon($fnm, $offset))
-                                    ->getOutput();
-                            });
-                    });
-            });
+        $leap = (new GregorianToJd(new DateTimeInterval(1, 10, $year), $offset))
+            ->then(JdToLunarNewMoon::class)
+            ->then(NewMoonToLunarFirstNewMoon::class)
+            ->then(LunarFirstNewMoonToLunarLeapNewMoon::class)
+            ->getOutput();
 
         $this->assertEquals($month, $leap->month);
         $this->assertEquals($jd, $leap->jd);
@@ -63,17 +57,11 @@ class LunarFirstNewMoonToLunarLeapNewMoonTest extends TestCase
         $offset = 25200;
 
         /** @var LunarLeapMonthNewMoonPhase */
-        $leap = (new GregorianToJd(new DateTimeInterval(1, 10, $year)))
-            ->forward(function (float $jd) use ($offset) {
-                return (new JdToLunarNewMoon($jd, $offset))
-                    ->forward(function (NewMoonPhase $nm) use ($offset) {
-                        return (new NewMoonToLunarFirstNewMoon($nm, $offset))
-                            ->forward(function (LunarFirstNewMoonPhase $fnm) use ($offset) {
-                                return (new LunarFirstNewMoonToLunarLeapNewMoon($fnm, $offset))
-                                    ->getOutput();
-                            });
-                    });
-            });
+        $leap = (new GregorianToJd(new DateTimeInterval(1, 10, $year), $offset))
+            ->then(JdToLunarNewMoon::class)
+            ->then(NewMoonToLunarFirstNewMoon::class)
+            ->then(LunarFirstNewMoonToLunarLeapNewMoon::class)
+            ->getOutput();
 
         $this->assertEquals($month, $leap->month);
         $this->assertEquals($jd, $leap->jd);
@@ -81,20 +69,12 @@ class LunarFirstNewMoonToLunarLeapNewMoonTest extends TestCase
 
     public function testUnleapYear()
     {
-        $offset = 25200;
-
         /** @var null */
         $leap = (new GregorianToJd(new DateTimeInterval(1, 10, 2024)))
-            ->forward(function (float $jd) use ($offset) {
-                return (new JdToLunarNewMoon($jd, $offset))
-                    ->forward(function (NewMoonPhase $nm) use ($offset) {
-                        return (new NewMoonToLunarFirstNewMoon($nm, $offset))
-                            ->forward(function (LunarFirstNewMoonPhase $fnm) use ($offset) {
-                                return (new LunarFirstNewMoonToLunarLeapNewMoon($fnm, $offset))
-                                    ->getOutput();
-                            });
-                    });
-            });
+            ->then(JdToLunarNewMoon::class)
+            ->then(NewMoonToLunarFirstNewMoon::class)
+            ->then(LunarFirstNewMoonToLunarLeapNewMoon::class)
+            ->getOutput();
 
         $this->assertNull($leap);
     }
