@@ -8,16 +8,17 @@ namespace LucNham\LunarCalendar\Terms;
 readonly class LunarDateTimeInterval extends DateTimeInterval
 {
     /**
-     * Undocumented function
+     * Create new Lunar Date time interval. When used as input, not all attributes are needed.
      *
-     * @param integer $d
-     * @param integer $m
-     * @param integer $y
-     * @param integer $h
-     * @param integer $i
-     * @param integer $s
-     * @param integer $l    Leap month number, default 0 mean unknow.
-     * @param integer $t    Total days of month, default 0, mean unknow.
+     * @param integer $d        Days, default 1.
+     * @param integer $m        Months, default 1.
+     * @param integer $y        Years, default 1970.
+     * @param integer $h        Hours, default 0.
+     * @param integer $i        Minutes, default 0.
+     * @param integer $s        Seconds, default 0.
+     * @param integer $l        The leap month number, default 0 mean unknown or does not exist.
+     * @param boolean $leap     Check if the current month is leap, default false.
+     * @param integer $days     Total days of month, default 0, mean unknown.
      */
     public function __construct(
         public int $d = 1,
@@ -27,6 +28,7 @@ readonly class LunarDateTimeInterval extends DateTimeInterval
         public int $i = 0,
         public int $s = 0,
         public int $l = 0,
-        public int $t = 0
+        public bool $leap = false,
+        public int $days = 0
     ) {}
 }
