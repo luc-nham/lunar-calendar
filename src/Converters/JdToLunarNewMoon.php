@@ -49,12 +49,11 @@ class JdToLunarNewMoon extends ToNewMoon
     public function getOutput(): NewMoonPhase
     {
         $offset = $this->offset();
-        $lm = (new JdToMidnightJd($this->jd, $offset))->getOutput();
-        $diff = $this->getDiffDay($this->jd, $offset);
-        $total = $this->total($lm + $diff);
+        $mJd = (new JdToMidnightJd($this->jd, $offset))->getOutput();
+        $total = $this->total($mJd + 0.999988);
         $nmJd = $this->truephase($total);
         $nmMjd = (new JdToMidnightJd($nmJd, $offset))->getOutput();
 
-        return new NewMoonPhase($total, $this->toFixed($nmMjd));
+        return new NewMoonPhase(total: $total, jd: $nmMjd);
     }
 }
