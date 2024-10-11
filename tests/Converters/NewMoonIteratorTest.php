@@ -6,9 +6,11 @@ use LucNham\LunarCalendar\Converters\GregorianToJd;
 use LucNham\LunarCalendar\Converters\JdToGregorian;
 use LucNham\LunarCalendar\Converters\JdToLunarNewMoon;
 use LucNham\LunarCalendar\Converters\JdToMidnightJd;
+use LucNham\LunarCalendar\Converters\JdToTime;
 use LucNham\LunarCalendar\Converters\NewMoonIterator;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
+use LucNham\LunarCalendar\Terms\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
@@ -20,6 +22,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(JdToGregorian::class)]
 #[CoversClass(JdToMidnightJd::class)]
 #[CoversClass(DateTimeInterval::class)]
+#[CoversClass(JdToTime::class)]
+#[CoversClass(TimeInterval::class)]
 class NewMoonIteratorTest extends TestCase
 {
     public function testNavigationToNext()

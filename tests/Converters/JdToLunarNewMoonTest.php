@@ -6,8 +6,10 @@ use LucNham\LunarCalendar\Converters\GregorianToJd;
 use LucNham\LunarCalendar\Converters\JdToGregorian;
 use LucNham\LunarCalendar\Converters\JdToLunarNewMoon;
 use LucNham\LunarCalendar\Converters\JdToMidnightJd;
+use LucNham\LunarCalendar\Converters\JdToTime;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
+use LucNham\LunarCalendar\Terms\TimeInterval;
 use LucNham\LunarCalendar\Tests\Providers\VnLunarFistNewMoonList;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -20,6 +22,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(JdToMidnightJd::class)]
 #[CoversClass(DateTimeInterval::class)]
 #[CoversClass(NewMoonPhase::class)]
+#[CoversClass(JdToTime::class)]
+#[CoversClass(TimeInterval::class)]
 class JdToLunarNewMoonTest extends TestCase
 {
     public function testUTC()

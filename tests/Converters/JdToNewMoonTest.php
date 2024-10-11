@@ -5,9 +5,11 @@ namespace LucNham\LunarCalendar\Tests\Converters;
 use LucNham\LunarCalendar\Converters\GregorianToJd;
 use LucNham\LunarCalendar\Converters\JdToGregorian;
 use LucNham\LunarCalendar\Converters\JdToNewMoon;
+use LucNham\LunarCalendar\Converters\JdToTime;
 use LucNham\LunarCalendar\Converters\ToNewMoon;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
+use LucNham\LunarCalendar\Terms\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -17,6 +19,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(DateTimeInterval::class)]
 #[CoversClass(GregorianToJd::class)]
 #[CoversClass(JdToGregorian::class)]
+#[CoversClass(JdToTime::class)]
+#[CoversClass(TimeInterval::class)]
 class JdToNewMoonTest extends TestCase
 {
     public function testUtcInput()
