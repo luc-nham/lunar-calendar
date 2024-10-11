@@ -82,4 +82,21 @@ class LunarFirstNewMoonToLunarLeapNewMoonTest extends TestCase
 
         $this->assertNull($leap);
     }
+
+    /**
+     * @link https://github.com/luc-nham/lunar-calendar/issues/54
+     */
+    public function testFixIssue54()
+    {
+        $offset = 25200;
+
+        /** @var LunarLeapMonthNewMoonPhase */
+        $leap = (new GregorianToJd(new DateTimeInterval(1, 10, 2023), $offset))
+            ->then(JdToLunarNewMoon::class)
+            ->then(NewMoonToLunarFirstNewMoon::class)
+            ->then(LunarFirstNewMoonToLunarLeapNewMoon::class)
+            ->getOutput();
+
+        $this->assertEquals(1524, $leap->total);
+    }
 }
