@@ -63,18 +63,15 @@ class JdToGregorian extends Converter
             $y += 1;
         }
 
-        $totalSec =
-            ($this->jd - floor($this->jd)) * 86400 + $this->offset() + 43200;
+        $time =  (new JdToTime($this->jd, $this->offset()))->getOutput();
 
-        $totalSec =
-            $totalSec - floor($totalSec) < 0.5
-            ? floor($totalSec)
-            : ceil($totalSec);
-
-        $h = floor($totalSec / 3600) % 24;
-        $i = floor($totalSec / 60) % 60;
-        $s = floor($totalSec % 60);
-
-        return new DateTimeInterval($d, $m, $y, $h, $i, $s);
+        return new DateTimeInterval(
+            d: $d,
+            m: $m,
+            y: $y,
+            h: $time->h,
+            i: $time->i,
+            s: $time->s
+        );
     }
 }

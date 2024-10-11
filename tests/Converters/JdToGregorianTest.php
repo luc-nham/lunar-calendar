@@ -3,12 +3,16 @@
 namespace LucNham\LunarCalendar\Tests\Converters;
 
 use LucNham\LunarCalendar\Converters\JdToGregorian;
+use LucNham\LunarCalendar\Converters\JdToTime;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
+use LucNham\LunarCalendar\Terms\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(JdToGregorian::class)]
 #[CoversClass(DateTimeInterval::class)]
+#[CoversClass(JdToTime::class)]
+#[CoversClass(TimeInterval::class)]
 class JdToGregorianTest extends TestCase
 {
     public function testUTC()

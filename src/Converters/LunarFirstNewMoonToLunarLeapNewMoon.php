@@ -32,7 +32,7 @@ class LunarFirstNewMoonToLunarLeapNewMoon extends ToNewMoon
 
         /** @var LunarLeapMonthNewMoonPhase[] */
         $result = [];
-        $total = 2;
+        $total = $this->nm->total + 1;
         $month = 1;
         $nm = $iterator->current();
 
@@ -52,7 +52,14 @@ class LunarFirstNewMoonToLunarLeapNewMoon extends ToNewMoon
                 ->forward(fn(float $deg) => floor($deg / 30));
 
             if ($ls1 === $ls2) {
-                array_push($result, new LunarLeapMonthNewMoonPhase($total, $nm->jd, $month));
+                array_push(
+                    $result,
+                    new LunarLeapMonthNewMoonPhase(
+                        total: $total,
+                        jd: $nm->jd,
+                        month: $month
+                    )
+                );
             }
 
             $nm = $nextNm;
