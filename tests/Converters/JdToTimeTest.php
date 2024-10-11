@@ -2,6 +2,8 @@
 
 namespace LucNham\LunarCalendar\Tests\Converters;
 
+use DateInterval;
+use DateTime;
 use LucNham\LunarCalendar\Converters\GregorianToJd;
 use LucNham\LunarCalendar\Converters\JdToTime;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
@@ -11,6 +13,8 @@ use PHPUnit\Framework\TestCase;
 
 #[CoversClass(JdToTime::class)]
 #[CoversClass(TimeInterval::class)]
+#[CoversClass(GregorianToJd::class)]
+#[CoversClass(DateTimeInterval::class)]
 class JdToTimeTest extends TestCase
 {
     public function testDefault()
@@ -98,5 +102,38 @@ class JdToTimeTest extends TestCase
                 $this->assertEquals(59, $time->i);
                 $this->assertEquals(59, $time->s);
             });
+    }
+
+    /**
+     * A large test with 86400 loops to test each second increment.
+     */
+    public function testOneDay()
+    {
+        $date = new DateTime('1970-01-01T00:00:00+0000');
+
+        $h = (int)$date->format('G');
+        $i = (int)$date->format('i');
+        $s = (int)$date->format('s');
+
+        for ($k = 1; $k <= 86399; $k++) {
+            (new GregorianToJd(
+                new DateTimeInterval(
+                    d: 1,
+                    m: 1,
+                    y: 1970,
+                    h: $h,
+                    i: $i,
+                    s: $s,
+                )
+            ))
+                ->then(JdToTime::class)
+                ->forward(function (TimeInterval $time) use ($h, $i, $s) {
+                    $this->assertEquals($h, $time->h);
+                    $this->assertEquals($i, $time->i);
+                    $this->assertEquals($s, $time->s);
+                });
+
+            $date->add(new DateInterval('PT1S'));
+        }
     }
 }

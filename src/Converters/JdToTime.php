@@ -38,10 +38,7 @@ class JdToTime extends Converter
             1
         );
 
-        $totalSec =
-            $totalSec - floor($totalSec) < 0.5
-            ? floor($totalSec)
-            : ceil($totalSec);
+        $totalSec = floor($totalSec);
 
         return new TimeInterval(
             h: floor($totalSec / 3600) % 24,
