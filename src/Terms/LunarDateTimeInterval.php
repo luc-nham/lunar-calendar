@@ -18,7 +18,6 @@ readonly class LunarDateTimeInterval extends DateTimeInterval
      * @param integer $s        Seconds, default 0.
      * @param integer $l        The leap month number, default 0 mean unknown or does not exist.
      * @param boolean $leap     Check if the current month is leap, default false.
-     * @param integer $days     Total days of month, default 0, mean unknown.
      */
     public function __construct(
         public int $d = 1,
@@ -29,6 +28,5 @@ readonly class LunarDateTimeInterval extends DateTimeInterval
         public int $s = 0,
         public int $l = 0,
         public bool $leap = false,
-        public int $days = 0
     ) {}
 }

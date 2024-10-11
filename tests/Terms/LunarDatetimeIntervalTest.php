@@ -21,7 +21,6 @@ class LunarDatetimeIntervalTest extends TestCase
         $this->assertEquals(0, $date->s);
         $this->assertEquals(0, $date->l);
         $this->assertEquals(false, $date->leap);
-        $this->assertEquals(0, $date->days);
     }
 
     public function testCreateViaConstructor()
@@ -43,6 +42,5 @@ class LunarDatetimeIntervalTest extends TestCase
         $this->assertEquals(59, $date->s);
         $this->assertEquals(6, $date->l);
         $this->assertEquals(true, $date->leap);
-        $this->assertEquals(0, $date->days);
     }
 }
