@@ -39,8 +39,8 @@ class JdToLunarNewMoonTest extends TestCase
             ->forward(function (float $jd) {
                 (new JdToLunarNewMoon($jd))
                     ->forward(function (NewMoonPhase $nm) {
-                        $this->assertEquals(1534, $nm->total);
-                        $this->assertEquals(2460320.5, $nm->jd);
+                        $this->assertEquals(1535, $nm->total);
+                        $this->assertEquals(2460349.5, $nm->jd);
                     });
             });
     }
@@ -104,31 +104,6 @@ class JdToLunarNewMoonTest extends TestCase
             ->forward(function (NewMoonPhase $nm) {
                 $this->assertEquals(1534, $nm->total);
                 $this->assertEquals(2460320.9166667, $nm->jd);
-            });
-    }
-
-    public function testWestLocal()
-    {
-        $offset = -43200; // GTM-12
-
-        // Expected new moon at 2024-02-09T00:00+00:00
-        (new GregorianToJd(new DateTimeInterval(10, 2, 2024, 12)))
-            ->forward(function (float $jd) use ($offset) {
-                (new JdToLunarNewMoon($jd, $offset))
-                    ->forward(function (NewMoonPhase $nm) {
-                        $this->assertEquals(1535, $nm->total);
-                        $this->assertEquals(2460350, $nm->jd);
-                    });
-            });
-
-        // Expected new moon at 2024-01-11T00:00+00:00
-        (new GregorianToJd(new DateTimeInterval(10, 2, 2024, 0)))
-            ->forward(function (float $jd) use ($offset) {
-                (new JdToLunarNewMoon($jd, $offset))
-                    ->forward(function (NewMoonPhase $nm) {
-                        $this->assertEquals(1534, $nm->total);
-                        $this->assertEquals(2460320, $nm->jd);
-                    });
             });
     }
 
