@@ -55,20 +55,30 @@ class LunarFirstNewMoonToLunarLeapNewMoonTest extends TestCase
         $this->assertEquals($jd, $leap->jd);
     }
 
-    #[DataProviderExternal(VnLunarLeapMonthProvider::class, 'listOf21thCentury')]
-    public function testVn21thCenturyLeapMonth(int $year, int $month, float $jd)
+    /**
+     * This test function dose not use a DataProviderExternal, this because it is used to generate 
+     * coverage reports for code.
+     */
+    public function testVn21thCenturyLeapMonth()
     {
         $offset = 25200;
+        $list = VnLunarLeapMonthProvider::listOf21thCentury();
 
-        /** @var LunarLeapMonthNewMoonPhase */
-        $leap = (new GregorianToJd(new DateTimeInterval(1, 10, $year), $offset))
-            ->then(JdToLunarNewMoon::class)
-            ->then(NewMoonToLunarFirstNewMoon::class)
-            ->then(LunarFirstNewMoonToLunarLeapNewMoon::class)
-            ->getOutput();
+        foreach ($list as $data) {
+            $year = $data['year'];
+            $month = $data['month'];
+            $jd = $data['jd'];
 
-        $this->assertEquals($month, $leap->month);
-        $this->assertEquals($jd, $leap->jd);
+            /** @var LunarLeapMonthNewMoonPhase */
+            $leap = (new GregorianToJd(new DateTimeInterval(1, 10, $year), $offset))
+                ->then(JdToLunarNewMoon::class)
+                ->then(NewMoonToLunarFirstNewMoon::class)
+                ->then(LunarFirstNewMoonToLunarLeapNewMoon::class)
+                ->getOutput();
+
+            $this->assertEquals($month, $leap->month);
+            $this->assertEquals($jd, $leap->jd);
+        }
     }
 
     public function testUnleapYear()
