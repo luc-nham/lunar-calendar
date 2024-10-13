@@ -20,9 +20,6 @@ readonly class LunarDateTimeInterval extends DateTimeInterval
      *                              This property can be calculate and assign by some converters. 
      *                              Default 0 mean unknown. 
      * @param boolean $leap         Check if the current month is leap, default false.
-     * @param integer $daysOfMonth  Total days of current month, may be 29 or 30. This property can
-     *                              be calculate and assign by some converters. Default 0 mean
-     *                              unknown. 
      */
     public function __construct(
         public int $d = 1,
@@ -32,7 +29,6 @@ readonly class LunarDateTimeInterval extends DateTimeInterval
         public int $i = 0,
         public int $s = 0,
         public int $l = 0,
-        public bool $leap = false,
-        public int $daysOfMonth = 0
+        public bool $leap = false
     ) {}
 }
