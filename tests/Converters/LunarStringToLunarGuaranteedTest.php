@@ -5,12 +5,10 @@ namespace LucNham\LunarCalendar\Tests\Parsers;
 use DateMalformedStringException;
 use DateTimeZone;
 use LucNham\LunarCalendar\Converters\LunarStringToLunarGuaranteed;
-use LucNham\LunarCalendar\Parsers\LunarDateTimeParser;
 use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(LunarDateTimeParser::class)]
 #[CoversClass(LunarDateTimeInterval::class)]
 class LunarStringToLunarGuaranteedTest extends TestCase
 {
