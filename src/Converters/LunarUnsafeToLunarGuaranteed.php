@@ -2,6 +2,7 @@
 
 namespace LucNham\LunarCalendar\Converters;
 
+use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
 
 /**
@@ -26,9 +27,9 @@ class LunarUnsafeToLunarGuaranteed extends Converter
      *   6 depends on total days of lunar month, also the month number output will be increase by 1.
      * - Fix incorrect leap month input
      *
-     * @return LunarDateTimeInterval
+     * @return LunarDateTimeGuaranteed
      */
-    public function getOutput(): LunarDateTimeInterval
+    public function getOutput(): LunarDateTimeGuaranteed
     {
         return (new LunarDateTimeToJd(
             lunar: $this->lunar,

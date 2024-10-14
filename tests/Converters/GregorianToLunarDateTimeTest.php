@@ -11,6 +11,7 @@ use LucNham\LunarCalendar\Converters\JdToTime;
 use LucNham\LunarCalendar\Converters\LunarFirstNewMoonToLunarLeapNewMoon;
 use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
+use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
 use LucNham\LunarCalendar\Terms\LunarFirstNewMoonPhase;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
@@ -31,6 +32,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LunarFirstNewMoonPhase::class)]
 #[CoversClass(NewMoonPhase::class)]
 #[CoversClass(TimeInterval::class)]
+#[CoversClass(LunarDateTimeGuaranteed::class)]
 class GregorianToLunarDateTimeTest extends TestCase
 {
     public function testDefault()

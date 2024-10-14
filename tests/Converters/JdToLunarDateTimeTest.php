@@ -13,7 +13,7 @@ use LucNham\LunarCalendar\Converters\LunarFirstNewMoonToLunarLeapNewMoon;
 use LucNham\LunarCalendar\Converters\NewMoonIterator;
 use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
-use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
+use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarFirstNewMoonPhase;
 use LucNham\LunarCalendar\Terms\LunarLeapMonthNewMoonPhase;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
@@ -30,13 +30,13 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LunarFirstNewMoonToLunarLeapNewMoon::class)]
 #[CoversClass(NewMoonToLunarFirstNewMoon::class)]
 #[CoversClass(DateTimeInterval::class)]
-#[CoversClass(LunarDateTimeInterval::class)]
 #[CoversClass(LunarFirstNewMoonPhase::class)]
 #[CoversClass(NewMoonPhase::class)]
 #[CoversClass(GregorianToJd::class)]
 #[CoversClass(JdToLs::class)]
 #[CoversClass(NewMoonIterator::class)]
 #[CoversClass(LunarLeapMonthNewMoonPhase::class)]
+#[CoversClass(LunarDateTimeGuaranteed::class)]
 class JdToLunarDateTimeTest extends TestCase
 {
     public function testDefault()
@@ -52,6 +52,7 @@ class JdToLunarDateTimeTest extends TestCase
         $this->assertEquals(0, $lunar->s);
         $this->assertEquals(false, $lunar->leap);
         $this->assertEquals(0, $lunar->l);          // 1970 is not a Lunar leap year
+        $this->assertEquals(2440623.5, $lunar->j);
 
         $converter->setOffset(25200);
         $lunar = $converter->getOutput();
@@ -68,7 +69,7 @@ class JdToLunarDateTimeTest extends TestCase
 
     public function testBeforeLeapMonth()
     {
-        /** @var LunarDateTimeInterval */
+        /** @var LunarDateTimeGuaranteed */
         $lunar = ((new GregorianToJd(
             g: new DateTimeInterval(
                 d: 21,
@@ -95,7 +96,7 @@ class JdToLunarDateTimeTest extends TestCase
 
     public function testAfterLeapMonth()
     {
-        /** @var LunarDateTimeInterval */
+        /** @var LunarDateTimeGuaranteed */
         $lunar = ((new GregorianToJd(
             g: new DateTimeInterval(
                 d: 18,
@@ -122,7 +123,7 @@ class JdToLunarDateTimeTest extends TestCase
 
     public function testInLeapMonth()
     {
-        /** @var LunarDateTimeInterval */
+        /** @var LunarDateTimeGuaranteed */
         $lunar = ((new GregorianToJd(
             g: new DateTimeInterval(
                 d: 24,
