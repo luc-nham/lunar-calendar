@@ -15,6 +15,7 @@ use LucNham\LunarCalendar\Converters\LunarUnsafeToLunarGuaranteed;
 use LucNham\LunarCalendar\Converters\NewMoonIterator;
 use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
+use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
 use LucNham\LunarCalendar\Terms\LunarFirstNewMoonPhase;
 use LucNham\LunarCalendar\Terms\LunarLeapMonthNewMoonPhase;
@@ -41,6 +42,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(NewMoonIterator::class)]
 #[CoversClass(LunarLeapMonthNewMoonPhase::class)]
 #[CoversClass(LunarDateTimeToJd::class)]
+#[CoversClass(LunarDateTimeGuaranteed::class)]
 class LunarUnsafeToLunarGuaranteedTest extends TestCase
 {
     public function testIncorrectDayNumber()

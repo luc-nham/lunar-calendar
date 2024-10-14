@@ -3,7 +3,7 @@
 namespace LucNham\LunarCalendar\Converters;
 
 use LucNham\LunarCalendar\Converters\Traits\JdInputSetable;
-use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
+use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarLeapMonthNewMoonPhase;
 use LucNham\LunarCalendar\Terms\NewMoonPhase;
 
@@ -55,9 +55,9 @@ class JdToLunarDateTime extends Converter
     /**
      * Return Lunar date time period.
      *
-     * @return LunarDateTimeInterval
+     * @return LunarDateTimeGuaranteed
      */
-    public function getOutput(): LunarDateTimeInterval
+    public function getOutput(): LunarDateTimeGuaranteed
     {
         $offset = $this->offset();
         $jd = $this->jd;
@@ -67,7 +67,7 @@ class JdToLunarDateTime extends Converter
         $leapNewMoon = (new LunarFirstNewMoonToLunarLeapNewMoon($fistNewMoon, $offset))->getOutput();
         $time = (new JdToTime($this->jd, $offset))->getOutput();
 
-        return new LunarDateTimeInterval(
+        return new LunarDateTimeGuaranteed(
             d: floor($mjd - $newMoon->jd + 1),
             m: $this->getMonthNumber($newMoon, $fistNewMoon, $leapNewMoon),
             y: $fistNewMoon->year,
@@ -75,7 +75,8 @@ class JdToLunarDateTime extends Converter
             leap: $newMoon->total === $leapNewMoon?->total,
             h: $time->h,
             i: $time->i,
-            s: $time->s
+            s: $time->s,
+            j: $this->jd,
         );
     }
 }
