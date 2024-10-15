@@ -127,10 +127,6 @@ class LunarStringToLunarGuaranteed extends LunarUnsafeToLunarGuaranteed implemen
      */
     public function getTimezone(): DateTimeZone
     {
-        if (!$this->timezone) {
-            $this->timezone = new DateTimeZone(date_default_timezone_get());
-        }
-
         return $this->timezone;
     }
 }
