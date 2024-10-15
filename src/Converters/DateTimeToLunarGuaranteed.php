@@ -39,4 +39,12 @@ class DateTimeToLunarGuaranteed extends GregorianToLunarDateTime implements Zone
     {
         return $this->datetime->getTimezone();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOffset(): int
+    {
+        return $this->offset();
+    }
 }
