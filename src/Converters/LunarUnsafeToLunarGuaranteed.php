@@ -2,13 +2,14 @@
 
 namespace LucNham\LunarCalendar\Converters;
 
+use LucNham\LunarCalendar\Contracts\LunarGuaranteedAccessible;
 use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
 
 /**
  * Correct unsafe Lunar date time input to safe Lunar date time output.
  */
-class LunarUnsafeToLunarGuaranteed extends Converter
+class LunarUnsafeToLunarGuaranteed extends Converter implements LunarGuaranteedAccessible
 {
     /**
      * Create new converter
@@ -37,5 +38,13 @@ class LunarUnsafeToLunarGuaranteed extends Converter
         ))
             ->then(JdToLunarDateTime::class)
             ->getOutput();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getGuaranteedLunarDateTime(): LunarDateTimeGuaranteed
+    {
+        return $this->getOutput();
     }
 }

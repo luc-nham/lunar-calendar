@@ -129,4 +129,12 @@ class LunarStringToLunarGuaranteed extends LunarUnsafeToLunarGuaranteed implemen
     {
         return $this->timezone;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOffset(): int
+    {
+        return $this->offset();
+    }
 }

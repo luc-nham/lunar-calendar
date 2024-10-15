@@ -2,6 +2,7 @@
 
 namespace LucNham\LunarCalendar\Converters;
 
+use LucNham\LunarCalendar\Contracts\LunarGuaranteedAccessible;
 use LucNham\LunarCalendar\Converters\Traits\JdInputSetable;
 use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarLeapMonthNewMoonPhase;
@@ -10,7 +11,7 @@ use LucNham\LunarCalendar\Terms\NewMoonPhase;
 /**
  * Converter that converts a Julian day number to Lunar date time period.
  */
-class JdToLunarDateTime extends Converter
+class JdToLunarDateTime extends Converter implements LunarGuaranteedAccessible
 {
     use JdInputSetable;
 
@@ -78,5 +79,13 @@ class JdToLunarDateTime extends Converter
             s: $time->s,
             j: $this->jd,
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getGuaranteedLunarDateTime(): LunarDateTimeGuaranteed
+    {
+        return $this->getOutput();
     }
 }

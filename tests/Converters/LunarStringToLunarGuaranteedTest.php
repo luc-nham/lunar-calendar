@@ -52,7 +52,7 @@ class LunarStringToLunarGuaranteedTest extends TestCase
     public function testDateTime()
     {
         $converter = (new LunarStringToLunarGuaranteed('2024-10-20 20:30'));
-        $lunar = $converter->getOutput();
+        $lunar = $converter->getGuaranteedLunarDateTime();
 
         $this->assertEquals(20, $lunar->d);
         $this->assertEquals(10, $lunar->m);
@@ -77,7 +77,7 @@ class LunarStringToLunarGuaranteedTest extends TestCase
         $converter = (new LunarStringToLunarGuaranteed('2024-10-20 +0700'));
 
         $this->assertEquals('+07:00', $converter->getTimezone()->getName());
-        $this->assertEquals(25200, $converter->offset());
+        $this->assertEquals(25200, $converter->getOffset());
 
         $converter = (new LunarStringToLunarGuaranteed('2024-10-20 -1200'));
         $this->assertEquals('-12:00', $converter->getTimezone()->getName());
