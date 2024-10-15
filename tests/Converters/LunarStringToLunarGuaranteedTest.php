@@ -4,12 +4,49 @@ namespace LucNham\LunarCalendar\Tests\Parsers;
 
 use DateMalformedStringException;
 use DateTimeZone;
+use LucNham\LunarCalendar\Converters\GregorianToJd;
+use LucNham\LunarCalendar\Converters\JdToGregorian;
+use LucNham\LunarCalendar\Converters\JdToLs;
+use LucNham\LunarCalendar\Converters\JdToLunarDateTime;
+use LucNham\LunarCalendar\Converters\JdToLunarNewMoon;
+use LucNham\LunarCalendar\Converters\JdToMidnightJd;
+use LucNham\LunarCalendar\Converters\JdToTime;
+use LucNham\LunarCalendar\Converters\LunarDateTimeToJd;
+use LucNham\LunarCalendar\Converters\LunarFirstNewMoonToLunarLeapNewMoon;
 use LucNham\LunarCalendar\Converters\LunarStringToLunarGuaranteed;
+use LucNham\LunarCalendar\Converters\LunarUnsafeToLunarGuaranteed;
+use LucNham\LunarCalendar\Converters\NewMoonIterator;
+use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
+use LucNham\LunarCalendar\Terms\DateTimeInterval;
+use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\LunarDateTimeInterval;
+use LucNham\LunarCalendar\Terms\LunarFirstNewMoonPhase;
+use LucNham\LunarCalendar\Terms\LunarLeapMonthNewMoonPhase;
+use LucNham\LunarCalendar\Terms\NewMoonPhase;
+use LucNham\LunarCalendar\Terms\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(LunarStringToLunarGuaranteed::class)]
+#[CoversClass(LunarUnsafeToLunarGuaranteed::class)]
+#[CoversClass(JdToLunarDateTime::class)]
+#[CoversClass(JdToTime::class)]
+#[CoversClass(TimeInterval::class)]
+#[CoversClass(JdToGregorian::class)]
+#[CoversClass(JdToLunarNewMoon::class)]
+#[CoversClass(JdToMidnightJd::class)]
+#[CoversClass(LunarFirstNewMoonToLunarLeapNewMoon::class)]
+#[CoversClass(NewMoonToLunarFirstNewMoon::class)]
+#[CoversClass(DateTimeInterval::class)]
 #[CoversClass(LunarDateTimeInterval::class)]
+#[CoversClass(LunarFirstNewMoonPhase::class)]
+#[CoversClass(NewMoonPhase::class)]
+#[CoversClass(GregorianToJd::class)]
+#[CoversClass(JdToLs::class)]
+#[CoversClass(NewMoonIterator::class)]
+#[CoversClass(LunarLeapMonthNewMoonPhase::class)]
+#[CoversClass(LunarDateTimeToJd::class)]
+#[CoversClass(LunarDateTimeGuaranteed::class)]
 class LunarStringToLunarGuaranteedTest extends TestCase
 {
     public function testDateTime()
