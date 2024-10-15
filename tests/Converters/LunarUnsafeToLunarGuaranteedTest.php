@@ -87,7 +87,7 @@ class LunarUnsafeToLunarGuaranteedTest extends TestCase
                 leap: true
             ),
             offset: 25200
-        ))->getOutput();
+        ))->getGuaranteedLunarDateTime();
 
         $this->assertEquals(3, $lunar->d);
         $this->assertEquals(5, $lunar->m);

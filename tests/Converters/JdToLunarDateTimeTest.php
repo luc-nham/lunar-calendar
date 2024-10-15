@@ -65,6 +65,9 @@ class JdToLunarDateTimeTest extends TestCase
         $this->assertEquals(0, $lunar->s);
         $this->assertEquals(false, $lunar->leap);
         $this->assertEquals(0, $lunar->l);          // 1970 is not a Lunar leap year
+
+        $guaranteed = $converter->getGuaranteedLunarDateTime();
+        $this->assertInstanceOf(LunarDateTimeGuaranteed::class, $guaranteed);
     }
 
     public function testBeforeLeapMonth()

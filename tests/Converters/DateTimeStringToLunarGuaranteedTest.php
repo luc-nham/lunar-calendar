@@ -67,5 +67,6 @@ class DateTimeStringToLunarGuaranteedTest extends TestCase
         $timezone = $converter->getTimezone();
 
         $this->assertEquals('UTC', $timezone->getName());
+        $this->assertEquals(0, $converter->getOffset());
     }
 }
