@@ -13,6 +13,8 @@ use LucNham\LunarCalendar\Converters\JdToLunarDateTime;
 use LucNham\LunarCalendar\Converters\JdToLunarNewMoon;
 use LucNham\LunarCalendar\Converters\JdToMidnightJd;
 use LucNham\LunarCalendar\Converters\JdToTime;
+use LucNham\LunarCalendar\Converters\LunarDateTimeToDateTimeString;
+use LucNham\LunarCalendar\Converters\LunarDateTimeToGregorian;
 use LucNham\LunarCalendar\Converters\LunarDateTimeToJd;
 use LucNham\LunarCalendar\Converters\LunarFirstNewMoonToLunarLeapNewMoon;
 use LucNham\LunarCalendar\Converters\LunarStringToLunarGuaranteed;
@@ -56,6 +58,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(DateTimeToLunarGuaranteed::class)]
 #[CoversClass(GregorianToLunarDateTime::class)]
 #[CoversClass(LunarDateTimeDefaultFormatter::class)]
+#[CoversClass(LunarDateTimeToDateTimeString::class)]
+#[CoversClass(LunarDateTimeToGregorian::class)]
 class LunarDateTimeTest extends TestCase
 {
     public function testConstructor()
@@ -107,8 +111,17 @@ class LunarDateTimeTest extends TestCase
     {
         $date = new DateTime();
         $lunar1 = LunarDateTime::now();
-        $lunar2 = LunarDateTime::fromGregorian($date->format('c'));
+        $lunar2 = LunarDateTime::fromGregorian($date->format('Y-m-d H:i P'));
 
-        $this->assertEquals($lunar2->format('c'), $lunar1->format('c'));
+        $this->assertEquals($lunar2->format('Y-m-d H:i P'), $lunar1->format('Y-m-d H:i P'));
+    }
+
+    public function testToDateTimeString()
+    {
+        $lunar = new LunarDateTime('2024-01-01 +0700');
+        $this->assertEquals('2024-02-10 00:00:00 +07:00', $lunar->toDateTimeString());
+
+        $lunar = new LunarDateTime('2024-01-01 -12:00');
+        $this->assertEquals('2024-02-09 00:00:00 -12:00', $lunar->toDateTimeString());
     }
 }

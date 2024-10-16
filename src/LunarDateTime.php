@@ -9,6 +9,7 @@ use LucNham\LunarCalendar\Contracts\LunarDateTimeFormattable;
 use LucNham\LunarCalendar\Contracts\LunarGuaranteedAccessible;
 use LucNham\LunarCalendar\Contracts\ZoneAccessible;
 use LucNham\LunarCalendar\Converters\DateTimeStringToLunarGuaranteed;
+use LucNham\LunarCalendar\Converters\LunarDateTimeToDateTimeString;
 use LucNham\LunarCalendar\Converters\LunarStringToLunarGuaranteed;
 use LucNham\LunarCalendar\Formatters\LunarDateTimeDefaultFormatter;
 use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
@@ -139,6 +140,19 @@ class LunarDateTime implements ContractsLunarDateTime, LunarGuaranteedAccessible
     public function getOffset(): int
     {
         return $this->offset;
+    }
+
+    /**
+     * Returns corresponding date time string with format: 'Y-m-d H:i:s P'
+     *
+     * @return string
+     */
+    public function toDateTimeString(): string
+    {
+        return (new LunarDateTimeToDateTimeString(
+            lunar: $this->getGuaranteedLunarDateTime(),
+            offset: $this->getOffset()
+        ))->getOutput();
     }
 
     /**
