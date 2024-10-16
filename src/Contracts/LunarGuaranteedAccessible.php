@@ -10,7 +10,7 @@ use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 interface LunarGuaranteedAccessible
 {
     /**
-     * Returns a guaranteed lunar day time object
+     * Returns a guaranteed lunar date time object
      *
      * @return LunarDateTimeGuaranteed
      */

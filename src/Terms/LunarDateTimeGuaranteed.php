@@ -30,7 +30,7 @@ readonly class LunarDateTimeGuaranteed extends LunarDateTimeInterval
         public int $i,
         public int $s,
         public int $l,
-        public bool $leap = false,
+        public bool $leap,
         public float $j
     ) {}
 }
