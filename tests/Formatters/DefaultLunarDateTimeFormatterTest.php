@@ -1,6 +1,6 @@
 <?php
 
-namespace LucNham\LunarCalendar\Formatters\Tests;
+namespace LucNham\LunarCalenda\Tests\Formatters;
 
 use DateTimeZone;
 use LucNham\LunarCalendar\Converters\JdToGregorian;
