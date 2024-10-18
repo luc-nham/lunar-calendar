@@ -3,6 +3,7 @@
 namespace LucNham\LunarCalendar\Tests;
 
 use DateTime;
+use LucNham\LunarCalendar\Converters\DateTimeIntervalToDateTimeString;
 use LucNham\LunarCalendar\Converters\DateTimeStringToLunarGuaranteed;
 use LucNham\LunarCalendar\Converters\DateTimeToLunarGuaranteed;
 use LucNham\LunarCalendar\Converters\GregorianToJd;
@@ -60,6 +61,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LunarDateTimeDefaultFormatter::class)]
 #[CoversClass(LunarDateTimeToDateTimeString::class)]
 #[CoversClass(LunarDateTimeToGregorian::class)]
+#[CoversClass(DateTimeIntervalToDateTimeString::class)]
 class LunarDateTimeTest extends TestCase
 {
     public function testConstructor()
