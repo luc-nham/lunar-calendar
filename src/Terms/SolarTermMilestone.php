@@ -5,6 +5,7 @@ namespace LucNham\LunarCalendar\Terms;
 use Exception;
 use LucNham\LunarCalendar\Converters\DateTimeIntervalToDateTimeString;
 use LucNham\LunarCalendar\Converters\JdToGregorian;
+use LucNham\LunarCalendar\Converters\JdToUnix;
 
 /**
  * Store a Solar term milestone
@@ -34,7 +35,7 @@ readonly class SolarTermMilestone
     public function __get(string $name)
     {
         $value = match ($name) {
-            'unix' => floor(($this->jd - 2440587.5) * 86400),
+            'unix' => (new JdToUnix($this->jd))->getOutput(),
             'datetime' => (new JdToGregorian($this->jd))
                 ->then(DateTimeIntervalToDateTimeString::class)
                 ->getOutput(),
