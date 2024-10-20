@@ -2,61 +2,49 @@
 
 namespace LucNham\LunarCalendar\Terms;
 
-enum SolarTermEvent
-{
-    /**
-     * The beginning milestone of Solar term
-     */
-    case BEGIN;
-
-    /**
-     * The current milestone of Solar term
-     */
-    case CURRENT;
-
-    /**
-     * The unknown milestone of Solar term
-     */
-    case ANY;
-}
+use Exception;
+use LucNham\LunarCalendar\Converters\DateTimeIntervalToDateTimeString;
+use LucNham\LunarCalendar\Converters\JdToGregorian;
 
 /**
  * Store a Solar term milestone
+ * 
+ * @property int $unix          Unix timestamp represents to milestone
+ * @property string $datetime   Date time string with format 'Y-m-d H:i:s P' represents to milestone
  */
-readonly class SolarTermMilestone extends SolarLongitudeMileStone
+readonly class SolarTermMilestone
 {
     /**
      * Create new term
      *
      * @param float $jd             Julian day number
-     * @param string $datetime      Date time string corresponding to Julian day number
      * @param float $angle          Angle number corresponding to Julian day number
-     * @param [type] $event         Event key, default SolarTermEvent::ANY
-     * @param string $descrition    A description for event
      */
     public function __construct(
         public float $jd,
-        public string $datetime,
         public float $angle,
-        public SolarTermEvent $event = SolarTermEvent::ANY,
-        public string $descrition = '',
     ) {}
 
     /**
-     * Returns description of milestone event. 
+     * To get extra dynamic properties if needed
      *
-     * @return string
+     * @param string $name
+     * @return void
      */
-    public function getDescription(): string
+    public function __get(string $name)
     {
-        if ($this->descrition) {
-            return $this->descrition;
+        $value = match ($name) {
+            'unix' => floor(($this->jd - 2440587.5) * 86400),
+            'datetime' => (new JdToGregorian($this->jd))
+                ->then(DateTimeIntervalToDateTimeString::class)
+                ->getOutput(),
+            default => null
+        };
+
+        if (!$value === null) {
+            throw new Exception("Property '{$name}' dose not exists");
         }
 
-        return match ($this->event) {
-            SolarTermEvent::BEGIN => 'The beginning milestone of the term',
-            SolarTermEvent::CURRENT => 'The current milestone of the term',
-            SolarTermEvent::ANY => "Unknown milestone"
-        };
+        return $value;
     }
 }
