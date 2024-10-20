@@ -41,7 +41,7 @@ readonly class SolarTermMilestone
             default => null
         };
 
-        if (!$value === null) {
+        if ($value === null) {
             throw new Exception("Property '{$name}' dose not exists");
         }
 

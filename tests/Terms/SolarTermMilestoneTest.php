@@ -30,5 +30,8 @@ class SolarTermMilestoneTest extends TestCase
 
         $this->assertEquals(0, $milestone->unix);
         $this->assertEquals('1970-01-01 00:00:00 +00:00', $milestone->datetime);
+
+        $this->expectExceptionMessage("Property 'bad_access' dose not exists");
+        $milestone->bad_access;
     }
 }
