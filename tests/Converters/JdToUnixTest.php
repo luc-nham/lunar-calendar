@@ -35,7 +35,7 @@ class JdToUnixTest extends TestCase
             );
 
             $jd = (new GregorianToJd($interval))->getOutput();
-            $unix = (new JdToUnix($jd + 0.0000114))->getOutput();
+            $unix = (new JdToUnix($jd))->getOutput();
 
             $this->assertEquals($date->getTimestamp(), $unix);
 

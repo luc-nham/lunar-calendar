@@ -25,6 +25,9 @@ class JdToUnix extends Converter
      */
     public function getOutput(): int
     {
-        return ($this->jd - 2440587.5) * 86400;
+        $u = round($this->jd - 2440587.5, 6) * 86400;
+        $fu = floor($u);
+
+        return $u - $fu >= 0.5 ? ceil($u) : $fu;
     }
 }
