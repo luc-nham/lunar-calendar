@@ -5,6 +5,7 @@ namespace LucNham\LunarCalendar\Tests\Terms;
 use LucNham\LunarCalendar\Converters\DateTimeIntervalToDateTimeString;
 use LucNham\LunarCalendar\Converters\JdToGregorian;
 use LucNham\LunarCalendar\Converters\JdToTime;
+use LucNham\LunarCalendar\Converters\JdToUnix;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\SolarTermMilestone;
 use LucNham\LunarCalendar\Terms\TimeInterval;
@@ -17,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(JdToTime::class)]
 #[CoversClass(DateTimeInterval::class)]
 #[CoversClass(TimeInterval::class)]
+#[CoversClass(JdToUnix::class)]
 class SolarTermMilestoneTest extends TestCase
 {
     public function testGetMagic()
