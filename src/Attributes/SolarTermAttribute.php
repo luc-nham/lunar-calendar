@@ -10,7 +10,7 @@ readonly class SolarTermAttribute
     /**
      * @param string $key   Key of term
      * @param string $name  Display name
-     * @param int $order    Position of the term in term group
+     * @param int $position Position of the term in term group
      * @param string $type  Additional classification
      * @param float $ls     The solar longitude angle corresponds to the starting point
      */
