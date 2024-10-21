@@ -7,26 +7,23 @@ use Exception;
 use LucNham\LunarCalendar\Attributes\SolarTermAttribute;
 use LucNham\LunarCalendar\Contracts\LunarDateTime;
 use LucNham\LunarCalendar\Converters\JdToLs;
-use LucNham\LunarCalendar\Converters\JdToUnix;
 use LucNham\LunarCalendar\Converters\UnixToJd;
 use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
-use LucNham\LunarCalendar\Terms\SolarTermMilestone;
 use ReflectionClass;
 
 /**
  * Solar term resolver
  * 
- * @property string $key                    Solar term key
- * @property string $name                   Solar term name
- * @property int $position                  Solar term position in term group
- * @property float $ls                      The Solar longitude of beginning point of the term
- * @property string $type                   Classify between even and odd
- * @property SolarTermMilestone $begin      The milestone represents to beginning point
- * @property SolarTermMilestone $current    The milestone represents to current point
+ * @property string $key    Solar term key
+ * @property string $name   Solar term name
+ * @property int $position  Solar term position in term group
+ * @property float $ls      The Solar longitude of beginning point of the term
+ * @property string $type   Classify between even and odd
+ * @property float $angle   Solar longitude angle of current point
+ * @property int $begin     Unix timestamp corresponds to beginning point
  */
 class SolarTerm
 {
-    private float $jd;
     private float $angle;
     private SolarTermIdentifier $term;
 
@@ -45,9 +42,14 @@ class SolarTerm
             $this->time = time();
         }
 
-        $this->jd = (new UnixToJd($this->time))->getOutput();
-        $this->angle = (new JdToLs($this->jd))->getOutput();
-        $this->term = $this->resolveTerm((floor($this->angle / 15) + 3) % 24);
+        $angle = (new UnixToJd($this->time))
+            ->then(JdToLs::class)
+            ->forward(fn(float $angle) => round($angle, 3));
+
+        $position = (floor($angle / 15) + 3) % 24;
+
+        $this->angle = round($angle, 3);
+        $this->term = $this->resolveTerm($position);
     }
 
     /**
@@ -63,8 +65,8 @@ class SolarTerm
             'position' => $term->position,
             'ls' => $term->ls,
             'type' => $term->type,
-            'current' => $this->getCurrnetMilestone(),
-            'begin' => $this->getBeginMilestone(),
+            'angle' => $this->angle,
+            'begin' => $this->getBeginTimestamp(),
             default => null
         };
 
@@ -113,51 +115,39 @@ class SolarTerm
     }
 
     /**
-     * Return milestone representation of the beginning point of current Solar term
+     * Return unix timestamp corresponding to beginning point
      *
-     * @return SolarTermMilestone
+     * @return int
      */
-    public function getBeginMilestone(): SolarTermMilestone
+    public function getBeginTimestamp(): int
     {
-        $diff = (float)(round($this->angle, 5) - $this->ls);
+        $diff = $this->angle - $this->ls;
 
         if ($diff <= 0.00001) {
-            return new SolarTermMilestone(
-                jd: $this->jd,
-                angle: round($this->angle, 1),
-            );
+            return $this->time;
         }
 
-        $jd = $this->jd;
+        $time = $this->time;
         $angle = $this->angle;
         $nextAngle = $angle;
 
         do {
-            $nextJd = $jd - $diff * 0.95;
-            $nextAngle = (new JdToLs($nextJd))->getOutput();
+            $nextTime = $time - $diff * 0.95 * 86400;
+            $nextAngle = (new UnixToJd((int)$nextTime))
+                ->then(JdToLs::class)
+                ->getOutput();
+
             $diff = $nextAngle - $this->ls;
 
-            // Not coveragable
-            // if ($diff < 0) {
-            //     break;
-            // }
+            if ($diff < 0) {
+                break;
+            }
 
             $angle = $nextAngle;
-            $jd = $nextJd;
-        } while (round($diff, 5) > 0.00001);
+            $time = $nextTime;
+        } while ($diff > 0.00001);
 
-        return new SolarTermMilestone(
-            jd: round($jd, 7),
-            angle: round($angle, 1)
-        );
-    }
-
-    public function getCurrnetMilestone()
-    {
-        return new SolarTermMilestone(
-            jd: $this->jd,
-            angle: round($this->angle, 1)
-        );
+        return floor($time);
     }
 
     /**
@@ -167,10 +157,8 @@ class SolarTerm
      */
     public function previous(): self
     {
-        $time = (new JdToUnix($this->begin->jd - 14))->getOutput();
-
         return new self(
-            time: $time,
+            time: (new self($this->begin - 14 * 86400))->begin,
             target: $this->target
         );
     }
@@ -182,10 +170,8 @@ class SolarTerm
      */
     public function next(): self
     {
-        $time = (new JdToUnix($this->begin->jd + 17))->getOutput();
-
         return new self(
-            time: $time,
+            time: (new self($this->begin + 17 * 86400))->begin,
             target: $this->target
         );
     }
@@ -209,11 +195,11 @@ class SolarTerm
      * @param string $target
      * @return self
      */
-    // public static function now(string $target = SolarTermIdentifier::class): self
-    // {
-    //     return new self(
-    //         time: time(),
-    //         target: $target
-    //     );
-    // }
+    public static function now(string $target = SolarTermIdentifier::class): self
+    {
+        return new self(
+            time: time(),
+            target: $target
+        );
+    }
 }

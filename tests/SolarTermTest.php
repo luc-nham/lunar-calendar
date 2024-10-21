@@ -37,15 +37,13 @@ class SolarTermTest extends TestCase
     public function testMagicGetter()
     {
         $st = new SolarTerm();
-        $begin = $st->begin;
 
         $this->assertTrue(is_string($st->name));
         $this->assertTrue(is_string($st->key));
         $this->assertTrue(is_string($st->type));
         $this->assertTrue(is_integer($st->position));
         $this->assertTrue(is_float($st->ls));
-
-        $this->assertInstanceOf(SolarTermMilestone::class, $begin);
+        $this->assertTrue(is_float($st->angle));
 
         $this->expectExceptionMessage("Attribute 'bad_prop' does not exist");
         $st->bad_prop;
@@ -68,26 +66,15 @@ class SolarTermTest extends TestCase
         })->getTerm();
     }
 
-    public function testCurrentMilestone()
+    public function testBeginningPoint()
     {
-        $date = new DateTime();
-        $st = SolarTerm::fromDate($date);
-        $current = $st->current;
+        $st1 = new SolarTerm(0);
+        $begin1 = $st1->getBeginTimestamp();
 
-        $this->assertEquals($date->getTimestamp(), $current->unix);
-    }
+        $st2 = new SolarTerm($begin1);
+        $begin2 = $st2->getBeginTimestamp();
 
-    public function testCurrentSameBegin()
-    {
-        $point = (new SolarTerm(0))->getBeginMilestone();
-
-        $st = new SolarTerm($point->unix);
-        $begin = $st->begin;
-        $current = $st->current;
-
-        $this->assertEquals($point->unix, $begin->unix);
-        $this->assertEquals($current->angle, $begin->angle);
-        $this->assertEquals($current->jd, $begin->jd);
+        $this->assertEquals($begin1, $begin2);
     }
 
     public function testNextTerm()
@@ -96,7 +83,7 @@ class SolarTermTest extends TestCase
 
         for ($i = 1; $i <= 7; $i++) {
             $next = $start->next();
-            $diff = $next->begin->jd - $start->begin->jd;
+            $diff = ($next->getBeginTimestamp() - $start->getBeginTimestamp()) / 86400;
 
             $this->assertTrue($diff >= 14 && $diff <= 17);
 
@@ -110,10 +97,19 @@ class SolarTermTest extends TestCase
 
         for ($i = 1; $i <= 24; $i++) {
             $prev = $start->previous();
-            $diff = $start->begin->jd - $prev->begin->jd;
+            $diff = ($start->getBeginTimestamp() - $prev->getBeginTimestamp()) / 86400;
 
             $this->assertTrue($diff >= 14 && $diff <= 17);
             $start = $prev;
         }
+    }
+
+    public function testStaticInstance()
+    {
+        $date = new DateTime();
+        $st1 = SolarTerm::now();
+        $st2 = SolarTerm::fromDate($date);
+
+        $this->assertTrue($st1->getBeginTimestamp() === $st2->getBeginTimestamp());
     }
 }
