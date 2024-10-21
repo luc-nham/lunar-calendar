@@ -5,7 +5,7 @@ namespace LucNham\LunarCalendar\Attributes;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
-readonly class SolarTermAttribute extends BaseTermAttribute
+readonly class SolarTermAttribute
 {
     /**
      * @param string $key   Key of term
