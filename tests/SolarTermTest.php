@@ -4,32 +4,19 @@ namespace LucNham\LunarCalendar\Tests;
 
 use DateTime;
 use LucNham\LunarCalendar\Attributes\SolarTermAttribute;
-use LucNham\LunarCalendar\Converters\DateTimeIntervalToDateTimeString;
-use LucNham\LunarCalendar\Converters\JdToGregorian;
 use LucNham\LunarCalendar\Converters\JdToLs;
-use LucNham\LunarCalendar\Converters\JdToTime;
 use LucNham\LunarCalendar\Converters\JdToUnix;
 use LucNham\LunarCalendar\Converters\UnixToJd;
 use LucNham\LunarCalendar\SolarTerm;
-use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
-use LucNham\LunarCalendar\Terms\SolarTermMilestone;
-use LucNham\LunarCalendar\Terms\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 
 #[CoversClass(SolarTerm::class)]
-#[CoversClass(SolarTerm::class)]
 #[CoversClass(SolarTermAttribute::class)]
 #[CoversClass(SolarTermIdentifier::class)]
 #[CoversClass(JdToLs::class)]
-#[CoversClass(DateTimeIntervalToDateTimeString::class)]
-#[CoversClass(JdToGregorian::class)]
-#[CoversClass(JdToTime::class)]
-#[CoversClass(DateTimeInterval::class)]
-#[CoversClass(TimeInterval::class)]
-#[CoversClass(SolarTermMilestone::class)]
 #[CoversClass(JdToUnix::class)]
 #[CoversClass(UnixToJd::class)]
 class SolarTermTest extends TestCase
