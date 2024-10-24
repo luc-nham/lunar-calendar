@@ -17,7 +17,7 @@ use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 /**
  * Representation of Lunar calendar date and time
  */
-class LunarDateTime implements ContractsLunarDateTime, LunarGuaranteedAccessible
+class LunarDateTime implements ContractsLunarDateTime
 {
     /**
      * Timezone offset inseconds
