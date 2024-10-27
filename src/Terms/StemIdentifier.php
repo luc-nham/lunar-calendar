@@ -2,7 +2,6 @@
 
 namespace LucNham\LunarCalendar\Terms;
 
-use Exception;
 use LucNham\LunarCalendar\Attributes\SexagenaryTermAttribute;
 
 #[SexagenaryTermAttribute(key: 'giap', name: 'Giap', position: 0)]
@@ -23,25 +22,5 @@ readonly class StemIdentifier extends SexagenaryIdentifier
     protected function registerType(): string
     {
         return 'S';
-    }
-
-    /**
-     * Returns the Stem term identification
-     * 
-     * @param string|int $term The term key, name or position
-     * @param string $target Target class name
-     * @return StemIdentifier
-     */
-    public static function resolve(
-        string|int $term,
-        string $target = StemIdentifier::class,
-    ): StemIdentifier {
-        try {
-            return parent::resolve($term, $target);
-        } catch (\Throwable $th) {
-            $propName = is_string($term) ? 'name or key' : 'position';
-
-            throw new Exception("Stem term with {$propName} '{$term}' could not be found");
-        }
     }
 }

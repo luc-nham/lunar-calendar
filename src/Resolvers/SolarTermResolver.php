@@ -6,7 +6,10 @@ use LucNham\LunarCalendar\Attributes\SolarTermAttribute;
 use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
 
 /**
- * To resolve terms of Solar term system
+ * Solar terms resolver
+ * 
+ * @method SolarTermIdentifier resolve(mixed $value, ?string $name = null) Resolve single Solar term
+ * @method SolarTermIdentifier[] resolveAll() Resolve all Solar terms
  */
 class SolarTermResolver extends BaseTermResolver
 {
@@ -24,27 +27,5 @@ class SolarTermResolver extends BaseTermResolver
     public function getTargetTermClass(): string
     {
         return SolarTermIdentifier::class;
-    }
-
-    /**
-     * Resolve a Solar term
-     *
-     * @param mixed $value
-     * @param string|null $name
-     * @return SolarTermIdentifier
-     */
-    public function resolve(mixed $value, ?string $name = null): SolarTermIdentifier
-    {
-        return parent::resolve($value, $name);
-    }
-
-    /**
-     * Resolve all Solar terms
-     *
-     * @return SolarTermIdentifier[]
-     */
-    public function resolveAll(): array
-    {
-        return parent::resolveAll();
     }
 }

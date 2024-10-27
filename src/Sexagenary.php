@@ -7,6 +7,8 @@ use LucNham\LunarCalendar\Contracts\LunarDateTime;
 use LucNham\LunarCalendar\Contracts\SexagenaryFormattable;
 use LucNham\LunarCalendar\Converters\LunarGuaranteedToSexagenary;
 use LucNham\LunarCalendar\Formatters\SexagenaryDefaultFormatter;
+use LucNham\LunarCalendar\Resolvers\BranchTermResolver;
+use LucNham\LunarCalendar\Resolvers\StemTermResolver;
 use LucNham\LunarCalendar\Terms\BranchIdentifier;
 use LucNham\LunarCalendar\Terms\SexagenaryIdentifier;
 use LucNham\LunarCalendar\Terms\SexagenaryMilestone;
@@ -39,17 +41,49 @@ class Sexagenary
     /**
      * Creat new Sexagenary system
      *
-     * @param LunarDateTime $lunar                  Lunar date time
-     * @param SexagenaryFormattable $formatter      Formatter
+     * @param LunarDateTime $lunar              Lunar date time
+     * @param string $stemIdetifier             Stem identifier class, support to localization
+     * @param string $branchIdentifier          Branch identifier class, support to localization
+     * @param SexagenaryFormattable $formatter  Formatter
      */
     public function __construct(
         private LunarDateTime $lunar,
+        private string $stemIdetifier = StemIdentifier::class,
+        private string $branchIdentifier = BranchIdentifier::class,
         private SexagenaryFormattable $formatter = new SexagenaryDefaultFormatter,
     ) {
         $this->terms = (new LunarGuaranteedToSexagenary(
             lunar: $this->lunar->getGuaranteedLunarDateTime(),
-            offset: $this->lunar->getOffset()
+            offset: $this->lunar->getOffset(),
+            stemResolver: $this->createStemResolver(),
+            branchResolver: $this->createBranchResolver(),
         ))->getOutput();
+    }
+
+    /**
+     * Create Stem terms resolver
+     *
+     * @return StemTermResolver
+     */
+    protected function createStemResolver(): StemTermResolver
+    {
+        $resolve = new StemTermResolver();
+        $resolve->setTargetTermClass($this->stemIdetifier);
+
+        return $resolve;
+    }
+
+    /**
+     * Create Branches terms resolver
+     *
+     * @return BranchTermResolver
+     */
+    protected function createBranchResolver(): BranchTermResolver
+    {
+        $resolve = new BranchTermResolver();
+        $resolve->setTargetTermClass($this->branchIdentifier);
+
+        return $resolve;
     }
 
     /**

@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(TimeInterval::class)]
 #[CoversClass(JdToTime::class)]
 #[CoversClass(JdToMidnightJd::class)]
-class DefaultLunarDateTimeFormatterTest extends TestCase
+class LunarDateTimeDefaultFormatterTest extends TestCase
 {
     public function testFormating()
     {

@@ -3,10 +3,11 @@
 namespace LucNham\LunarCalendar\Converters;
 
 use InvalidArgumentException;
-use LucNham\LunarCalendar\Terms\BranchIdentifier;
+use LucNham\LunarCalendar\Contracts\TermResolver;
+use LucNham\LunarCalendar\Resolvers\BranchTermResolver;
+use LucNham\LunarCalendar\Resolvers\StemTermResolver;
 use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
 use LucNham\LunarCalendar\Terms\SexagenaryMilestone;
-use LucNham\LunarCalendar\Terms\StemIdentifier;
 
 /**
  * Convert a guaranteed Lunar date time to Sexagenary milestone
@@ -23,8 +24,8 @@ class LunarGuaranteedToSexagenary extends Converter
     public function __construct(
         private LunarDateTimeGuaranteed $lunar,
         int $offset = 0,
-        private string $stem = StemIdentifier::class,
-        private string $branch = BranchIdentifier::class
+        private TermResolver $stemResolver = new StemTermResolver(),
+        private TermResolver $branchResolver = new BranchTermResolver()
     ) {
         $this->setOffset($offset);
     }
@@ -151,24 +152,21 @@ class LunarGuaranteedToSexagenary extends Converter
 
         $this->jd = $this->getFakeLocalJd($this->lunar->j, $this->offset());
 
-        /** @var StemIdentifier */
-        $S = $this->stem;
-
-        /** @var BranchIdentifier */
-        $B = $this->branch;
+        $S = $this->stemResolver;
+        $B = $this->branchResolver;
 
         return new SexagenaryMilestone(
-            D: $S::resolve($this->getPosition('D')),
-            M: $S::resolve($this->getPosition('M')),
-            Y: $S::resolve($this->getPosition('Y')),
-            H: $S::resolve($this->getPosition('H')),
-            W: $S::resolve($this->getPosition('W')),
-            N: $S::resolve($this->getPosition('N')),
-            d: $B::resolve($this->getPosition('d')),
-            m: $B::resolve($this->getPosition('m')),
-            y: $B::resolve($this->getPosition('y')),
-            h: $B::resolve($this->getPosition('h')),
-            w: $B::resolve($this->getPosition('w')),
+            D: $S->resolve($this->getPosition('D'), 'position'),
+            M: $S->resolve($this->getPosition('M'), 'position'),
+            Y: $S->resolve($this->getPosition('Y'), 'position'),
+            H: $S->resolve($this->getPosition('H'), 'position'),
+            W: $S->resolve($this->getPosition('W'), 'position'),
+            N: $S->resolve($this->getPosition('N'), 'position'),
+            d: $B->resolve($this->getPosition('d'), 'position'),
+            m: $B->resolve($this->getPosition('m'), 'position'),
+            y: $B->resolve($this->getPosition('y'), 'position'),
+            h: $B->resolve($this->getPosition('h'), 'position'),
+            w: $B->resolve($this->getPosition('w'), 'position'),
         );
     }
 }

@@ -19,6 +19,8 @@ use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
 use LucNham\LunarCalendar\Formatters\LunarDateTimeDefaultFormatter;
 use LucNham\LunarCalendar\Formatters\SexagenaryDefaultFormatter;
 use LucNham\LunarCalendar\LunarDateTime;
+use LucNham\LunarCalendar\Resolvers\BranchTermResolver;
+use LucNham\LunarCalendar\Resolvers\StemTermResolver;
 use LucNham\LunarCalendar\Terms\BranchIdentifier;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
@@ -61,6 +63,8 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(LunarDateTimeInterval::class)]
 #[UsesClass(LunarFirstNewMoonPhase::class)]
 #[UsesClass(NewMoonPhase::class)]
+#[UsesClass(BranchTermResolver::class)]
+#[UsesClass(StemTermResolver::class)]
 class SexagenaryDefaultFormatterTest extends TestCase
 {
     public function testSingleTerm()

@@ -20,6 +20,8 @@ use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
 use LucNham\LunarCalendar\Formatters\LunarDateTimeDefaultFormatter;
 use LucNham\LunarCalendar\Formatters\SexagenaryDefaultFormatter;
 use LucNham\LunarCalendar\LunarDateTime;
+use LucNham\LunarCalendar\Resolvers\BranchTermResolver;
+use LucNham\LunarCalendar\Resolvers\StemTermResolver;
 use LucNham\LunarCalendar\Sexagenary;
 use LucNham\LunarCalendar\Terms\BranchIdentifier;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
@@ -32,12 +34,16 @@ use LucNham\LunarCalendar\Terms\SexagenaryIdentifier;
 use LucNham\LunarCalendar\Terms\SexagenaryMilestone;
 use LucNham\LunarCalendar\Terms\StemIdentifier;
 use LucNham\LunarCalendar\Terms\TimeInterval;
+use LucNham\LunarCalendar\Terms\VnBranchIdentifier;
+use LucNham\LunarCalendar\Terms\VnStemIdentifier;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Sexagenary::class)]
+#[CoversClass(VnStemIdentifier::class)]
+#[CoversClass(VnBranchIdentifier::class)]
 #[UsesClass(SexagenaryDefaultFormatter::class)]
 #[UsesClass(LunarDateTime::class)]
 #[UsesClass(SexagenaryTermAttribute::class)]
@@ -68,6 +74,8 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(NewMoonPhase::class)]
 #[UsesClass(JdToLs::class)]
 #[UsesClass(LunarLeapMonthNewMoonPhase::class)]
+#[UsesClass(BranchTermResolver::class)]
+#[UsesClass(StemTermResolver::class)]
 class SexagenaryTest extends TestCase
 {
     public function testMagicGet(): Sexagenary
@@ -105,6 +113,20 @@ class SexagenaryTest extends TestCase
     {
         $expected = 'D: Quy Ti, M: Giap Than, Y: At Ti, H: Quy Hoi, W: Giap Than';
         $formatter = 'D: [D+], M: [M+], Y: [Y+], H: [H+], W: [W+]';
+
+        $this->assertEquals($expected, $se->format($formatter));
+    }
+
+    public function testLocalization()
+    {
+        $se = new Sexagenary(
+            lunar: new LunarDateTime('2025-07-30 22:00 +07:00'),
+            stemIdetifier: VnStemIdentifier::class,
+            branchIdentifier: VnBranchIdentifier::class
+        );
+
+        $expected = 'Ngày Quý Tị, tháng Giáp Thân, năm Ất Tị, giờ Quý Hợi';
+        $formatter = 'Ngày [D+], tháng [M+], năm [Y+], giờ [H+]';
 
         $this->assertEquals($expected, $se->format($formatter));
     }
