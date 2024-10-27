@@ -2,7 +2,6 @@
 
 namespace LucNham\LunarCalendar\Terms;
 
-use Exception;
 use LucNham\LunarCalendar\Attributes\SexagenaryTermAttribute;
 
 #[SexagenaryTermAttribute(key: 'ty', name: 'Ty', position: 0)]
@@ -25,25 +24,5 @@ readonly class BranchIdentifier extends SexagenaryIdentifier
     protected function registerType(): string
     {
         return 'B';
-    }
-
-    /**
-     * Returns the Branch term identification
-     * 
-     * @param string|int $term The term key, name or position
-     * @param string $target Target class name
-     * @return BranchIdentifier
-     */
-    public static function resolve(
-        string|int $term,
-        string $target = BranchIdentifier::class,
-    ): BranchIdentifier {
-        try {
-            return parent::resolve($term, $target);
-        } catch (\Throwable $th) {
-            $propName = is_string($term) ? 'name or key' : 'position';
-
-            throw new Exception("Branch term with {$propName} '{$term}' could not be found");
-        }
     }
 }
