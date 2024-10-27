@@ -2,6 +2,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.0.0beta4] - 2024-10-27
+ 
+### Added
+- New English version of document
+
 ## [3.0.0beta3] - 2024-10-27
  
 ### Added
@@ -11,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - Update main **Sexagranary** class structure
 - Update **LunarGuaranteedToSexagenary** converter structure
 - Update documents
+
 ## [3.0.0beta2] - 2024-10-27
  
 ### Added
