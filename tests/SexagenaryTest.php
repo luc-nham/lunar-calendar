@@ -20,6 +20,8 @@ use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
 use LucNham\LunarCalendar\Formatters\LunarDateTimeDefaultFormatter;
 use LucNham\LunarCalendar\Formatters\SexagenaryDefaultFormatter;
 use LucNham\LunarCalendar\LunarDateTime;
+use LucNham\LunarCalendar\Resolvers\BranchTermResolver;
+use LucNham\LunarCalendar\Resolvers\StemTermResolver;
 use LucNham\LunarCalendar\Sexagenary;
 use LucNham\LunarCalendar\Terms\BranchIdentifier;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
@@ -68,6 +70,8 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(NewMoonPhase::class)]
 #[UsesClass(JdToLs::class)]
 #[UsesClass(LunarLeapMonthNewMoonPhase::class)]
+#[UsesClass(BranchTermResolver::class)]
+#[UsesClass(StemTermResolver::class)]
 class SexagenaryTest extends TestCase
 {
     public function testMagicGet(): Sexagenary

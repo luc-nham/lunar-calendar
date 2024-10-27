@@ -5,7 +5,6 @@ namespace LucNham\LunarCalendar\Tests\Converters;
 use LucNham\LunarCalendar\Attributes\SexagenaryTermAttribute;
 use LucNham\LunarCalendar\Converters\LunarGuaranteedToSexagenary;
 use LucNham\LunarCalendar\LunarDateTime;
-use PHPUnit\Framework\Attributes\CoversClass;
 use LucNham\LunarCalendar\Converters\GregorianToJd;
 use LucNham\LunarCalendar\Converters\JdToGregorian;
 use LucNham\LunarCalendar\Converters\JdToLs;
@@ -20,6 +19,8 @@ use LucNham\LunarCalendar\Converters\LunarUnsafeToLunarGuaranteed;
 use LucNham\LunarCalendar\Converters\NewMoonIterator;
 use LucNham\LunarCalendar\Converters\NewMoonToLunarFirstNewMoon;
 use LucNham\LunarCalendar\Formatters\LunarDateTimeDefaultFormatter;
+use LucNham\LunarCalendar\Resolvers\BranchTermResolver;
+use LucNham\LunarCalendar\Resolvers\StemTermResolver;
 use LucNham\LunarCalendar\Terms\BranchIdentifier;
 use LucNham\LunarCalendar\Terms\DateTimeInterval;
 use LucNham\LunarCalendar\Terms\LunarDateTimeGuaranteed;
@@ -30,35 +31,39 @@ use LucNham\LunarCalendar\Terms\SexagenaryIdentifier;
 use LucNham\LunarCalendar\Terms\SexagenaryMilestone;
 use LucNham\LunarCalendar\Terms\StemIdentifier;
 use LucNham\LunarCalendar\Terms\TimeInterval;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LunarGuaranteedToSexagenary::class)]
 #[CoversClass(SexagenaryMilestone::class)]
 #[CoversClass(SexagenaryTermAttribute::class)]
-#[CoversClass(LunarDateTimeToJd::class)]
-#[CoversClass(LunarStringToLunarGuaranteed::class)]
-#[CoversClass(LunarUnsafeToLunarGuaranteed::class)]
-#[CoversClass(LunarDateTimeDefaultFormatter::class)]
-#[CoversClass(LunarDateTime::class)]
-#[CoversClass(BranchIdentifier::class)]
-#[CoversClass(StemIdentifier::class)]
-#[CoversClass(SexagenaryIdentifier::class)]
-#[CoversClass(JdToLunarDateTime::class)]
-#[CoversClass(JdToTime::class)]
-#[CoversClass(TimeInterval::class)]
-#[CoversClass(JdToGregorian::class)]
-#[CoversClass(JdToLunarNewMoon::class)]
-#[CoversClass(JdToMidnightJd::class)]
-#[CoversClass(LunarFirstNewMoonToLunarLeapNewMoon::class)]
-#[CoversClass(NewMoonToLunarFirstNewMoon::class)]
-#[CoversClass(DateTimeInterval::class)]
-#[CoversClass(LunarFirstNewMoonPhase::class)]
-#[CoversClass(NewMoonPhase::class)]
-#[CoversClass(GregorianToJd::class)]
-#[CoversClass(JdToLs::class)]
-#[CoversClass(NewMoonIterator::class)]
-#[CoversClass(LunarLeapMonthNewMoonPhase::class)]
-#[CoversClass(LunarDateTimeGuaranteed::class)]
+#[UsesClass(LunarDateTimeToJd::class)]
+#[UsesClass(LunarStringToLunarGuaranteed::class)]
+#[UsesClass(LunarUnsafeToLunarGuaranteed::class)]
+#[UsesClass(LunarDateTimeDefaultFormatter::class)]
+#[UsesClass(LunarDateTime::class)]
+#[UsesClass(BranchIdentifier::class)]
+#[UsesClass(StemIdentifier::class)]
+#[UsesClass(SexagenaryIdentifier::class)]
+#[UsesClass(JdToLunarDateTime::class)]
+#[UsesClass(JdToTime::class)]
+#[UsesClass(TimeInterval::class)]
+#[UsesClass(JdToGregorian::class)]
+#[UsesClass(JdToLunarNewMoon::class)]
+#[UsesClass(JdToMidnightJd::class)]
+#[UsesClass(LunarFirstNewMoonToLunarLeapNewMoon::class)]
+#[UsesClass(NewMoonToLunarFirstNewMoon::class)]
+#[UsesClass(DateTimeInterval::class)]
+#[UsesClass(LunarFirstNewMoonPhase::class)]
+#[UsesClass(NewMoonPhase::class)]
+#[UsesClass(GregorianToJd::class)]
+#[UsesClass(JdToLs::class)]
+#[UsesClass(NewMoonIterator::class)]
+#[UsesClass(LunarLeapMonthNewMoonPhase::class)]
+#[UsesClass(LunarDateTimeGuaranteed::class)]
+#[UsesClass(BranchTermResolver::class)]
+#[UsesClass(StemTermResolver::class)]
 class LunarGuaranteedToSexagenaryTest extends TestCase
 {
     public function testDayBeginToEnd()
