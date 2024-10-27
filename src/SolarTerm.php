@@ -4,12 +4,12 @@ namespace LucNham\LunarCalendar;
 
 use DateTimeInterface;
 use Exception;
-use LucNham\LunarCalendar\Attributes\SolarTermAttribute;
 use LucNham\LunarCalendar\Contracts\LunarDateTime;
+use LucNham\LunarCalendar\Contracts\TermResolver;
 use LucNham\LunarCalendar\Converters\JdToLs;
 use LucNham\LunarCalendar\Converters\UnixToJd;
+use LucNham\LunarCalendar\Resolvers\SolarTermResolver;
 use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
-use ReflectionClass;
 
 /**
  * Solar term resolver
@@ -24,8 +24,26 @@ use ReflectionClass;
  */
 class SolarTerm
 {
+    /**
+     * Current Solar longitude angle number
+     *
+     * @var float
+     */
     private float $angle;
+
+    /**
+     * Current target term
+     *
+     * @var SolarTermIdentifier
+     */
     private SolarTermIdentifier $term;
+
+    /**
+     * Solar terms resolver
+     *
+     * @var TermResolver
+     */
+    private TermResolver $resolver;
 
     /**
      * Create new Solar term
@@ -38,6 +56,8 @@ class SolarTerm
         private ?int $time = null,
         private string $target = SolarTermIdentifier::class
     ) {
+        $this->resolver = $this->createTermResolver();
+
         if ($time === null) {
             $this->time = time();
         }
@@ -49,7 +69,7 @@ class SolarTerm
         $position = (floor($angle / 15) + 3) % 24;
 
         $this->angle = round($angle, 3);
-        $this->term = $this->resolveTerm($position);
+        $this->term = $this->resolve($position);
     }
 
     /**
@@ -78,30 +98,27 @@ class SolarTerm
     }
 
     /**
-     * Return target Solar term by position
+     * Return Solar term resolver
+     *
+     * @return TermResolver
+     */
+    protected function createTermResolver(): TermResolver
+    {
+        $resolver = new SolarTermResolver();
+        $resolver->setTargetTermClass($this->target);
+
+        return $resolver;
+    }
+
+    /**
+     * Resolve Solar term via it's position
      *
      * @param integer $position
      * @return SolarTermIdentifier
      */
-    protected function resolveTerm(int $position): SolarTermIdentifier
+    protected function resolve(int $position): SolarTermIdentifier
     {
-        try {
-            $class = new ReflectionClass($this->target);
-            $attributes = $class->getAttributes(SolarTermAttribute::class);
-
-
-            foreach ($attributes as $att) {
-                $instance = $att->newInstance();
-
-                if ($instance->position === $position) {
-                    return new $this->target(...(array)$instance);
-                }
-            }
-
-            throw new Exception("The Solar term corresponding to position {$position} could not be found");
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        return $this->resolver->resolve($position, 'position');
     }
 
     /**

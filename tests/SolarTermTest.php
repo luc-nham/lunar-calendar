@@ -7,18 +7,22 @@ use LucNham\LunarCalendar\Attributes\SolarTermAttribute;
 use LucNham\LunarCalendar\Converters\JdToLs;
 use LucNham\LunarCalendar\Converters\JdToUnix;
 use LucNham\LunarCalendar\Converters\UnixToJd;
+use LucNham\LunarCalendar\Resolvers\SolarTermResolver;
 use LucNham\LunarCalendar\SolarTerm;
 use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
+use LucNham\LunarCalendar\Terms\VnSolarTermIdentifier;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 
 #[CoversClass(SolarTerm::class)]
-#[CoversClass(SolarTermAttribute::class)]
-#[CoversClass(SolarTermIdentifier::class)]
-#[CoversClass(JdToLs::class)]
-#[CoversClass(JdToUnix::class)]
-#[CoversClass(UnixToJd::class)]
+#[UsesClass(SolarTermAttribute::class)]
+#[UsesClass(SolarTermIdentifier::class)]
+#[UsesClass(JdToLs::class)]
+#[UsesClass(JdToUnix::class)]
+#[UsesClass(UnixToJd::class)]
+#[UsesClass(SolarTermResolver::class)]
 class SolarTermTest extends TestCase
 {
     public function testMagicGetter()
@@ -40,17 +44,6 @@ class SolarTermTest extends TestCase
     {
         $this->expectException(TypeError::class);
         new SolarTerm(TestCase::class);
-    }
-
-    public function testRosolveTermBadPostion()
-    {
-        $this->expectExceptionMessage("The Solar term corresponding to position 50 could not be found");
-        $term = (new class() extends SolarTerm {
-            public function getTerm(): SolarTermIdentifier
-            {
-                return $this->resolveTerm(50);
-            }
-        })->getTerm();
     }
 
     public function testBeginningPoint()
@@ -98,5 +91,21 @@ class SolarTermTest extends TestCase
         $st2 = SolarTerm::fromDate($date);
 
         $this->assertTrue($st1->getBeginTimestamp() === $st2->getBeginTimestamp());
+    }
+
+    public function testLocalTerm()
+    {
+        $date = new DateTime('2024-12-30');
+        $default = SolarTerm::fromDate($date);
+        $local = SolarTerm::fromDate(
+            date: $date,
+            target: VnSolarTermIdentifier::class
+        );
+
+        $this->assertEquals('Winter Solstice', $default->name);
+        $this->assertEquals('winter_solstice', $default->key);
+
+        $this->assertEquals('Đông Chí', $local->name);
+        $this->assertEquals('dong_chi', $local->key);
     }
 }
