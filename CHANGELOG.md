@@ -2,6 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2024-10-31
+### Added
+- Official release of version 3.0.0
+
 ## [3.0.0beta4] - 2024-10-27
  
 ### Added
