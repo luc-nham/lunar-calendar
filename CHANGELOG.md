@@ -2,38 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.0.1] - 2024-11-06
+### Fixed
+- [Lunar date time format 'L' incorrect](https://github.com/luc-nham/lunar-calendar/issues/82)
+
 ## [3.0.0] - 2024-10-31
 ### Added
 - Official release of version 3.0.0
-
-## [3.0.0beta4] - 2024-10-27
- 
-### Added
-- New English version of document
-
-## [3.0.0beta3] - 2024-10-27
- 
-### Added
-- Add new Branch and Stem term resolvers classes
-- Add new Vietnamese Stem and Branch identifier classes
-### Changed
-- Update main **Sexagranary** class structure
-- Update **LunarGuaranteedToSexagenary** converter structure
-- Update documents
-
-## [3.0.0beta2] - 2024-10-27
- 
-### Added
-- Term resolver structure
-- Solar term resolver
-- Vietnames Solar terms identidier
-- Solar term system document for Vietnames
-### Changed
-- Change self resoving method to solar term resolver in **SolarTerm** class
- 
-## [3.0.0beta1] - 2024-10-26
- 
-### Added
-- **LunarDateTime** class to works with Lunar date time
-- **SolarTerm** class to works with Solar term system
-- **Sexagenary** class to works with Sexagenary cycle system 
