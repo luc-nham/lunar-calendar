@@ -103,7 +103,7 @@ class LunarDateTimeDefaultFormatter implements LunarDateTimeFormattable
             'l' => $this->lunar->leap ? $this->lunar->m . '+' : $this->lunar->m,
 
             // Numeric representation of a month with leap sign, with leading zeros
-            'L' => str_pad($this->getEquivalent('l'), 2, '0', STR_PAD_LEFT),
+            'L' => $this->lunar->leap ? $this->getEquivalent('m') . '+' : $this->getEquivalent('m'),
 
             // Numeric representation of a month, without leading zeros and leap sign
             'n' => $this->lunar->m,
