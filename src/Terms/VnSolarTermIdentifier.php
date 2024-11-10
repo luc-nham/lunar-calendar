@@ -12,7 +12,7 @@ use LucNham\LunarCalendar\Attributes\SolarTermAttribute;
 )]
 #[SolarTermAttribute(
     key: 'vu_thuy',
-    name: 'Vũ thủy',
+    name: 'Vũ Thủy',
     position: 1,
     ls: 330.0
 )]
