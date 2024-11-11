@@ -170,8 +170,6 @@ class SolarTerm implements SolarTermInterface
 
     /**
      * @inheritDoc
-     *
-     * @return integer
      */
     public function previous(): self
     {
@@ -183,8 +181,6 @@ class SolarTerm implements SolarTermInterface
 
     /**
      * @inheritDoc
-     *
-     * @return integer
      */
     public function next(): self
     {
