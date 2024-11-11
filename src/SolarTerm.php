@@ -220,4 +220,20 @@ class SolarTerm implements SolarTermInterface
             target: $target
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTimestamp(): int
+    {
+        return $this->time;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAngle(): float
+    {
+        return $this->angle;
+    }
 }
