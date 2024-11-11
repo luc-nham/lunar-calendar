@@ -5,6 +5,8 @@ namespace LucNham\LunarCalendar;
 use DateTimeInterface;
 use Exception;
 use LucNham\LunarCalendar\Contracts\LunarDateTime;
+use LucNham\LunarCalendar\Contracts\SolarTermInterface;
+use LucNham\LunarCalendar\Contracts\SolarTermNavigable;
 use LucNham\LunarCalendar\Contracts\TermResolver;
 use LucNham\LunarCalendar\Converters\JdToLs;
 use LucNham\LunarCalendar\Converters\UnixToJd;
@@ -22,7 +24,7 @@ use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
  * @property float $angle   Solar longitude angle of current point
  * @property int $begin     Unix timestamp corresponds to beginning point
  */
-class SolarTerm
+class SolarTerm implements SolarTermInterface, SolarTermNavigable
 {
     /**
      * Current Solar longitude angle number
@@ -132,9 +134,9 @@ class SolarTerm
     }
 
     /**
-     * Return unix timestamp corresponding to beginning point
+     * @inheritDoc
      *
-     * @return int
+     * @return integer
      */
     public function getBeginTimestamp(): int
     {
@@ -168,9 +170,7 @@ class SolarTerm
     }
 
     /**
-     * Return new instance with attached information of previous Solar term
-     * 
-     * @return self
+     * @inheritDoc
      */
     public function previous(): self
     {
@@ -181,9 +181,7 @@ class SolarTerm
     }
 
     /**
-     * Return new instance with attached information of next Solar term
-     * 
-     * @return self
+     * @inheritDoc
      */
     public function next(): self
     {
@@ -218,5 +216,21 @@ class SolarTerm
             time: time(),
             target: $target
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTimestamp(): int
+    {
+        return $this->time;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAngle(): float
+    {
+        return $this->angle;
     }
 }
