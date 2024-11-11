@@ -108,4 +108,12 @@ class SolarTermTest extends TestCase
         $this->assertEquals('Đông Chí', $local->name);
         $this->assertEquals('dong_chi', $local->key);
     }
+
+    public function testGetTimestampAndAngle()
+    {
+        $solarTerm = SolarTerm::now();
+
+        $this->assertIsInt($solarTerm->getTimestamp());
+        $this->assertIsFloat($solarTerm->getAngle());
+    }
 }
