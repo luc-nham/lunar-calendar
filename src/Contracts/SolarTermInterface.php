@@ -33,18 +33,4 @@ interface SolarTermInterface
      * @return int
      */
     public function getBeginTimestamp(): int;
-
-    /**
-     * Return new instance with attached information of previous Solar term
-     * 
-     * @return self
-     */
-    public function previous(): self;
-
-    /**
-     * Return new instance with attached information of next Solar term
-     * 
-     * @return self
-     */
-    public function next(): self;
 }

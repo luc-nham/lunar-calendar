@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Exception;
 use LucNham\LunarCalendar\Contracts\LunarDateTime;
 use LucNham\LunarCalendar\Contracts\SolarTermInterface;
+use LucNham\LunarCalendar\Contracts\SolarTermNavigable;
 use LucNham\LunarCalendar\Contracts\TermResolver;
 use LucNham\LunarCalendar\Converters\JdToLs;
 use LucNham\LunarCalendar\Converters\UnixToJd;
@@ -23,7 +24,7 @@ use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
  * @property float $angle   Solar longitude angle of current point
  * @property int $begin     Unix timestamp corresponds to beginning point
  */
-class SolarTerm implements SolarTermInterface
+class SolarTerm implements SolarTermInterface, SolarTermNavigable
 {
     /**
      * Current Solar longitude angle number
