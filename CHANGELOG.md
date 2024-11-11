@@ -2,6 +2,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 2024-11-11
+### Added
+- Calculate the duration of a Solar Term is available now
+### Changed
+- Apply abstraction for Solar term class handler
+### Fixed
+- Solar term spell mistake
+
 ## [3.0.1] - 2024-11-06
 ### Fixed
 - [Lunar date time format 'L' incorrect](https://github.com/luc-nham/lunar-calendar/issues/82)
