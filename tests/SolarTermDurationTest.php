@@ -55,8 +55,10 @@ class SolarTermDurationTest extends TestCase
 
         $this->assertEquals(SolarTermDurationMode::STRICT, $duration->mode);
         $this->assertEquals($duration->mode, $duration->getMode());
-
         $this->assertEquals($duration->getTotal(), $duration->getPassed() + $duration->getRemain());
+
+        $arr = $duration->toArray();
+        $this->assertEquals('strict', $arr['mode']);
     }
 
     public function testToArray()
@@ -69,5 +71,7 @@ class SolarTermDurationTest extends TestCase
         $this->assertTrue(isset($duration['passed']));
         $this->assertTrue(isset($duration['remain']));
         $this->assertTrue(isset($duration['total']));
+
+        $this->assertEquals('normal', $duration['mode']);
     }
 }

@@ -113,10 +113,13 @@ class SolarTermDuration
     /**
      * Return array
      *
-     * @return array{total: int|float, passed: int|float, remain: int|float, mode: SolarTermDurationMode}
+     * @return array{total: int|float, passed: int|float, remain: int|float, mode: 'strict'|'normal'}
      */
     public function toArray(): array
     {
-        return (array)$this->duration;
+        $duration = (array)$this->duration;
+        $duration['mode'] = $this->mode === SolarTermDurationMode::STRICT ? 'strict' : 'normal';
+
+        return $duration;
     }
 }
