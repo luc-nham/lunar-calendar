@@ -2,6 +2,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.1.1] - 2024-11-13
+### Added
+- Official website in README.md
+### Fixed
+- Known issue [Solar term duration toArray mode key #87](https://github.com/luc-nham/lunar-calendar/issues/87)
+
 ## [3.1.0] - 2024-11-11
 ### Added
 - Calculate the duration of a Solar Term is available now
