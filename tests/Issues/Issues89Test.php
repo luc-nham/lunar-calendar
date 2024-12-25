@@ -17,7 +17,7 @@ class Issues89Test extends TestCase
      */
     protected function getTerm(int $year): array
     {
-        $date = new DateTime($year . '-03-21 23:59:59 Asia/Ho_Chi_Minh');
+        $date = new DateTime($year . '-03-10 23:59:59 Asia/Ho_Chi_Minh');
         $term = SolarTerm::fromDate($date);
 
         if ($term->angle > 345) {

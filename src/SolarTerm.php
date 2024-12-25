@@ -142,7 +142,7 @@ class SolarTerm implements SolarTermInterface, SolarTermNavigable
     {
         $diff = $this->angle - $this->ls;
 
-        if ($diff <= 0.00001) {
+        if ($diff <= 0.001) {
             return $this->time;
         }
 
@@ -159,7 +159,7 @@ class SolarTerm implements SolarTermInterface, SolarTermNavigable
 
             $diff = $nextAngle - $this->ls;
 
-            if ($diff <= 0 || $diff > $prevDiff) {
+            if ($diff < 0.001 || $diff > $prevDiff) {
                 break;
             }
 
