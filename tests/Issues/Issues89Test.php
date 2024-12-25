@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 
 #[CoversNothing]
-class Issue89Test extends TestCase
+class Issues89Test extends TestCase
 {
     /**
      * @param integer $year
