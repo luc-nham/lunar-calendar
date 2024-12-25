@@ -1,6 +1,6 @@
 <?php
 
-namespace LucNham\LunarCalenda\Tests\Issues;
+namespace LucNham\LunarCalendar\Tests\Issues;
 
 use LucNham\LunarCalendar\LunarDateTime;
 use PHPUnit\Framework\Attributes\CoversNothing;
