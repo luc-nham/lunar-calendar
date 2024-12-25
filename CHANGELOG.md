@@ -2,6 +2,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.1.2] - 2024-12-25
+### Fixed
+- Known issues [Error: calculating next Solar term #87](https://github.com/luc-nham/lunar-calendar/issues/89)
+- Misspelled namespace declaration
+
 ## [3.1.1] - 2024-11-13
 ### Added
 - Official website in README.md
