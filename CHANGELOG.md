@@ -2,7 +2,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [3.2.0] - 2024-12-25
+## [3.2.0] - 2024-12-28
 ### Added
 - New [toString](./src//Terms/DateTimeInterval.php) method, helps easier make PHP date time string
 - 
