@@ -32,4 +32,11 @@ class DateTimeIntervalTest extends TestCase
         $this->assertEquals(30, $date->i);
         $this->assertEquals(20, $date->s);
     }
+
+    public function testToDateString()
+    {
+        $itv = new DateTimeInterval(1, 2, 3, 4, 5, 6);
+        $this->assertEquals('0003-02-01 04:05:06', $itv->toString());
+        $this->assertEquals('01/02/0003', $itv->toString('d/m/Y'));
+    }
 }

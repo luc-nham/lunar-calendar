@@ -96,16 +96,14 @@ class SolarTermDuration
                 ->getTimestamp();
         }
 
-        $total = ($nextBegin - $begin) / 86400;
-        $passed = ($current - $begin) / 86400;
+        $total = round(($nextBegin - $begin) / 86400, 6);
+        $passed = round(($current - $begin) / 86400, 6);
         $remain = $total - $passed;
 
-        $fixed = 7;
-
         return new SolarTermDurationStorage(
-            total: $isNormal ? (int)$total : round($total, $fixed),
-            passed: $isNormal ? (int)$passed : round($passed, $fixed),
-            remain: $isNormal ? (int)$remain : round($remain, $fixed),
+            total: $isNormal ? (int)$total : $total,
+            passed: $isNormal ? (int)$passed : $passed,
+            remain: $isNormal ? (int)$remain : $remain,
             mode: $this->mode,
         );
     }

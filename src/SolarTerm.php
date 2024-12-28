@@ -152,7 +152,7 @@ class SolarTerm implements SolarTermInterface, SolarTermNavigable
         $prevDiff = 360;
 
         do {
-            $nextTime = $time - $diff * 0.95 * 86400;
+            $nextTime = $time - $diff * 0.9 * 86400;
             $nextAngle = (new UnixToJd((int)$nextTime))
                 ->then(JdToLs::class)
                 ->getOutput();
@@ -166,7 +166,7 @@ class SolarTerm implements SolarTermInterface, SolarTermNavigable
             $angle = $nextAngle;
             $time = $nextTime;
             $prevDiff = $diff;
-        } while ($diff > 0.00001);
+        } while ($diff > 0.001);
 
         return floor($time);
     }
