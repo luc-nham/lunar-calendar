@@ -10,14 +10,14 @@ interface SolarTermNavigable
     /**
      * Move to previous Solar term
      * 
-     * @return SolarTermInterface
+     * @return SolarTermNavigable&SolarTermInterface
      */
-    public function previous(): SolarTermInterface;
+    public function previous(): SolarTermNavigable&SolarTermInterface;
 
     /**
      * Move to next Solar term
      * 
-     * @return SolarTermInterface
+     * @return SolarTermNavigable&SolarTermInterface
      */
-    public function next(): SolarTermInterface;
+    public function next(): SolarTermNavigable&SolarTermInterface;
 }
