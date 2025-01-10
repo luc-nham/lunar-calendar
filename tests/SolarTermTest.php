@@ -4,6 +4,8 @@ namespace LucNham\LunarCalendar\Tests;
 
 use DateTime;
 use LucNham\LunarCalendar\Attributes\SolarTermAttribute;
+use LucNham\LunarCalendar\Contracts\SolarTermInterface;
+use LucNham\LunarCalendar\Contracts\SolarTermNavigable;
 use LucNham\LunarCalendar\Converters\JdToLs;
 use LucNham\LunarCalendar\Converters\JdToUnix;
 use LucNham\LunarCalendar\Converters\UnixToJd;
@@ -115,5 +117,16 @@ class SolarTermTest extends TestCase
 
         $this->assertIsInt($solarTerm->getTimestamp());
         $this->assertIsFloat($solarTerm->getAngle());
+    }
+
+    public function testPhpDocBlock()
+    {
+        /**
+         * @var SolarTermInterface&SolarTermNavigable
+         */
+        $st = new SolarTerm();
+        $st->next()->next();
+
+        $this->assertNotEmpty($st->key);
     }
 }

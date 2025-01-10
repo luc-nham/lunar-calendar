@@ -15,14 +15,6 @@ use LucNham\LunarCalendar\Terms\SolarTermIdentifier;
 
 /**
  * Solar term resolver
- * 
- * @property string $key    Solar term key
- * @property string $name   Solar term name
- * @property int $position  Solar term position in term group
- * @property float $ls      The Solar longitude of beginning point of the term
- * @property string $type   Classify between even and odd
- * @property float $angle   Solar longitude angle of current point
- * @property int $begin     Unix timestamp corresponds to beginning point
  */
 class SolarTerm implements SolarTermInterface, SolarTermNavigable
 {
@@ -174,7 +166,7 @@ class SolarTerm implements SolarTermInterface, SolarTermNavigable
     /**
      * @inheritDoc
      */
-    public function previous(): self
+    public function previous(): SolarTermInterface&SolarTermNavigable
     {
         return new self(
             time: (new self($this->begin - 14 * 86400))->begin,
@@ -185,7 +177,7 @@ class SolarTerm implements SolarTermInterface, SolarTermNavigable
     /**
      * @inheritDoc
      */
-    public function next(): self
+    public function next(): SolarTermInterface&SolarTermNavigable
     {
         return new self(
             time: (new self($this->begin + 17 * 86400))->begin,
