@@ -2,6 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.2] - 2025-01-11
+### Added
+- Added magic getter to support more convenient access to Lunar date time properties
+
 ## [3.2.1] - 2025-01-10
 ### Changed
 - Update better Solar term types definition with PHP DocBlock

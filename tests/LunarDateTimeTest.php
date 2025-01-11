@@ -126,4 +126,19 @@ class LunarDateTimeTest extends TestCase
         $lunar = new LunarDateTime('2024-01-01 -12:00');
         $this->assertEquals('2024-02-09 00:00:00 -12:00', $lunar->toDateTimeString());
     }
+
+    public function test_magic_getter()
+    {
+        $lunar = new LunarDateTime();
+
+        $this->assertIsInt($lunar->day);
+        $this->assertIsInt($lunar->month);
+        $this->assertIsInt($lunar->year);
+        $this->assertIsInt($lunar->hour);
+        $this->assertIsInt($lunar->minute);
+        $this->assertIsInt($lunar->second);
+        $this->assertIsInt($lunar->timestamp);
+        $this->assertIsFloat($lunar->jdn);
+        $this->assertTrue($lunar->leap > 1 || $lunar->leap === false);
+    }
 }
