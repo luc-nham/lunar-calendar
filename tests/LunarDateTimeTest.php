@@ -139,6 +139,7 @@ class LunarDateTimeTest extends TestCase
         $this->assertIsInt($lunar->second);
         $this->assertIsInt($lunar->timestamp);
         $this->assertIsFloat($lunar->jdn);
-        $this->assertTrue($lunar->leap > 1 || $lunar->leap === false);
+        $this->assertIsInt($lunar->leap);
+        $this->assertIsBool($lunar->isLeapMonth);
     }
 }

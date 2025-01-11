@@ -64,16 +64,17 @@ class LunarDateTime implements ContractsLunarDateTime
     public function __get(string $name): mixed
     {
         $value = match ($name) {
-            'day'       => $this->interval->d,
-            'month'     => $this->interval->m,
-            'year'      => $this->interval->y,
-            'hour'      => $this->interval->h,
-            'minute'    => $this->interval->i,
-            'second'    => $this->interval->s,
-            'leap'      => $this->interval->leap ? $this->interval->l : false,
-            'jdn'       => $this->interval->j,
-            'timestamp' => $this->getTimestamp(),
-            default     => null
+            'day'           => $this->interval->d,
+            'month'         => $this->interval->m,
+            'year'          => $this->interval->y,
+            'hour'          => $this->interval->h,
+            'minute'        => $this->interval->i,
+            'second'        => $this->interval->s,
+            'leap'          => $this->interval->l,
+            'isLeapMonth'   => $this->interval->leap,
+            'jdn'           => $this->interval->j,
+            'timestamp'     => $this->getTimestamp(),
+            default         => null
         };
 
         if ($value === null) {

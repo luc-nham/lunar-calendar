@@ -11,7 +11,8 @@ namespace LucNham\LunarCalendar\Contracts;
  * @property integer $hour          Lunar hours from 0 to 23
  * @property integer $minute        Lunar minutes from 0 to 59
  * @property integer $second        Lunar second from 0 to 59
- * @property integer|false $leap    The leap month number, false if no leap month
+ * @property integer $leap          The leap month number, 0 if no leap month
+ * @property bool $isLeapMonth      Check if current lunar month be leap
  * @property float $jdn             Julian day number corresponding to Lunar date time
  * @property float $timestamp       Unix timestamp in seconds
  */

@@ -2,6 +2,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.3] - 2025-01-11
+### Fixed
+- Fix Lunar leap month getter logic
+
 ## [3.2.2] - 2025-01-11
 ### Added
 - Added magic getter to support more convenient access to Lunar date time properties
