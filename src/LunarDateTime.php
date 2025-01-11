@@ -4,6 +4,7 @@ namespace LucNham\LunarCalendar;
 
 use DateMalformedStringException;
 use DateTimeZone;
+use Exception;
 use LucNham\LunarCalendar\Contracts\LunarDateTime as ContractsLunarDateTime;
 use LucNham\LunarCalendar\Contracts\LunarDateTimeFormattable;
 use LucNham\LunarCalendar\Contracts\LunarGuaranteedAccessible;
@@ -52,6 +53,34 @@ class LunarDateTime implements ContractsLunarDateTime
     ) {
         $this->initComponents();
         $this->initFormatter();
+    }
+
+    /**
+     * Access properties more conveniently
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function __get(string $name): mixed
+    {
+        $value = match ($name) {
+            'day'       => $this->interval->d,
+            'month'     => $this->interval->m,
+            'year'      => $this->interval->y,
+            'hour'      => $this->interval->h,
+            'minute'    => $this->interval->i,
+            'second'    => $this->interval->s,
+            'leap'      => $this->interval->leap ? $this->interval->l : false,
+            'jdn'       => $this->interval->j,
+            'timestamp' => $this->getTimestamp(),
+            default     => null
+        };
+
+        if ($value === null) {
+            throw new Exception("Property dose not exists.");
+        }
+
+        return $value;
     }
 
     /**
